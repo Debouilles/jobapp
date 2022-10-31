@@ -24,7 +24,8 @@ router.post("/", (req, res) => {
     const newRdv = new RDV({
         RDV_ID: req.body.RDV_ID,
         provider: req.body.provider,
-        reciever: req.body.reciever
+        reciever: req.body.reciever,
+        isAccepted: req.body.isAccepted
     })
     if (!newRdv.RDV_ID || !newRdv.provider || !newRdv.reciever) {
         return res.sendStatus(400);
