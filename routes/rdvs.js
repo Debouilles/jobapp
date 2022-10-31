@@ -1,40 +1,43 @@
 
-import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-dotenv.config()
 import express from "express";
-import mongoose from "mongoose";
-// const User = require('./User')
-// import User from ('./User.js')
-
-
-
-
-
+import { RDV } from "../model/Rdv.js"
 const router = express.Router();
 
-if (process.env.ENV === 'dev') require('dotenv').config()
+//RDV
 
-const connection = mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-
-//added code------------------------
-// const express = require("express");
-
-// const app = express();
-
-// app.use(express.json());
-
-// app.use(express.urlencoded({ extended: false }));
-
-// app.use("/api/users", require("./routes/api/users"));
-
-// app.listen(3000, () => console.log('Server started'));
-//end added code----------------------
-
-router.get("/", function (req, res, next) {
-  res.send("Ignition!");
+//  GET
+// /rdvs
+router.get("/", (req, res) => {
+    RDV.find().sort('titre').exec(function (err, theRdv) {
+        if (err) {
+            return next(err);
+        }
+        res.send(theRdv);
+    });
 });
+
+
+//  POST 
+// /users
+router.post("/", (req, res) => {
+    //générer l'ID tout seul?
+    const newRdv = new RDV({
+        RDV_ID: req.body.RDV_ID,
+        provider: req.body.provider,
+        reciever: req.body.reciever
+    })
+    if (!newRdv.RDV_ID || !newRdv.provider || !newRdv.reciever) {
+        return res.sendStatus(400);
+    } else {
+        newRdv
+            .save()
+            .then(
+                () => console.log("One entry added"),
+                (err) => console.log(err)
+            );
+    }
+
+});
+
 
 export default router;

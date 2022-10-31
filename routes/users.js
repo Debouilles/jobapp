@@ -61,12 +61,13 @@ router.post("/", (req, res) => {
     .save()
     .then(
       () => console.log("One entry added"),
-      (err) => console.log(err)
+      (err) => console.log(err),
     );
 
-  if (!newUser.id || !newUser.name || !newUser.email) {
-    return res.sendStatus(400);
-  }
+  // if (!newUser.id || !newUser.name || !newUser.email) {
+  //   return res.sendStatus(400);
+  // }
+  return res.sendStatus(200)
 });
 
 //  PUT 
