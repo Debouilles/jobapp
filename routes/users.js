@@ -27,7 +27,7 @@ const router = express.Router();
 
 // GET
 // /users
-router.get("/", (req, res) => {
+router.get("/users", (req, res) => {
   User.find().sort('name').exec(function (err, users) {
     if (err) {
       return next(err);
