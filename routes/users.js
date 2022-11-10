@@ -94,42 +94,59 @@ router.post("/", async (req, res, next) => {
 
 //  PUT 
 // /users/:id
-router.put("/:id", (req, res) => {
-  let theObject = {}
-  if (req.body.name) {
-    theObject.name = req.body.name
-    console.log('hello')
+router.put("/:id", async (req, res,next) => {
+  let modif = req.body
+  try {
+   await User.findByIdAndUpdate(req.params.id, modif)
+  } catch(e) {
+    res.send(e)
   }
-  if (req.body.email) {
-    theObject.email = req.body.email
-  }
-  console.log(theObject)
 
-  User.findByIdAndUpdate(req.params.id, theObject, function (err, user) {
-    if (err) {
-      console.log(err)
-      res.sendStatus(400);
-    }
-    else {
-      res.sendStatus(200);
-    }
-  });
+
+  // let theObject = {}
+  // if (req.body.name) {
+  //   theObject.name = req.body.name
+  // }
+  // if (req.body.email) {
+  //   theObject.email = req.body.email
+  // }
+  // console.log(theObject)
+
+  // User.findByIdAndUpdate(req.params.id, theObject, function (err, user) {
+  //   if (err) {
+  //     console.log(err)
+  //     res.sendStatus(400);
+  //   }
+  //   else {
+  //     res.sendStatus(200);
+  //   }
+  // });
 
 });
 
 //  DELETE 
 // /users/:id
-router.delete("/:id", (req, res) => {
-  User.findByIdAndDelete(req.params.id, function (err, user) {
-    if (err) {
-      console.log(err)
-      res.sendStatus(400)
-    }
-    else {
-      console.log("Deleted : ", user);
-      res.sendStatus(200)
-    }
-  });
+router.delete("/:id", async (req, res, next) => {
+
+  try {
+    const user = await User.findByIdAndDelete(req.params.id)
+    res.status(200)
+    res.send(user);
+  } catch(e) {
+    res.send(e)
+  }
+
+  
+  // User.findByIdAndDelete(req.params.id, function (err, user) {
+  //   if (err) {
+  //     console.log(err)
+  //     res.sendStatus(400)
+  //   }
+  //   else {
+  //     console.log("Deleted : ", user);
+  //     res.sendStatus(200)
+  //   }
+  // });
 });
 
 
