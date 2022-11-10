@@ -27,13 +27,14 @@ const router = express.Router();
 
 // GET
 // /users
-router.get("/", (req, res) => {
-  User.find().sort('name').exec(function (err, users) {
-    if (err) {
-      return next(err);
-    }
+router.get("/", async (req, res, next) => {
+  try {
+    const users = await User.find({})
+    res.status(200)
     res.send(users);
-  });
+  } catch(e) {
+    res.send(e)
+  }
 });
 
 //  GET 
@@ -68,6 +69,7 @@ router.post("/", (req, res) => {
   // if (!newUser.id || !newUser.name || !newUser.email) {
   //   return res.sendStatus(400);
   // }
+  return res.sendStatus(200)
 });
 
 //  PUT 
