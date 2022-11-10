@@ -39,37 +39,57 @@ router.get("/", async (req, res, next) => {
 
 //  GET 
 // /users/:id
-router.get("/:id", (req, res) => {
-  //finds user by ID
-  User.findById(req.params.id, function (err, user) {
-    //return erreur si pas trouvé
-    if (err) return res.sendStatus(404)
-    return res.json(user)
-  });
+router.get("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+    res.status(200)
+    res.send(user);
+  } catch(e) {
+    res.send(e)
+  }
+  // //finds user by ID
+  // User.findById(req.params.id, function (err, user) {
+  //   //return erreur si pas trouvé
+  //   if (err) return res.sendStatus(404)
+  //   return res.json(user)
+  // });
 });
 
 //  POST 
 // /users
-router.post("/", (req, res) => {
-  // id: uuid.v4(),
-  const newUser = new User({
-    id: req.body.id,
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password
-  })
-  newUser
-    .save()
-    .then(
-      () => console.log("One entry added"),
-      (err) => console.log(err),
-      res.sendStatus(200)
-    );
+router.post("/", async (req, res, next) => {
 
-  // if (!newUser.id || !newUser.name || !newUser.email) {
-  //   return res.sendStatus(400);
-  // }
-  return res.sendStatus(200)
+  try {
+    const newUser = await new User({
+      id: req.body.id,
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    })
+    .save()
+    res.status(200)
+    res.send(newUser);
+  } catch(e) {
+    res.send(e)
+  }
+
+
+
+  
+  // id: uuid.v4(),
+
+  // newUser
+  //   .save()
+  //   .then(
+  //     () => console.log("One entry added"),
+  //     (err) => console.log(err),
+  //     res.sendStatus(200)
+  //   );
+
+  // // if (!newUser.id || !newUser.name || !newUser.email) {
+  // //   return res.sendStatus(400);
+  // // }
+  // return res.sendStatus(200)
 });
 
 //  PUT 
