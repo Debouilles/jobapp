@@ -51,14 +51,15 @@ router.get("/:id",async (req, res, next) => {
 // /services
 // NOTE: ID doit être un user
 router.post("/", async (req, res, next) => {
-    //check si l'utilisateur existe
+    //A FAIRE !! check si l'utilisateur existe!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     try {
       const newService = await new Service({
-        id: req.body.id,
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
+                titre: req.body.titre,
+                type: req.body.type,
+                date: req.body.date,
+                provider: result._id,
+                location: req.body.location,
       })
       .save()
       res.status(200)
@@ -104,40 +105,58 @@ router.post("/", async (req, res, next) => {
 
 //DELETE
 // /services/:id
-router.delete("/:id", (req, res) => {
-    Service.findByIdAndDelete(req.params.id, function (err, service) {
-      if (err) {
-        console.log(err)
-        res.sendStatus(400)
-      }
-      else {
-        console.log("Deleted : ", service);
-        res.sendStatus(200)
-      }
-    });
+router.delete("/:id", async (req, res) => {
+
+  try {
+    const service = await Service.findByIdAndDelete(req.params.id)
+    res.status(200)
+    res.send(service);
+  } catch(e) {
+    res.send(e)
+  }
+
+
+
+  
+    // Service.findByIdAndDelete(req.params.id, function (err, service) {
+    //   if (err) {
+    //     console.log(err)
+    //     res.sendStatus(400)
+    //   }
+    //   else {
+    //     console.log("Deleted : ", service);
+    //     res.sendStatus(200)
+    //   }
+    // });
   });
 
 //  PUT 
 // /services/:id
-router.put("/:id", (req, res) => {
-    let theObject = {}
-    if (req.body.titre) {
-      theObject.titre = req.body.titre
-    }
-    if (req.body.type) {
-      theObject.type = req.body.type
-    }
-    console.log(theObject)
+router.put("/:id", async (req, res) => {
+  let modif = req.body
+  try {
+   await Service.findByIdAndUpdate(req.params.id, modif)
+  } catch(e) {
+    res.send(e)
+  }
+    // let theObject = {}
+    // if (req.body.titre) {
+    //   theObject.titre = req.body.titre
+    // }
+    // if (req.body.type) {
+    //   theObject.type = req.body.type
+    // }
+    // console.log(theObject)
   
-    Service.findByIdAndUpdate(req.params.id, theObject, function (err, service) {
-      if (err) {
-        console.log(err)
-        res.sendStatus(400);
-      }
-      else {
-        res.sendStatus(200);
-      }
-    });
+    // Service.findByIdAndUpdate(req.params.id, theObject, function (err, service) {
+    //   if (err) {
+    //     console.log(err)
+    //     res.sendStatus(400);
+    //   }
+    //   else {
+    //     res.sendStatus(200);
+    //   }
+    // });
   
   });
 
