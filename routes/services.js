@@ -9,6 +9,15 @@ const router = express.Router();
 
 
 router.get("/", (req, res) => {
+
+
+
+
+
+
+  
+
+  
     Service.find().sort('name').exec(function (err, services) {
         if (err) {
             return next(err);
