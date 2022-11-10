@@ -68,7 +68,6 @@ router.post("/", (req, res) => {
   // if (!newUser.id || !newUser.name || !newUser.email) {
   //   return res.sendStatus(400);
   // }
-  return res.sendStatus(200)
 });
 
 //  PUT 
