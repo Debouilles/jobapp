@@ -12,7 +12,7 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
 
   try {
-    const services = await Service.find({})
+    const services = await Service.find({}).populate('provider')
     if(services === null){
       res.send(404)
      } else{
@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
      }
 
   } catch(e) {
-    res.send(e)
+    next(e)
   }
 });
 
@@ -43,10 +43,13 @@ router.get("/:id",async (req, res, next) => {
       if(theService === null){
              console.log('No results found');
            //correct de la throw ici si null? --------------------------------------------------????
+           //car vu que pas d'erreur je peux pas envoyer à next()
           res.status(404)
+      } else{
+        await theService.populate('provider')
+        res.send(theService);
       }
-      await theService.populate('provider')
-      res.send(theService);
+
       
     } catch(e) {
       // res.send(e)

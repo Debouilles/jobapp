@@ -2,18 +2,21 @@ import { Schema, model } from "mongoose"
 import mongoose from "mongoose";
 let rdvSchema = new Schema({
   //RDV ID pour plus tard
-  RDV_ID: {
-    type: Number,
-    required: [true, 'You must provide an ID']
+  relatedService: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'service',
+    required: [true, 'You must provide a Service']
   },
   provider: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: [true, 'You must provide a provider user']
   },
   reciever:
   {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: [true, 'You must provide a reciever user']
   },
   isAccepted: {
     type: Boolean,
