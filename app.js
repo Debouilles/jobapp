@@ -34,20 +34,24 @@ app.use("/services", servicesRouter);
 app.use("/rdvs", rdvsRouter);
 
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
+// // catch 404 and forward to error handler
+// app.use(function (req, res, next) {
+//   next(createError(404));
+// });
 
-// error handler
+// error handler--------------------------------
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // Send the error status
+  //ici gestion de l'ID not found------
+  if(err.kind == 'ObjectId' && !err.status){
+    err.status = 404;
+    // err.message = "This ressource doesn't exist"
+  }
   res.status(err.status || 500);
-  res.send(err.message);
+  // Send the error status
+  res.send(err.message); //QUESTION !! Ici remplacer le message d'erreur?
 });
 
 //MON CODE-----------------------

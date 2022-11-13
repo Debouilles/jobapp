@@ -30,10 +30,10 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.find({})
+    res.send(users)
     res.status(200)
-    res.send(users);
   } catch(e) {
-    res.send(e)
+    next(e)
   }
 });
 
@@ -42,10 +42,12 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   try {
     const user = await User.findById(req.params.id)
+    console.log(user)
     res.status(200)
     res.send(user);
   } catch(e) {
-    res.send(e)
+    // res.send(e)
+    next(e)
   }
   // //finds user by ID
   // User.findById(req.params.id, function (err, user) {
@@ -57,6 +59,7 @@ router.get("/:id", async (req, res, next) => {
 
 //  POST 
 // /users
+//Arrenger l'erreur que donne l'email a double
 router.post("/", async (req, res, next) => {
 
   try {
