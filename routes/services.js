@@ -32,14 +32,22 @@ router.get("/", async (req, res, next) => {
 router.get("/:id",async (req, res, next) => {
     //finds user by ID
     try {
-      const theService = Service.findById(req.params.id, function (err, service) {
-        if(service === null) {
-           console.log('No results found');
+      // const theService = await Service.findById(req.params.id, function (err, service) {
+      //   if(service === null) {
+      //      console.log('No results found');
+      //      //correct de la throw ici si null? --------------------------------------------------????
+      //     res.status(404)
+      //   }
+      // })
+      const theService = await Service.findById(req.params.id)
+      if(theService === null){
+             console.log('No results found');
            //correct de la throw ici si null? --------------------------------------------------????
           res.status(404)
-        }
-        res.send(service)
-      });
+      }
+      await theService.populate('provider')
+      res.send(theService);
+      
     } catch(e) {
       // res.send(e)
       next(e)

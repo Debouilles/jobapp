@@ -10,7 +10,7 @@ let userSchema = new Schema({
   email: {
     type: Schema.Types.String,
     required: [true, 'Email address is required'],
-    unique: true
+    unique: [true, 'This Email is already taken']
   },
   password: {
     type: Schema.Types.String,

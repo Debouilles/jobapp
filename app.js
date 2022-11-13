@@ -49,24 +49,14 @@ app.use(function (err, req, res, next) {
     err.status = 404;
     // err.message = "This ressource doesn't exist"
   }
+
+  //Correct de faire ça ? ??????????????????????????????????????-----------------------------
+  if(err.code == 11000){
+    console.log("mail deja utilisé")
+  }
   res.status(err.status || 500);
   // Send the error status
   res.send(err.message); //QUESTION !! Ici remplacer le message d'erreur?
 });
-
-//MON CODE-----------------------
-
-//note: en local pour test (URI dans .env)
-//a faire: mongoDB on cloud
-
-
-
-// mongoose.connect(
-//   process.env.MONGODB_URI, 
-//   {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true
-//   }
-// );
 
 export default app;

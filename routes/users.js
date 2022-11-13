@@ -32,7 +32,7 @@ router.get("/", async (req, res, next) => {
     const users = await User.find({})
     res.send(users)
     res.status(200)
-  } catch(e) {
+  } catch (e) {
     next(e)
   }
 });
@@ -45,16 +45,10 @@ router.get("/:id", async (req, res, next) => {
     console.log(user)
     res.status(200)
     res.send(user);
-  } catch(e) {
+  } catch (e) {
     // res.send(e)
     next(e)
   }
-  // //finds user by ID
-  // User.findById(req.params.id, function (err, user) {
-  //   //return erreur si pas trouvé
-  //   if (err) return res.sendStatus(404)
-  //   return res.json(user)
-  // });
 });
 
 //  POST 
@@ -64,44 +58,26 @@ router.post("/", async (req, res, next) => {
 
   try {
     const newUser = await new User({
-      id: req.body.id,
       name: req.body.name,
       email: req.body.email,
       password: req.body.password
     })
-    .save()
+      .save()
     res.status(200)
     res.send(newUser);
-  } catch(e) {
-    res.send(e)
+  } catch (e) {
+    // res.send(e)
+    next(e)
   }
-
-
-
-  
-  // id: uuid.v4(),
-
-  // newUser
-  //   .save()
-  //   .then(
-  //     () => console.log("One entry added"),
-  //     (err) => console.log(err),
-  //     res.sendStatus(200)
-  //   );
-
-  // // if (!newUser.id || !newUser.name || !newUser.email) {
-  // //   return res.sendStatus(400);
-  // // }
-  // return res.sendStatus(200)
 });
 
 //  PUT 
 // /users/:id
-router.put("/:id", async (req, res,next) => {
+router.put("/:id", async (req, res, next) => {
   let modif = req.body
   try {
-   await User.findByIdAndUpdate(req.params.id, modif)
-  } catch(e) {
+    await User.findByIdAndUpdate(req.params.id, modif)
+  } catch (e) {
     res.send(e)
   }
 
@@ -135,11 +111,11 @@ router.delete("/:id", async (req, res, next) => {
     const user = await User.findByIdAndDelete(req.params.id)
     res.status(200)
     res.send(user);
-  } catch(e) {
+  } catch (e) {
     res.send(e)
   }
 
-  
+
   // User.findByIdAndDelete(req.params.id, function (err, user) {
   //   if (err) {
   //     console.log(err)
