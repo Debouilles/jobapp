@@ -7,6 +7,11 @@ import rdvsRouter from "./routes/rdvs.js";
 import servicesRouter from "./routes/services.js";
 import loginRouter from "./routes/login.js";
 
+//openapi
+import fs from 'fs';
+import yaml from 'js-yaml';
+import swaggerUi from 'swagger-ui-express';
+
 import mongoose from "mongoose";
 
 // const mongoose = require("mongoose");
@@ -25,6 +30,12 @@ mongoose.connect(
 
 
 const app = express();
+
+// Parse the openapi document.
+const openApiDocument = yaml.load(fs.readFileSync('./openapi.yml'));
+// Serve the Swagger UI documentation.
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
+
 
 app.use(logger("dev"));
 app.use(express.json());
