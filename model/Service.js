@@ -22,6 +22,10 @@ let serviceSchema = new Schema({
       type: mongoose.ObjectId,
       ref: 'User'
     },
+    picture:
+    {
+      type: String,
+    },
     location:
 {    type: {
         type: String,

@@ -137,6 +137,7 @@ router.post("/", async (req, res, next) => {
       type: req.body.type,
       date: req.body.date,
       provider: result,
+      picture: req.body.picture,
       location: req.body.location,
     })
       .save()
