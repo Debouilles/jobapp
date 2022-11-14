@@ -2,6 +2,8 @@ import express from "express";
 import { RDV } from "../model/Rdv.js";
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
+import { broadcastMessage } from '../messaging.js';
+
 const router = express.Router();
 
 //GET
@@ -56,6 +58,9 @@ router.post("/", async (req, res, next) => {
     await newRdv.save()
     res.status(200)
     res.send(newRdv);
+
+    broadcastMessage({ hello: 'world' });
+
   } catch (e) {
     // res.send(e)
     next(e)
