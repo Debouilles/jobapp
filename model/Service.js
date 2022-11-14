@@ -17,7 +17,7 @@ let serviceSchema = new Schema({
     provider:
     {
       type: mongoose.ObjectId,
-      ref: 'user'
+      ref: 'User'
     },
     location:
 {    type: {

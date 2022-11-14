@@ -16,9 +16,15 @@ router.get("/", async (req, res, next) => {
     if (services === null) {
       res.send(404)
     } else {
-      if(req.query){
+      if (req.query) {
         console.log(req.query)
-
+        // Filter movies by director
+        if (req.query.type){
+          let query = await Service.where('type').equals(req.query.type);
+          res.send(query)
+          res.status(200)
+          return
+        }
       }
       res.status(200)
       res.send(services);
@@ -122,7 +128,7 @@ router.post("/", async (req, res, next) => {
 
   try {
     const result = await User.findOne({ _id: req.body.provider }).select("_id").lean()
-    if (result === null){
+    if (result === null) {
       res.status(404).send('The user doesn\'t exists')
       return
     }
