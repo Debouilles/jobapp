@@ -7,7 +7,7 @@ const router = express.Router();
 const secretKey = process.env.SECRET_KEY || "changeme";
 
 
-function authenticate(req, res, next) {
+export function authenticate(req, res, next) {
     // Ensure the header is present.
     const authorization = req.get("Authorization");
     if (!authorization) {

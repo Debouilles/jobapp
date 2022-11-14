@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 // import { v4 as uuid } from 'uuid';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { authenticate } from "./login.js";
 
 
 //liste des users
@@ -28,7 +29,7 @@ const router = express.Router();
 
 // GET
 // /users
-router.get("/", (req, res) => { //authenticate
+router.get("/", authenticate, (req, res) => { //authenticate
   const currentUserId = req.currentUserId;
   User.find().sort('name').exec(function (err, users) {
     if (err) {
