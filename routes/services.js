@@ -152,11 +152,6 @@ router.post("/", async (req, res, next) => {
   //A FAIRE !! check si l'utilisateur existe!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   try {
-    const result = await User.findOne({ _id: req.body.provider }).select("_id").lean()
-    if (result === null) {
-      res.status(404).send('The user doesn\'t exists')
-      return
-    }
     const newService = await new Service({
       titre: req.body.titre,
       type: req.body.type,
