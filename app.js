@@ -50,16 +50,20 @@ app.use(function (err, req, res, next) {
     res.status(404)
     res.send(err.message)
     // err.message = "This ressource doesn't exist"
+    return;
   }
 
-  //Correct de faire ça ? -----------------------------??????????????????????????????????????
-  if(err.code == 11000){
-    //faire un try catch ici !!!
-    console.log("mail deja utilisé")
+  if(err.name == 'ValidationError'){
+    res.status(400)
+    res.send(err.message)
+    // err.message = "This ressource doesn't exist"
+    return;
   }
+  
   res.status(err.status || 500);
   // Send the error status
   res.send(err.message); //QUESTION !! Ici remplacer le message d'erreur?
+  
 });
 
 export default app;

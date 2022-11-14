@@ -12,7 +12,16 @@ let userSchema = new Schema({
   email: {
     type: String,
     required: [true, 'Email address is required'],
-    unique: [true, 'This Email is already taken']
+    unique: [true, 'This Email is already taken'],
+    validate:
+    // Manually validate uniqueness to send a "pretty" validation error
+    // rather than a MongoDB duplicate key error
+    [
+      {
+        validator: validateUserEmailUniqueness,
+        message: 'Email {VALUE} already exists'
+      }
+    ]
   },
   password: {
     type: String,
@@ -29,6 +38,21 @@ function transformJsonUser(doc, json, options) {
  delete json.password;
  delete json.__v;
  return json;
+}
+
+/**
+ * Given a name, calls the callback function with true if no person exists with that name
+ * (or the only person that exists is the same as the person being validated).
+ */
+ function validateUserEmailUniqueness(value) {
+  return this.constructor
+    .findOne()
+    .where('email')
+    .equals(value)
+    .exec()
+    .then(existingPerson => {
+      return !existingPerson || existingPerson._id.equals(this._id);
+    });
 }
 
 //For external ids !! 
