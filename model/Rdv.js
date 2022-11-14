@@ -25,7 +25,7 @@ let rdvSchema = new Schema({
   }
 });
 
-serviceSchema.set("toJSON", {
+rdvSchema.set("toJSON", {
   transform: transformJsonRdv
 });
 
