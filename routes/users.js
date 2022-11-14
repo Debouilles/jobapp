@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { authenticate } from "./login.js";
 
-
 //liste des users
 // import{ users } from '../Users.js';
 
@@ -29,15 +28,15 @@ const router = express.Router();
 
 // GET
 // /users
-router.get("/", authenticate, (req, res) => { //authenticate
-  const currentUserId = req.currentUserId;
-  User.find().sort('name').exec(function (err, users) {
-    if (err) {
-      return next(err);
-    }
-    res.send(users);
-  });
-});
+// router.get("/", (req, res) => { //authenticate
+//   const currentUserId = req.currentUserId;
+//   User.find().sort('name').exec(function (err, users) {
+//     if (err) {
+//       return next(err);
+//     }
+//     res.send(users);
+//   });
+// });
 
 router.get("/", async (req, res, next) => {
   try {
