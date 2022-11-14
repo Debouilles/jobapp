@@ -35,12 +35,12 @@ router.get("/", async (req, res, next) => {
 // /rdvs
 router.post("/", async (req, res, next) => {
   try {
-    const theService = await Service.findOne({ _id: req.body.relatedService }).lean()
+    const theService = await Service.findOne({ _id: req.body.relatedService })
     // console.log(theService)
-    const resultService = await Service.findOne({ _id: theService._id }).select("_id").lean();
-    const resultProvider = await Service.findOne({ _id: theService._id }).select("provider").lean();
+    const resultService = theService._id;
+    const resultProvider =  theService.provider;
     // const resultProvider = await User.findOne({ _id: req.body.provider }).select("_id").lean()
-    const resultReciever = await User.findOne({ _id: req.body.reciever }).select("_id").lean()
+    const resultReciever = await User.findOne({ _id: req.body.reciever }).select("_id")
     if (resultReciever._id.equals(resultProvider.provider)) {
       res.status(400).send('The provider and the reciever can\'t be the same person')//bonne erreur????
       return
@@ -48,7 +48,7 @@ router.post("/", async (req, res, next) => {
     //note: provider pris automatiquement du service
     const newRdv = new RDV({
       relatedService: resultService,
-      provider: resultProvider.provider,
+      provider: resultProvider,
       reciever: resultReciever,
       isAccepted: req.body.isAccepted
     })

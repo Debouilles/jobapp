@@ -40,6 +40,7 @@ app.use("/login", loginRouter);
 
 // error handler---------------------------------------------------------------------------------
 app.use(function (err, req, res, next) {
+  console.warn(err.stack);
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
