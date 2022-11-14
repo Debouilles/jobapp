@@ -5,8 +5,10 @@ import indexRouter from "./routes/index.js";
 import usersRouter from "./routes/users.js";
 import rdvsRouter from "./routes/rdvs.js";
 import servicesRouter from "./routes/services.js";
+import loginRouter from "./routes/login.js";
 
 import mongoose from "mongoose";
+
 // const mongoose = require("mongoose");
 // import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 
@@ -32,6 +34,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/services", servicesRouter);
 app.use("/rdvs", rdvsRouter);
+app.use("/login", loginRouter);
 
 
 // // catch 404 and forward to error handler

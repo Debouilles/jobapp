@@ -18,6 +18,15 @@ let userSchema = new Schema({
   }
 });
 
+userSchema.set("toJSON", {
+  transform: transformJsonUser
+});
+function transformJsonUser(doc, json, options) {
+ // Remove the hashed password from the generated JSON.
+ delete json.password;
+ return json;
+}
+
 //For external ids !! 
 //https://stackoverflow.com/questions/18001478/referencing-another-schema-in-mongoose
 

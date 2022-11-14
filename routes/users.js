@@ -1,7 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
-// const express = require("express");
-// const uuid = require("uuid");
+// import { v4 as uuid } from 'uuid';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 
 //liste des users
@@ -27,6 +28,16 @@ const router = express.Router();
 
 // GET
 // /users
+router.get("/", (req, res) => { //authenticate
+  const currentUserId = req.currentUserId;
+  User.find().sort('name').exec(function (err, users) {
+    if (err) {
+      return next(err);
+    }
+    res.send(users);
+  });
+});
+
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.find({})
@@ -36,6 +47,9 @@ router.get("/", async (req, res, next) => {
     next(e)
   }
 });
+
+
+
 
 //  GET 
 // /users/:id
@@ -54,21 +68,39 @@ router.get("/:id", async (req, res, next) => {
 //  POST 
 // /users
 //Arrenger l'erreur que donne l'email a double
-router.post("/", async (req, res, next) => {
+// router.post("/", async (req, res, next) => {
 
-  try {
-    const newUser = await new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
-    })
-      .save()
-    res.status(200)
-    res.send(newUser);
-  } catch (e) {
-    // res.send(e)
-    next(e)
-  }
+//   try {
+//     const newUser = await new User({
+//       name: req.body.name,
+//       email: req.body.email,
+//       password: req.body.password
+//     })
+//       .save()
+//     res.status(200)
+//     res.send(newUser);
+//   } catch (e) {
+//     // res.send(e)
+//     next(e)
+//   }
+// });
+
+router.post("/", function (req, res, next) {
+  const plainPassword = req.body.password;
+  const costFactor = 10;
+  bcrypt.hash(plainPassword, costFactor, function (err, hashedPassword) {
+    if (err) {
+      return next(err);
+    }
+    const newUser = new User(req.body);
+    newUser.password = hashedPassword;
+    newUser.save(function (err, savedUser) {
+      if (err) {
+        return next(err);
+      }
+      res.send(savedUser);
+    });
+  });
 });
 
 //  PUT 
