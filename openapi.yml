@@ -1,0 +1,514 @@
+openapi: 3.0.3
+info:
+  version: "1.0.0"
+  title: "jobapp - OpenAPI"
+  description: "API for jobapp"
+  tags:
+  - name: auth
+    description: toutes les infos sur le login
+  - name: rdvs
+    description: toutes les infos sur les rdvs
+  - name: services
+    description: toutes les infos sur les services proposés
+  - name: users
+    description: toutes les infos sur nos utilisateurs
+  - name: login
+    description: permet à l'utilisateur de se connecter
+
+paths:
+######## LOGIN
+  /login/:
+    post:
+      tags:
+      - login
+
+######## RDVS
+  /rdvs/:
+    get:
+      tags: 
+      - rdvs
+      summary: Chercher tous les rdvs
+      description: Un rdv est créé quand un user provider propose un service et un user reciever valide le service. Créant ainsi un rdv unique identifiable avec son id
+      operationId: GetRdvs
+      parameters:
+      - $ref: '#/components/parameters/relatedService'
+      - $ref: '#/components/parameters/provider'
+      - $ref: '#/components/parameters/reciever'
+      - $ref: '#/components/parameters/isAccepted'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  relatedService :
+                    $ref: '#/components/schemas/relatedService'
+                  provider:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  reciever:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  isAccepted:
+                    title: isAccepted
+                    type: boolean
+                    example: true
+      example:
+        '400':
+          description: if resultReciever._id.equals(resultProvider.provider)
+          content:
+            text/plain:
+              schema:
+                title: conflit users
+                type: string
+                example: The provider and the reciever can't be the same person
+        '404':
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Users not found
+                type: string
+                example: Not found
+    post:
+      tags: 
+      - rdvs
+      summary: Ajouter un nouveau rdv 
+      description: ça ajoute un nouveau rdv quand le user reciever accepte un service
+      operationId: addRdv
+      requestBody:
+        description: Ajouter un nouveau rdv
+        content:
+          application/json:
+            schema:
+              properties:
+                  relatedService :
+                    $ref: '#/components/schemas/relatedService'
+                  provider:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  reciever:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  isAccepted:
+                    title: isAccepted
+                    type: boolean
+                    example: true
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/name'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/name'
+        '405':
+          description: Invalid input
+
+######## SERVICES
+  /services/:
+    get:
+      tags:
+      - services
+      summary: Chercher tous les services
+      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
+      operationId: GetServices
+      parameters:
+      - $ref: '#/components/parameters/location'
+      - $ref: '#/components/parameters/_id_header'
+      - $ref: '#/components/parameters/titre'
+      - $ref: '#/components/parameters/type'
+      - $ref: '#/components/parameters/date'
+      - $ref: '#/components/parameters/provider'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  location:
+                    $ref: '#/components/schemas/location'
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  titre:
+                    $ref: '#/components/schemas/titre'
+                  type:
+                    $ref: '#/components/schemas/type'
+                  date:
+                    $ref: '#/components/schemas/date'
+                  provider:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+        '404':
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Users not found
+                type: string
+                example: Not found
+    post:
+      tags:
+      - services
+      summary: Ajouter un nouveau service 
+      description: Un user ajoute un nouveau service en indicant la date(+heure), l'endroit, un titre et le type de service.
+      operationId: addService
+      requestBody:
+        description: Ajouter un nouveau service
+        content:
+          application/json:
+            schema:
+              properties:
+                  relatedService :
+                    $ref: '#/components/schemas/relatedService'
+                  provider:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  reciever:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  isAccepted:
+                    title: isAccepted
+                    type: boolean
+                    example: true
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/name'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/name'
+        '405':
+          description: Invalid input
+  /services/{id}:
+    get:
+      tags:
+      - services
+      summary: Chercher un service en utilisant son id
+      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
+      operationId: GetServiceId
+      parameters:
+        name:
+        in:
+        description:
+        required: true
+        schema:
+          type:
+          default:
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '/model/schemas/Rdv'          
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '/component/schemas/Rdv'
+        '400':
+          description: Invalid status value
+    delete:
+      tags:
+      - services
+      summary: Delete un service
+      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
+      operationId: DeleteService
+    put:
+      tags:
+      - services
+      summary: Update un service
+      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
+      operationId: GetServices
+
+######## USERS
+  /users/:
+    get:
+      tags:
+      - users
+      summary: Chercher tous les utilisateurs
+      description: #Ici on trouve tous les utilisateurs avec leur identifiant unique, un nom, un email, et le mot de passe hashé
+      operationId: GetUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: array
+                properties:
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  name:
+                    $ref: '#/components/schemas/name'
+                  email:
+                    $ref: '#/components/schemas/email'
+                  password:
+                    $ref: '#/components/schemas/password'
+        '404':
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Users not found
+                type: string
+                example: Not found
+    post:
+      tags:
+      - users
+      summary: Ajouter un nouveau service
+      description: #Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
+      operationId: GetServices
+
+  /users/{_id}:
+    get:
+      tags:
+      - users
+      summary: Trouver un user avec son id
+      description: Trouver un user avec son id
+      operationId: FindUserId
+      parameters:
+        - $ref: '#/components/parameters/_id_path'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  name:
+                    $ref: '#/components/schemas/name'
+                  email:
+                    $ref: '#/components/schemas/email'
+                  password:
+                    $ref: '#/components/schemas/password'
+        '404':
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Users not found
+                type: string
+                example: Not found
+    put:
+      tags:
+      - users
+      summary: Update un user
+      description: 
+      operationId: PutUser
+    delete:
+      tags:
+      - users
+      summary: Delete un user
+      description: Delete un user
+      operationId: DeleteUser
+    
+######## components
+components:
+  parameters:
+    _id_header:
+      name: _id
+      in: header #header, path, query, cookie
+      description: L'identifiant unique
+      required: false
+      schema:
+        type: string
+    _id_path:
+      name: _id
+      in: path #header, path, query, cookie
+      description: L'identifiant unique
+      required: false
+      schema:
+        type: string
+    name:
+      name: name
+      in: header #header, path, query, cookie
+      description: Nom de l'utilisateur
+      required: false
+      schema:
+        type: string
+    email:
+      name: email
+      in: header #header, path, query, cookie
+      description: Email de l'utilisateur
+      required: false
+      schema:
+        type: string
+    password:
+      name: password
+      in: header #header, path, query, cookie
+      description: L'identifiant unique de l'utilisateur
+      required: false
+      schema:
+        type: string
+        #qqch de spécial ici?
+    location:
+      name: location
+      in: header 
+      description: La localisation du service. Elle est définie par des coordonnées [x, y]
+      required: true
+      schema:
+        type: Point
+    titre:
+      name: titre
+      in: header 
+      description: Le titre du service que l'user provider peut choisir librement
+      required: true
+      schema:
+        type: String
+    type:
+      name: type
+      in: header 
+      description: C'est la catégorie du service
+      required: true
+      schema:
+        type: String
+        enum: ['Assistance', 'Promenade', 'Jardinage', 'Prêt']
+    date:
+      name: date
+      in: header 
+      description: La date que le service doit être accompli (choisi par le user provider)
+      required: true
+      schema:
+        type: date
+    reciever:
+      name: reciever
+      in: header
+      description: L'user reciever (ne peut pas être égal au user provider)
+      required: true
+      schema:
+        type: string
+    provider:
+      name: provider
+      in: header 
+      description: L'user provider
+      required: true
+      schema:
+        type: string
+    relatedService:
+      name: relatedService
+      in: header 
+      description: Le service lié au rdv
+      required: true
+      schema:
+        type: string
+    isAccepted:
+      name: isAccepted
+      in: header 
+      description: il passe au true quand l'user reciever accepte le rdv
+      required: true
+      schema:
+        type: boolean
+  schemas:
+    user_id:
+      title: _id
+      type: string
+      example: 636cc80cc2f4409e44b1ccf3
+    name:
+      title: name
+      type: string
+      example: Taya Licorne
+    email:
+      title: email
+      type: string
+      example: taya@arcenciel.ch
+    password:
+      title: password
+      type: string
+      example: '1234'
+    location:
+      title: location
+      type: object
+      example:
+        type:
+          Point
+        coordinates:
+        - '-73.856077'
+        - '40.848447'
+    titre:
+      title: titre
+      type: string
+      example: '3 chiens à balader'
+    type:
+      title: titre
+      type: string
+      description: Groupe de types pour les services ('Assistance', 'Promenade', 'Jardinage', 'Prêt', 'Autres')
+      example: Promenade
+    date:
+      title: titre
+      type: date
+      example: '2022-12-04T00:00:00.000Z'
+    relatedService:
+      title: relatedService
+      type: string
+      example: je dois revoir ce truc, parce que normalement c'est un objet
