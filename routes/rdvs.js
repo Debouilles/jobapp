@@ -42,7 +42,6 @@ router.post("/", async (req, res, next) => {
     if (resultReciever._id.equals(resultProvider.provider)) {
       res.status(400).send('The provider and the reciever can\'t be the same person')//bonne erreur????
       return
-      // !!---- ICI FAIT UNE ERREUR CHELOU SI Y A LES MEME ID, mais empeche l'ecriture quand même !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     }
     //note: provider pris automatiquement du service
     const newRdv = new RDV({
