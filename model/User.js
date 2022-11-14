@@ -4,16 +4,16 @@ import { Schema, model } from "mongoose"
 
 let userSchema = new Schema({
   name: {
-    type: Schema.Types.String,
+    type: String,
     required: [true, 'You must provide a name']
   },
   email: {
-    type: Schema.Types.String,
+    type: String,
     required: [true, 'Email address is required'],
     unique: [true, 'This Email is already taken']
   },
   password: {
-    type: Schema.Types.String,
+    type: String,
     required: [true, 'You must provide a password']
   }
 });

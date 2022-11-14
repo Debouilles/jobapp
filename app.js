@@ -37,24 +37,24 @@ app.use("/rdvs", rdvsRouter);
 app.use("/login", loginRouter);
 
 
-// // catch 404 and forward to error handler
-// app.use(function (req, res, next) {
-//   next(createError(404));
-// });
 
-// error handler--------------------------------
+// error handler---------------------------------------------------------------------------------
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-  //ici gestion de l'ID not found------
+
+  //ici gestion de l'ID not found---------------------------------??????????????????????????????????????
   if(err.kind == 'ObjectId' && !err.status){
-    err.status = 404;
+    // err.status = 404;
+    res.status(404)
+    res.send(err.message)
     // err.message = "This ressource doesn't exist"
   }
 
-  //Correct de faire ça ? ??????????????????????????????????????-----------------------------
+  //Correct de faire ça ? -----------------------------??????????????????????????????????????
   if(err.code == 11000){
+    //faire un try catch ici !!!
     console.log("mail deja utilisé")
   }
   res.status(err.status || 500);
