@@ -36,6 +36,11 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const theService = await Service.findOne({ _id: req.body.relatedService })
+    if(!theService){
+      let error = new Error("This id doesn't exists")
+      // error.type = 
+      throw error;
+    }
     // console.log(theService)
     const resultService = theService._id;
     const resultProvider =  theService.provider;

@@ -17,6 +17,7 @@ export function createWebSocketServer(httpServer) {
 
     // Keep track of clients.
     clients.push(ws);
+    ws.send('hello')
 
     // Listen for messages sent by clients.
     ws.on('message', (message) => {
