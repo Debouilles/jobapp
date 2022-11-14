@@ -12,16 +12,35 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
 
   try {
-    let services = await Service.find()
+    let query = Service.find();
+    //let services = await Service.find()
     // .populate('provider')
-    if (services === null) {
-      res.send(404)
-    } else {
+    // if (services === null) {
+    //   res.send(404)
+    // } else {
       if (req.query.type) {
         console.log(req.query.type)
         // services =  services.where('type').equals(req.query.type)
-        services = await Service.find().where('type').equals(req.query.type)
-        console.log(services)
+        //services = await Service.find().where('type').equals(req.query.type)
+        query = query.where('type').equals(req.query.type)
+
+        //console.log(services)
+
+      }
+        const maxPage = 10 //Max elements per page
+        let page = parseInt(req.query.page, 10);
+        if (isNaN(page) || page < 1) {
+          page = 1
+        }
+      
+        let pageSize = parseInt(req.query.pageSize, 10);
+        console.log('page size', pageSize);
+        if (isNaN(pageSize) || pageSize < 0 || pageSize > maxPage) {
+          pageSize = maxPage;
+        }
+        console.log('pagination', page, pageSize);
+      
+        query = query.skip((page - 1) * pageSize).limit(pageSize)
         // Filter movies by director
         // if (req.query.type){
         //   let query = await Service.where('type').equals(req.query.type);
@@ -29,10 +48,12 @@ router.get("/", async (req, res, next) => {
         //   res.status(200)
         //   return
         // }
-      }
-      res.status(200)
-      res.send(services);
-    }
+        const services = await query.sort({date : 1});
+         res.send(services);
+        
+      // res.status(200)
+      // res.send(services);
+    // }
 
   } catch (e) {
     next(e)

@@ -40,7 +40,7 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const users = await User.find({})
+    const users = await User.find({}).sort('name');
     res.send(users)
     res.status(200)
   } catch (e) {
