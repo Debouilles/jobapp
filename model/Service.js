@@ -4,7 +4,9 @@ import mongoose, { Schema, model } from "mongoose";
 let serviceSchema = new Schema({
     titre: {
         type: String,
-        required: [true, 'You must provide an ID']
+        required: [true, 'You must provide an ID'],
+        minlength: 3,
+        maxlength: 30
     },
     type: {
         type: String,
