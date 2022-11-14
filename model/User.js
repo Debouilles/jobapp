@@ -5,7 +5,9 @@ import { Schema, model } from "mongoose"
 let userSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'You must provide a name']
+    required: [true, 'You must provide a name'],
+    minlength: 3,
+    maxlength: 30
   },
   email: {
     type: String,
@@ -21,6 +23,7 @@ let userSchema = new Schema({
 userSchema.set("toJSON", {
   transform: transformJsonUser
 });
+
 function transformJsonUser(doc, json, options) {
  // Remove the hashed password from the generated JSON.
  delete json.password;

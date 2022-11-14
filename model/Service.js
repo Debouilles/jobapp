@@ -11,7 +11,7 @@ let serviceSchema = new Schema({
     type: {
         type: String,
         required: [true, 'You must provide a type'],
-        enum: ['Assistance', 'Promenade', 'Jardinage', 'Prêt']
+        enum: ['Assistance', 'Promenade', 'Jardinage', 'Prêt', 'Autres']
     },
     date: {
         type: Date,
@@ -40,6 +40,16 @@ let serviceSchema = new Schema({
 
 // Validation GeoJSON------------------------
 serviceSchema.index({ location: '2dsphere' });
+
+serviceSchema.set("toJSON", {
+  transform: transformJsonService
+});
+
+function transformJsonService(doc, json, options) {
+  // Remove the hashed password from the generated JSON.
+  delete json.__v;
+  return json;
+ }
 
 export function validateGeoJsonCoordinates(value) {
   return Array.isArray(value) && value.length >= 2 && value.length <= 3 && isLongitude(value[0]) && isLatitude(value[1]);

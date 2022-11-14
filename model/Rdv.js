@@ -25,6 +25,16 @@ let rdvSchema = new Schema({
   }
 });
 
+serviceSchema.set("toJSON", {
+  transform: transformJsonRdv
+});
+
+function transformJsonRdv(doc, json, options) {
+  // Remove the hashed password from the generated JSON.
+  delete json.__v;
+  return json;
+ }
+
 
 export const RDV = model('RDV', rdvSchema)
 // export const User = mongoose.model('User', userSchema)
