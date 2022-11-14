@@ -2,7 +2,7 @@ import express from "express";
 import { RDV } from "../model/Rdv.js";
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
-import { broadcastMessage } from '../messaging.js';
+import { broadcastMessage } from '../ws.js';
 
 const router = express.Router();
 
