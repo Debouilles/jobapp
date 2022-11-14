@@ -8,7 +8,8 @@ let serviceSchema = new Schema({
     },
     type: {
         type: String,
-        required: [true, 'You must provide a type']
+        required: [true, 'You must provide a type'],
+        enum: ['Assistance', 'Promenade', 'Jardinage', 'Prêt']
     },
     date: {
         type: Date,
