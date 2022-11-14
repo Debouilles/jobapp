@@ -12,19 +12,23 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
 
   try {
-    const services = await Service.find({}).populate('provider')
+    let services = await Service.find()
+    // .populate('provider')
     if (services === null) {
       res.send(404)
     } else {
-      if (req.query) {
-        console.log(req.query)
+      if (req.query.type) {
+        console.log(req.query.type)
+        // services =  services.where('type').equals(req.query.type)
+        services = await Service.find().where('type').equals(req.query.type)
+        console.log(services)
         // Filter movies by director
-        if (req.query.type){
-          let query = await Service.where('type').equals(req.query.type);
-          res.send(query)
-          res.status(200)
-          return
-        }
+        // if (req.query.type){
+        //   let query = await Service.where('type').equals(req.query.type);
+        //   res.send(query)
+        //   res.status(200)
+        //   return
+        // }
       }
       res.status(200)
       res.send(services);
