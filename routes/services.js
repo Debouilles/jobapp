@@ -59,12 +59,10 @@ router.get("/", async (req, res, next) => {
 
     let pageSize = parseInt(req.query.pageSize, 10);
     console.log('page size', pageSize);
-    if (isNaN(pageSize) || pageSize < 0 || pageSize > 100) {
-      pageSize = 100;
+    if (isNaN(pageSize) || pageSize < 0 || pageSize > 10) {
+      pageSize = 10;
     }
     console.log('pagination', page, pageSize);
-
-
 
 
 
@@ -86,8 +84,6 @@ router.get("/", async (req, res, next) => {
     // res.set('Pagination-Page', page);
     // res.set('Pagination-PageSize', pageSize);
     // res.set('Pagination-Total', totalServices);
-
-
 
 
     query = query.skip((page - 1) * pageSize).limit(pageSize)
