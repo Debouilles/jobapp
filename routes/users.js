@@ -20,8 +20,8 @@ const router = express.Router();
 
 //Middlewares------------------------------------------
 
-function failedOperationOnId(res, userID){
-  return res.status(404).type('text').send(userID+' is an invalid ID');
+ function failedOperationOnId(res, userID) {
+  return res.status(404).type('text').send(userID + ' is an invalid ID');
 }
 
 async function loadAll(req, res, next) {
@@ -29,20 +29,32 @@ async function loadAll(req, res, next) {
   res.send(user)
 }
 
-async function loadFromID(req, res, next){
- let theUser = req.params.id;
- if (!ObjectId.isValid(theUser)) {
-  return failedOperationOnId(res, theUser);
+export async function idCheckValidity(id){
+  let theUser = id;
+  if (!ObjectId.isValid(id)) {
+    return failedOperationOnId(res, theUser);
+  }
+  // const user = await User.findById(req.params.id)
+  // if (!user) {
+  //   return failedOperationOnId(res, theUser);
+  // }
+
 }
 
+async function loadFromID(req, res, next) {
+  let theUser = req.params.id;
+  if (!ObjectId.isValid(theUser)) {
+    return failedOperationOnId(res, theUser);
+  }
 
- const user = await User.findById(req.params.id)
- if(!user){
-  return failedOperationOnId(res, theUser);
- }
 
- req.user = user;
- next();
+  const user = await User.findById(req.params.id)
+  if (!user) {
+    return failedOperationOnId(res, theUser);
+  }
+
+  req.user = user;
+  next();
 }
 
 //ROUTES----------------------------------------------------
@@ -87,23 +99,23 @@ router.get("/", loadAll, async (req, res, next) => {
 
 //  GET 
 // /users/:id
-router.get("/:id", loadFromID ,async (req, res, next) => {
+router.get("/:id", loadFromID, async (req, res, next) => {
   try {
 
     User.aggregate([
       {
-        $match:{
+        $match: {
           _id: ObjectId(req.params.id)
-    
+
         }
-        },
+      },
       {
         $lookup: {
           from: 'services',
           localField: '_id',
           foreignField: 'provider',
           as: 'proposedServices'
-        } 
+        }
       },
       {
         $unwind: {
@@ -118,11 +130,11 @@ router.get("/:id", loadFromID ,async (req, res, next) => {
         }
       }
     ], function (err, results) {
-    if(err){
-      next(err)
-    }
-    res.send(results)
-  });
+      if (err) {
+        next(err)
+      }
+      res.send(results)
+    });
   } catch (e) {
     // res.send(e)
     next(e)

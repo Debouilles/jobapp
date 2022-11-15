@@ -3,6 +3,7 @@ import express from "express";
 import { ObjectId } from 'bson';
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
+import { idCheckValidity } from "./users.js";
 
 
 
@@ -117,6 +118,7 @@ router.post("/", async (req, res, next) => {
   //A FAIRE !! check si l'utilisateur existe!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   try {
+    idCheckValidity(req.body.provider)
     const newService = await new Service({
       titre: req.body.titre,
       type: req.body.type,
