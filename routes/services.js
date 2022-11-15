@@ -1,6 +1,5 @@
 import e from "express";
 import express from "express";
-import formatLinkHeader from 'format-link-header';
 import { ObjectId } from 'bson';
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
@@ -71,7 +70,7 @@ router.get("/", async (req, res, next) => {
 
 
     query = query.skip((page - 1) * pageSize).limit(pageSize)
-    const services = await query.sort({ date: 1 });
+    const services = await query.sort({ date: 1 });//sort ascendant par date
     // res.send(services);
     res.send({
       page: page,
