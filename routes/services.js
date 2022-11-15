@@ -1,36 +1,30 @@
 import e from "express";
 import express from "express";
+import formatLinkHeader from 'format-link-header';
 import { ObjectId } from 'bson';
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
 
+
+
+
+
+
+
+
+//Routes---------------------------------------
 const router = express.Router();
 
 
-function treatProviderArrays(request, query) {
-  if (Array.isArray(request)) {
-    const item = query.filter(ObjectId.isValid);
-    //switch ici
-    switch (key) {
-      case value:
 
-        break;
-
-      default:
-        break;
-    }
-    query = query.where('provider').in(users);
-  } else if (ObjectId.isValid(request)) {
-    query = query.where('provider').equals(request);
-  }
-
-}
 
 router.get("/", async (req, res, next) => {
+  const links = {};
+
   try {
     let query = Service.find();
     let users = await User.find();
-    const totalServices = Service.count();
+    const totalServices = await Service.count();
     console.log(req.query)
     //QUERIES-----------------------------------------------------------------------
     //note: switch avec (true) marchait pas.
@@ -45,19 +39,19 @@ router.get("/", async (req, res, next) => {
       }
     }
     //Type-------------------------------
-    if(req.query.type){ 
-        //!!!! Marche pas si accent !!!!
-        query = query.where('type').equals(req.query.type)
+    if (req.query.type) {
+      //!!!! Marche pas si accent !!!!
+      query = query.where('type').equals(req.query.type)
     }
     //Date------------------------------
-    if(req.query.date){ 
+    if (req.query.date) {
       //!!!! Marche pas si accent !!!!
       query = query.where('date').equals(req.query.date)
-  }
+    }
 
 
     //PAGINATION------------------------------------------------------------------
-    const maxPage = 10 //base pour le parseInt
+    // const maxPage = 10 //base pour le parseInt
     let page = parseInt(req.query.page, 10);
     if (isNaN(page) || page < 1) {
       page = 1
@@ -65,13 +59,47 @@ router.get("/", async (req, res, next) => {
 
     let pageSize = parseInt(req.query.pageSize, 10);
     console.log('page size', pageSize);
-    if (isNaN(pageSize) || pageSize < 0 || pageSize > maxPage) {
-      pageSize = maxPage;
+    if (isNaN(pageSize) || pageSize < 0 || pageSize > 100) {
+      pageSize = 100;
     }
     console.log('pagination', page, pageSize);
+
+
+
+
+
+    //Formatage des URLS
+    // Add "first" and "prev" links unless it's the first page
+    // if (page > 1) {
+    //   links.first = { rel: 'first', url: buildLinkUrl(url, 1, pageSize) };
+    //   links.prev = { rel: 'prev', url: buildLinkUrl(url, page - 1, pageSize) };
+    // }
+    // // Add "next" and "last" links unless it's the last page
+    // if (page < maxPage) {
+    //   links.next = { rel: 'next', url: buildLinkUrl(url, page + 1, pageSize) };
+    //   links.last = { rel: 'last', url: buildLinkUrl(url, maxPage, pageSize) };
+    // }
+    // if (Object.keys(links).length >= 1) {
+    //   res.set('Link', formatLinkHeader(links));
+    // }
+
+    // res.set('Pagination-Page', page);
+    // res.set('Pagination-PageSize', pageSize);
+    // res.set('Pagination-Total', totalServices);
+
+
+
+
     query = query.skip((page - 1) * pageSize).limit(pageSize)
     const services = await query.sort({ date: 1 });
-    res.send(services);
+    // res.send(services);
+    res.send({
+      page: page,
+      pageSize: pageSize,
+      total: totalServices,
+      data: services
+    });
+
   } catch (e) {
     next(e)
   }
@@ -114,7 +142,7 @@ router.post("/", async (req, res, next) => {
       titre: req.body.titre,
       type: req.body.type,
       date: req.body.date,
-      provider: result,
+      provider: req.body.provider,
       picture: req.body.picture,
       location: req.body.location,
     })
