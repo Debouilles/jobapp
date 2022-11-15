@@ -1,4 +1,4 @@
-
+import {User} from "./User.js"
 import mongoose, { Schema, model } from "mongoose";
 
 let serviceSchema = new Schema({
@@ -20,7 +20,16 @@ let serviceSchema = new Schema({
   provider:
   {
     type: mongoose.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    validate:
+    // Manually validate uniqueness to send a "pretty" validation error
+    // rather than a MongoDB duplicate key error
+    [
+      {
+        validator: validateServiceProvider,
+        message: 'id {VALUE} does not exists'
+      }
+    ]
   },
   picture:
   {
@@ -55,6 +64,21 @@ function transformJsonService(doc, json, options) {
   // Remove the hashed password from the generated JSON.
   delete json.__v;
   return json;
+}
+
+/**
+ * Given a name, calls the callback function with true if no person exists with that name
+ * (or the only person that exists is the same as the person being validated).
+ */
+ function validateServiceProvider(value) {
+  return User
+    .findOne()
+    .where('provider')
+    .equals(value)
+    .exec()
+    .then(existingPerson => {
+      return existingPerson !== null;
+    });
 }
 
 export function validateGeoJsonCoordinates(value) {
