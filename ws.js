@@ -45,6 +45,9 @@ export function broadcastMessage(message) {
   debug(
     `Broadcasting message to all connected clients: ${JSON.stringify(message)}`
   );
+  for(const client of clients){
+    client.send(JSON.stringify(message));
+  }
   // You can easily iterate over the "clients" array to send a message to all
   // connected clients.
 }

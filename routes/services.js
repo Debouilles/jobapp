@@ -1,67 +1,84 @@
 import e from "express";
 import express from "express";
+import { ObjectId } from 'bson';
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
 
 const router = express.Router();
 
 
+function treatProviderArrays(request, query) {
+  if (Array.isArray(request)) {
+    const item = query.filter(ObjectId.isValid);
+    //switch ici
+    switch (key) {
+      case value:
 
+        break;
 
+      default:
+        break;
+    }
+    query = query.where('provider').in(users);
+  } else if (ObjectId.isValid(request)) {
+    query = query.where('provider').equals(request);
+  }
+
+}
 
 router.get("/", async (req, res, next) => {
-
   try {
     let query = Service.find();
-    //let services = await Service.find()
-    // .populate('provider')
-    // if (services === null) {
-    //   res.send(404)
-    // } else {
-      if (req.query.type) {
-        console.log(req.query.type)
-        // services =  services.where('type').equals(req.query.type)
-        //services = await Service.find().where('type').equals(req.query.type)
-        query = query.where('type').equals(req.query.type)
-
-        //console.log(services)
-
+    let users = await User.find();
+    const totalServices = Service.count();
+    console.log(req.query)
+    //QUERIES-----------------------------------------------------------------------
+    //note: switch avec (true) marchait pas.
+    //PROVIDER------------------------------
+    if (req.query.provider) {
+      if (Array.isArray(req.query.provider)) {
+        const user = req.query.provider.filter(ObjectId.isValid);
+        //marche pas si array
+        query = query.where('provider').in(users);
+      } else if (ObjectId.isValid(req.query.provider)) {
+        query = query.where('provider').equals(req.query.provider);
       }
-        const maxPage = 10 //Max elements per page
-        let page = parseInt(req.query.page, 10);
-        if (isNaN(page) || page < 1) {
-          page = 1
-        }
-      
-        let pageSize = parseInt(req.query.pageSize, 10);
-        console.log('page size', pageSize);
-        if (isNaN(pageSize) || pageSize < 0 || pageSize > maxPage) {
-          pageSize = maxPage;
-        }
-        console.log('pagination', page, pageSize);
-      
-        query = query.skip((page - 1) * pageSize).limit(pageSize)
-        // Filter movies by director
-        // if (req.query.type){
-        //   let query = await Service.where('type').equals(req.query.type);
-        //   res.send(query)
-        //   res.status(200)
-        //   return
-        // }
-        const services = await query.sort({date : 1});
-         res.send(services);
-        
-      // res.status(200)
-      // res.send(services);
-    // }
+    }
+    //Type-------------------------------
+    if(req.query.type){ 
+        //!!!! Marche pas si accent !!!!
+        query = query.where('type').equals(req.query.type)
+    }
+    //Date------------------------------
+    if(req.query.date){ 
+      //!!!! Marche pas si accent !!!!
+      query = query.where('date').equals(req.query.date)
+  }
 
+
+    //PAGINATION------------------------------------------------------------------
+    const maxPage = 10 //base pour le parseInt
+    let page = parseInt(req.query.page, 10);
+    if (isNaN(page) || page < 1) {
+      page = 1
+    }
+
+    let pageSize = parseInt(req.query.pageSize, 10);
+    console.log('page size', pageSize);
+    if (isNaN(pageSize) || pageSize < 0 || pageSize > maxPage) {
+      pageSize = maxPage;
+    }
+    console.log('pagination', page, pageSize);
+    query = query.skip((page - 1) * pageSize).limit(pageSize)
+    const services = await query.sort({ date: 1 });
+    res.send(services);
   } catch (e) {
     next(e)
   }
 });
 
 
-//  GET -------------------------------------------------------------------------------
+//  ROUTES -------------------------------------------------------------------------------
 // /services/:id
 
 router.get("/:id", async (req, res, next) => {
@@ -85,65 +102,6 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-//QUERIES
-
-//   router.get('/serviceSearch', async (req, res) => {
-//     let query = await Service.find();
-//     console.log(query)
-//     console.log(req.query.name)
-//     // Filter movies by director
-//     if (ObjectId.isValid(req.query.name)) {
-//       query = query.where('name').equals(req.query.name);
-//     }
-//     query.exec(function(err, services) {
-//       if (err) {
-//         return next(err);
-//       }
-//       res.send(services);
-//     });
-// })
-
-
-router.get('/searchModule', async function (req, res, next) {
-  // let query = Service.find();
-  // console.log(query)
-  // // Filter movies by director
-  // if (ObjectId.isValid(req.query.titre)) {
-  //   query = query.where('director').contains(req.query.titre);
-  // }
-  // // Execute the query
-  // query.exec(function(err, services) {
-  //   if (err) {
-  //     return next(err);
-  //   }
-  //   res.send(services);
-  // });
-
-  try {
-    // const s = req.query.type
-    // console.log(req.query)
-    // const regex = new RegExp(s, 'i') // i for case insensitive
-    //  let theResult = await Service.find({type: {$regex: regex}})
-    // res.send(theResult)
-    let query = await Service.find({});
-    res.send(query)
-    /*if (ObjectId.isValid(req.query.type)) {
-      query = query.where('type').equals(req.query.type);
-    }
-    */
-    // Execute the query
-    /*query.exec(function (err, services) {
-      if (err) {
-        return next(err);
-      }
-      res.send(services);
-    });*/
-
-  } catch (error) {
-    next(error)
-  }
-
-});
 
 //  POST -----------------------------------------------------------------------------------------------
 // /services

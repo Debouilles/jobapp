@@ -36,15 +36,23 @@ router.get("/", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const theService = await Service.findOne({ _id: req.body.relatedService })
-    // console.log(theService)
     const resultService = theService._id;
     const resultProvider =  theService.provider;
-    // const resultProvider = await User.findOne({ _id: req.body.provider }).select("_id").lean()
     const resultReciever = await User.findOne({ _id: req.body.reciever }).select("_id")
+
+    //400 si le reciever est le même id que le provider
     if (resultReciever._id.equals(resultProvider.provider)) {
       res.status(400).send('The provider and the reciever can\'t be the same person')//bonne erreur????
       return
     }
+    //verif si y a pas deja un RDV
+    const existingRdv = await RDV.countDocuments({ relatedService: resultService });
+
+    //400 si un service a déjà un RDV associé
+    if (existingRdv) {
+        return res.status(400).send('There\'s already a meeting for this service')
+      }
+  
     //note: provider pris automatiquement du service
     const newRdv = new RDV({
       relatedService: resultService,
