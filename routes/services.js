@@ -65,22 +65,6 @@ router.get("/", async (req, res, next) => {
     console.log('pagination', page, pageSize);
 
 
-
-    //Formatage des URLS
-    // Add "first" and "prev" links unless it's the first page
-    // if (page > 1) {
-    //   links.first = { rel: 'first', url: buildLinkUrl(url, 1, pageSize) };
-    //   links.prev = { rel: 'prev', url: buildLinkUrl(url, page - 1, pageSize) };
-    // }
-    // // Add "next" and "last" links unless it's the last page
-    // if (page < maxPage) {
-    //   links.next = { rel: 'next', url: buildLinkUrl(url, page + 1, pageSize) };
-    //   links.last = { rel: 'last', url: buildLinkUrl(url, maxPage, pageSize) };
-    // }
-    // if (Object.keys(links).length >= 1) {
-    //   res.set('Link', formatLinkHeader(links));
-    // }
-
     // res.set('Pagination-Page', page);
     // res.set('Pagination-PageSize', pageSize);
     // res.set('Pagination-Total', totalServices);
