@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { authenticate } from "./login.js";
+const ObjectId = mongoose.Types.ObjectId;
+
 
 //liste des users
 // import{ users } from '../Users.js';
@@ -16,9 +18,32 @@ const router = express.Router();
 
 // let users = require("../Users");
 
-//SCHEMA------------------------------------------
+//Middlewares------------------------------------------
+
+function failedOperationOnId(res, userID){
+  return res.status(404).type('text').send(userID+' is an invalid ID');
+}
+
+async function loadAll(req, res, next) {
+  const user = await User.find();
+  res.send(user)
+}
+
+async function loadFromID(req, res, next){
+ let theUser = req.params.id;
+ if (!ObjectId.isValid(theUser)) {
+  return failedOperationOnId(res, theUser);
+}
 
 
+ const user = await User.findById(req.params.id)
+ if(!user){
+  return failedOperationOnId(res, theUser);
+ }
+
+ req.user = user;
+ next();
+}
 
 //ROUTES----------------------------------------------------
 
@@ -38,11 +63,20 @@ const router = express.Router();
 //   });
 // });
 
-router.get("/", async (req, res, next) => {
+// router.get("/", async (req, res, next) => {
+//   try {
+//     const users = await User.find({}).sort('name');
+//     res.send(users)
+//     res.status(200)
+//   } catch (e) {
+//     next(e)
+//   }
+// });
+
+
+router.get("/", loadAll, async (req, res, next) => {
   try {
-    const users = await User.find({}).sort('name');
-    res.send(users)
-    res.status(200)
+
   } catch (e) {
     next(e)
   }
@@ -53,37 +87,48 @@ router.get("/", async (req, res, next) => {
 
 //  GET 
 // /users/:id
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", loadFromID ,async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id)
-    console.log(user)
-    res.status(200)
-    res.send(user);
+
+    User.aggregate([
+      {
+        $match:{
+          _id: ObjectId(req.params.id)
+    
+        }
+        },
+      {
+        $lookup: {
+          from: 'services',
+          localField: '_id',
+          foreignField: 'provider',
+          as: 'proposedServices'
+        } 
+      },
+      {
+        $unwind: {
+          path: '$proposedServices',
+        }
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: { $first: '$name' },
+          proposedServices: { $sum: 1 }
+        }
+      }
+    ], function (err, results) {
+    if(err){
+      next(err)
+    }
+    res.send(results)
+  });
   } catch (e) {
     // res.send(e)
     next(e)
   }
 });
 
-//  POST 
-// /users
-//Arrenger l'erreur que donne l'email a double
-// router.post("/", async (req, res, next) => {
-
-//   try {
-//     const newUser = await new User({
-//       name: req.body.name,
-//       email: req.body.email,
-//       password: req.body.password
-//     })
-//       .save()
-//     res.status(200)
-//     res.send(newUser);
-//   } catch (e) {
-//     // res.send(e)
-//     next(e)
-//   }
-// });
 
 router.post("/", function (req, res, next) {
   const plainPassword = req.body.password;
@@ -114,25 +159,6 @@ router.put("/:id", async (req, res, next) => {
   }
 
 
-  // let theObject = {}
-  // if (req.body.name) {
-  //   theObject.name = req.body.name
-  // }
-  // if (req.body.email) {
-  //   theObject.email = req.body.email
-  // }
-  // console.log(theObject)
-
-  // User.findByIdAndUpdate(req.params.id, theObject, function (err, user) {
-  //   if (err) {
-  //     console.log(err)
-  //     res.sendStatus(400);
-  //   }
-  //   else {
-  //     res.sendStatus(200);
-  //   }
-  // });
-
 });
 
 //  DELETE 
@@ -148,16 +174,6 @@ router.delete("/:id", async (req, res, next) => {
   }
 
 
-  // User.findByIdAndDelete(req.params.id, function (err, user) {
-  //   if (err) {
-  //     console.log(err)
-  //     res.sendStatus(400)
-  //   }
-  //   else {
-  //     console.log("Deleted : ", user);
-  //     res.sendStatus(200)
-  //   }
-  // });
 });
 
 
