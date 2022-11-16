@@ -20,6 +20,15 @@ const router = express.Router();
 
 //Middlewares------------------------------------------
 
+
+function verifyOwner(req,res,next){
+  const OWNER = req.params.id.toString() === req.currentUserId;
+  if (!OWNER) {
+    return res.status(403).send('Insufficient permissions')
+  }
+  next()
+}
+
  function failedOperationOnId(res, userID) {
   return res.status(404).type('text').send(userID + ' is an invalid ID');
 }
@@ -35,6 +44,7 @@ export async function idCheckValidity(id){
     return failedOperationOnId(res, theUser);
   }
 }
+
 
 
 async function loadFromID(req, res, next) {
@@ -158,7 +168,7 @@ router.post("/", function (req, res, next) {
 
 //  PUT 
 // /users/:id
-router.patch("/:id", async (req, res, next) => {
+router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
   try {
     let modif = req.body
     //gestion password
