@@ -34,12 +34,8 @@ export async function idCheckValidity(id){
   if (!ObjectId.isValid(id)) {
     return failedOperationOnId(res, theUser);
   }
-  // const user = await User.findById(req.params.id)
-  // if (!user) {
-  //   return failedOperationOnId(res, theUser);
-  // }
-
 }
+
 
 async function loadFromID(req, res, next) {
   let theUser = req.params.id;
@@ -86,7 +82,7 @@ async function loadFromID(req, res, next) {
 // });
 
 
-router.get("/", loadAll, async (req, res, next) => {
+router.get("/", authenticate, loadAll, async (req, res, next) => {
   try {
 
   } catch (e) {
@@ -162,12 +158,21 @@ router.post("/", function (req, res, next) {
 
 //  PUT 
 // /users/:id
-router.put("/:id", async (req, res, next) => {
-  let modif = req.body
+router.patch("/:id", async (req, res, next) => {
   try {
+    let modif = req.body
+    //gestion password
+    if (modif.password !== undefined) {
+      const plainPassword = req.body.password;
+      const costFactor = 10;
+  
+      const hashedPassword = await bcrypt.hash(plainPassword, costFactor)
+      modif.password = hashedPassword;
+    }
     await User.findByIdAndUpdate(req.params.id, modif)
+    return res.status(200).send("Modifications applied with success.");
   } catch (e) {
-    res.send(e)
+    next(e)
   }
 
 
