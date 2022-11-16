@@ -148,7 +148,7 @@ router.get("/:id", loadFromID, async (req, res, next) => {
 });
 
 
-router.post("/", function (req, res, next) {
+router.post("/", async function (req, res, next) {
   const plainPassword = req.body.password;
   const costFactor = 10;
   bcrypt.hash(plainPassword, costFactor, function (err, hashedPassword) {
@@ -161,7 +161,7 @@ router.post("/", function (req, res, next) {
       if (err) {
         return next(err);
       }
-      res.send(savedUser);
+      return res.send(savedUser);
     });
   });
 });
