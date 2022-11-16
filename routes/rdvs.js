@@ -67,31 +67,12 @@ router.post("/", async (req, res, next) => {
     res.status(200)
     res.send(newRdv);
 
-    broadcastMessage({ hello: 'world' });
+    broadcastMessage({ rendezvous: newRdv });
 
   } catch (e) {
     // res.send(e)
     next(e)
   }
-
-
-  // const newRdv = new RDV({
-  //     RDV_ID: req.body.RDV_ID,
-  //     provider: req.body.provider,
-  //     reciever: req.body.reciever,
-  //     isAccepted: req.body.isAccepted
-  // })
-  // if (!newRdv.RDV_ID || !newRdv.provider || !newRdv.reciever) {
-  //     return res.sendStatus(400);
-  // } else {
-  //     newRdv
-  //         .save()
-  //         .then(
-  //             () => console.log("One entry added"),
-  //             (err) => console.log(err)
-  //         );
-  // }
-
 });
 
 
