@@ -92,7 +92,7 @@ async function loadFromID(req, res, next) {
 // });
 
 
-router.get("/", authenticate, loadAll, async (req, res, next) => {
+router.get("/", loadAll, async (req, res, next) => {
   try {
 
   } catch (e) {
