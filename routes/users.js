@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { authenticate } from "./login.js";
+
 const ObjectId = mongoose.Types.ObjectId;
 
 
@@ -93,7 +94,7 @@ async function loadFromID(req, res, next) {
 // });
 
 
-router.get("/", loadAll, async (req, res, next) => {
+router.get("/", authenticate , loadAll, async (req, res, next) => {
   try {
 
   } catch (e) {
@@ -179,8 +180,8 @@ router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
       const hashedPassword = await bcrypt.hash(plainPassword, costFactor)
       modif.password = hashedPassword;
     }
-    await User.findByIdAndUpdate(req.params.id, modif)
-    return res.status(200).send("Modifications applied with success.");
+    const theUser = await User.findByIdAndUpdate(req.params.id, modif, { returnDocument: 'after' })
+    return res.status(200).send(theUser);
   } catch (e) {
     next(e)
   }

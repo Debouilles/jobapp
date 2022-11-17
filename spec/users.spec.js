@@ -75,7 +75,7 @@ describe('GET /users', function () {
     })
       .expect(200)
       .expect('Content-Type', /json/);
-      
+
     expect(res.body).toBeArray();
     expect(res.body).toHaveLength(2);
     expect(res.body[0]).toBeObject();
@@ -91,6 +91,40 @@ describe('GET /users', function () {
     expect(res.body[1]).toContainAllKeys(['_id', 'name', 'email']);
   });
 });
+
+describe('PATCH /users', function () {
+  //Start here
+  let newUser;
+  beforeEach(async function() {
+    // Create 2 users before retrieving the list.
+    const users = await Promise.all([
+      User.create({ name: 'Kass Andra', password: '1234', email :'kass@heig.ch'}),
+      User.create({ name: 'Maia Labeil', password: '1234', email:'maia@heig.ch'})
+    ]);
+    newUser=users[0];
+  })
+
+  test('should patch a user', async function () {
+    const token = await generateValidJwt(newUser)
+    const res = await supertest(app)
+      .patch('/users/'+newUser._id)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'test',
+        email:'test@gmail.com'
+    })
+      .expect(200)
+      .expect('Content-Type', /json/);
+      expect(res.body).toBeObject();
+      expect(res.body._id).toBeString();
+      expect(res.body.name).toEqual('test');
+      expect(res.body.email).toEqual('test@gmail.com');
+      expect(res.body).toContainAllKeys(['_id', 'name', 'email']);
+
+  })
+
+
+})
 
 
 afterAll(async () => {
