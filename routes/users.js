@@ -36,6 +36,7 @@ function verifyOwner(req,res,next){
 async function loadAll(req, res, next) {
   const user = await User.find();
   res.send(user)
+  next()
 }
 
 export async function idCheckValidity(id){
@@ -175,7 +176,6 @@ router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
     if (modif.password !== undefined) {
       const plainPassword = req.body.password;
       const costFactor = 10;
-  
       const hashedPassword = await bcrypt.hash(plainPassword, costFactor)
       modif.password = hashedPassword;
     }
@@ -184,8 +184,6 @@ router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
   } catch (e) {
     next(e)
   }
-
-
 });
 
 //  DELETE 

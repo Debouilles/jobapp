@@ -3,6 +3,8 @@ import supertest from "supertest"
 import app from "../app.js"
 import mongoose from 'mongoose'
 import { cleanUpDatabase } from "./utils.js"
+import User from "../model/User.js"
+import { generateValidJwt } from "./utils.js"
 
 
 //Functions------
@@ -11,8 +13,8 @@ import { cleanUpDatabase } from "./utils.js"
 
 // Log requests (except in test mode).
 if (process.env.NODE_ENV !== 'test') {
-    app.use(logger('dev'));
-  }
+  app.use(logger('dev'));
+}
 
 // empty db
 // exports.cleanUpDatabase = async function() {
@@ -21,27 +23,77 @@ if (process.env.NODE_ENV !== 'test') {
 //     ]);
 //   };
 
-  beforeEach(cleanUpDatabase);
-  //Tests----------------------------
+beforeEach(cleanUpDatabase);
+//Tests----------------------------
 
 describe('POST /users', function () {
-    it('should create a user', async function () {
-        const res = await supertest(app)
-            .post('/users')
-            .send({
-                name: 'User14',
-                password: '1234',
-                email: 'user14@gmail.com'
-            })
+  it('should create a user', async function () {
+    const res = await supertest(app)
+      .post('/users')
+      .send({
+        name: 'Jane Darc',
+        password: '1234',
+        email: 'JaneDarc@gmail.com'
+      })
 
-            //check status and headers
-            .expect(200)
-            .expect('Content-Type', /json/);
-    })
+      //check status and headers
+      .expect(200)
+      .expect('Content-Type', /json/);
+    // expect.objectContaining({
+    //   _id: expect.any(String),
+    //   name: 'Jane Darc',
+    //   email: 'JaneDarc@gmail.co'
+    // })
+    expect(res.body).toBeObject();
+    expect(res.body._id).toBeString();
+    expect(res.body.name).toEqual('Jane Darc');
+    expect(res.body.email).toEqual('JaneDarc@gmail.com');
+    expect(res.body).toContainAllKeys(['_id', 'name', 'email'])
+  })
 })
+
+describe('GET /users', function () {
+  //Start here
+  let newUser;
+  beforeEach(async function() {
+    // Create 2 users before retrieving the list.
+    const users = await Promise.all([
+      User.create({ name: 'Mardin Pecheur', password: '1234', email :'mardin@heig.ch'}),
+      User.create({ name: 'Linda Aichar', password: '1234', email:'linda@heig.ch'})
+    ]);
+    newUser=users[0];
+  })
+
+  test('should retrieve the list of users', async function () {
+    const token = await generateValidJwt(newUser)
+    const res = await supertest(app)
+      .get('/users')
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'test',
+        email:'test@gmail.com'
+    })
+      .expect(200)
+      .expect('Content-Type', /json/);
+      
+    expect(res.body).toBeArray();
+    expect(res.body).toHaveLength(2);
+    expect(res.body[0]).toBeObject();
+    expect(res.body[0]._id).toBeString();
+    expect(res.body[0].name).toEqual('Mardin Pecheur');
+    expect(res.body[0].email).toEqual('mardin@heig.ch');
+    expect(res.body[0]).toContainAllKeys(['_id', 'name', 'email']);
+
+    expect(res.body[1]).toBeObject();
+    expect(res.body[1]._id).toBeString();
+    expect(res.body[1].name).toEqual('Linda Aichar');
+    expect(res.body[1].email).toEqual('linda@heig.ch');
+    expect(res.body[1]).toContainAllKeys(['_id', 'name', 'email']);
+  });
+});
 
 
 afterAll(async () => {
-    await mongoose.disconnect();
-  });
+  await mongoose.disconnect();
+});
 

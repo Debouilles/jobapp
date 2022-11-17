@@ -24,6 +24,10 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "jest": "^29.3.1",
+    "jest-extended": "^3.1.0",
     "supertest": "^6.3.1"
+  },
+  "jest": {
+    "setupFilesAfterEnv": ["jest-extended/all"]
   }
 }

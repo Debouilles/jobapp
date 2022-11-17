@@ -47,7 +47,7 @@ router.post("/", async function (req, res, next) {
         return res.sendStatus(401);
       }
       // Login is valid...
-      res.send(`Welcome ${user.name}!`);
+      // res.send(`Welcome ${user.name}!`);
       // Retrieve the secret key from your configuration.
       // Generate a valid JWT which expires in 7 days.
       const exp = Math.floor(Date.now() / 1000) + 7 * 24 * 3600;
