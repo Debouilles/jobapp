@@ -62,4 +62,4 @@ function transformJsonUser(doc, json, options) {
 // userSchema.pre('save', async function);
 
 export const User = model('User', userSchema)
-
+export default User;

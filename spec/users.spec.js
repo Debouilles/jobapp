@@ -1,7 +1,28 @@
+
 import supertest from "supertest"
 import app from "../app.js"
 import mongoose from 'mongoose'
+import { cleanUpDatabase } from "./utils.js"
 
+
+//Functions------
+
+
+
+// Log requests (except in test mode).
+if (process.env.NODE_ENV !== 'test') {
+    app.use(logger('dev'));
+  }
+
+// empty db
+// exports.cleanUpDatabase = async function() {
+//     await Promise.all([
+//       User.deleteMany()
+//     ]);
+//   };
+
+  beforeEach(cleanUpDatabase);
+  //Tests----------------------------
 
 describe('POST /users', function () {
     it('should create a user', async function () {
@@ -18,3 +39,9 @@ describe('POST /users', function () {
             .expect('Content-Type', /json/);
     })
 })
+
+
+afterAll(async () => {
+    await mongoose.disconnect();
+  });
+
