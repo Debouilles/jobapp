@@ -10,24 +10,11 @@ const router = express.Router();
 router.get("/", async (req, res, next) => {
   try {
     const rdvs = await RDV.find({}).populate('relatedService provider reciever')
-
-    // await rdvs.populate('relatedService')
-    // await rdvs.populate('provider')
-    // await rdvs.populate('reciever')
-    res.send(rdvs)
+    res.status(200).send(rdvs)
     // res.status(200)
   } catch (e) {
     next(e)
   }
-
-
-
-  // RDV.find().sort('titre').exec(function (err, theRdv) {
-  //     if (err) {
-  //         return next(err);
-  //     }
-  //     res.send(theRdv);
-  // });
 });
 
 
@@ -60,8 +47,6 @@ router.post("/", async (req, res, next) => {
       reciever: resultReciever,
       isAccepted: req.body.isAccepted
     })
-    // console.log(newRdv.reciever)
-    // console.log(newRdv.provider)
 
     await newRdv.save()
     res.status(200)

@@ -1,15 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
-// import { v4 as uuid } from 'uuid';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { authenticate } from "./login.js";
-
 const ObjectId = mongoose.Types.ObjectId;
 
-
-//liste des users
-// import{ users } from '../Users.js';
 
 //model user
 import { User } from "../model/User.js";
@@ -17,7 +12,6 @@ import { User } from "../model/User.js";
 
 const router = express.Router();
 
-// let users = require("../Users");
 
 //Middlewares------------------------------------------
 
@@ -66,32 +60,6 @@ async function loadFromID(req, res, next) {
 }
 
 //ROUTES----------------------------------------------------
-
-// router.get("/", function (req, res, next) {
-//   res.send("Got a response from the users route");
-// });
-
-// GET
-// /users
-// router.get("/", (req, res) => { //authenticate
-//   const currentUserId = req.currentUserId;
-//   User.find().sort('name').exec(function (err, users) {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.send(users);
-//   });
-// });
-
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const users = await User.find({}).sort('name');
-//     res.send(users)
-//     res.status(200)
-//   } catch (e) {
-//     next(e)
-//   }
-// });
 
 
 router.get("/", authenticate , loadAll, async (req, res, next) => {
@@ -144,7 +112,6 @@ router.get("/:id", loadFromID, async (req, res, next) => {
       res.send(results)
     });
   } catch (e) {
-    // res.send(e)
     next(e)
   }
 });
@@ -190,7 +157,6 @@ router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
 //  DELETE 
 // /users/:id
 router.delete("/:id",authenticate, verifyOwner, async (req, res, next) => {
-
   try {
     const user = await User.findByIdAndDelete(req.params.id)
     return res.status(200).send(user);

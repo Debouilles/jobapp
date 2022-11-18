@@ -7,7 +7,14 @@ import { idCheckValidity } from "./users.js";
 
 
 
-
+//Fonctions-----------------------------------
+function checkOwner(){
+  let isOwner = req.user.id.toString() === req.currentUserId;
+  if(!isOwner){
+    return res.status(403).send('You don\'t have the permissions to access this data')
+  }
+  next();
+}
 
 
 
@@ -27,7 +34,7 @@ router.get("/", async (req, res, next) => {
     const totalServices = await Service.count();
     console.log(req.query)
     //QUERIES-----------------------------------------------------------------------
-    //note: switch avec (true) marchait pas.
+    //note: switch avec (true) marchait pas. donc si imbriqué, sorry
     //PROVIDER------------------------------
     if (req.query.provider) {
       if (Array.isArray(req.query.provider)) {
@@ -105,7 +112,7 @@ router.get("/:id", async (req, res, next) => {
 
 
   } catch (e) {
-    // res.send(e)
+
     next(e)
   }
 });
@@ -113,9 +120,8 @@ router.get("/:id", async (req, res, next) => {
 
 //  POST -----------------------------------------------------------------------------------------------
 // /services
-// NOTE: ID doit être un user
 router.post("/", async (req, res, next) => {
-  //A FAIRE !! check si l'utilisateur existe!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  
 
   try {
     idCheckValidity(req.body.provider)
