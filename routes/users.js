@@ -189,14 +189,13 @@ router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
 
 //  DELETE 
 // /users/:id
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id",authenticate, verifyOwner, async (req, res, next) => {
 
   try {
     const user = await User.findByIdAndDelete(req.params.id)
-    res.status(200)
-    res.send(user);
+    return res.status(200).send(user);
   } catch (e) {
-    res.send(e)
+    next(e)
   }
 
 

@@ -25,6 +25,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 beforeEach(cleanUpDatabase);
 //Tests----------------------------
+//POST test--------------------------------------------------------
 
 describe('POST /users', function () {
   it('should create a user', async function () {
@@ -52,6 +53,8 @@ describe('POST /users', function () {
   })
 })
 
+//GET test--------------------------------------------------------
+//all users
 describe('GET /users', function () {
   //Start here
   let newUser;
@@ -92,6 +95,8 @@ describe('GET /users', function () {
   });
 });
 
+//PATCH test--------------------------------------------------------
+
 describe('PATCH /users', function () {
   //Start here
   let newUser;
@@ -120,10 +125,43 @@ describe('PATCH /users', function () {
       expect(res.body.name).toEqual('test');
       expect(res.body.email).toEqual('test@gmail.com');
       expect(res.body).toContainAllKeys(['_id', 'name', 'email']);
+  })
+})
 
+
+
+//DELETE test--------------------------------------------------------
+
+describe('DELETE /users', function () {
+  let newUser;
+  beforeEach(async function() {
+    // Create 2 users before retrieving the list.
+    const users = await Promise.all([
+      User.create({ name: 'Sahra Ahara', password: '1234', email :'sahra@heig.ch'}),
+      User.create({ name: 'Salima Ahara', password: '1234', email :'salima@heig.ch'})
+    ]);
+    newUser=users[0];
   })
 
 
+  it('should delete a user', async function () {
+    const token = await generateValidJwt(newUser)
+    const res = await supertest(app)
+      .delete('/users/'+newUser._id)
+      .set('Authorization', `Bearer ${token}`)
+      .send({
+        name: 'Sahra Ahara',
+        email:'sahra@heig.ch'
+    })
+      //check status and headers
+      .expect(200)
+      .expect('Content-Type', /json/);
+    expect(res.body).toBeObject();
+    expect(res.body._id).toBeString();
+    expect(res.body.name).toEqual('Sahra Ahara');
+    expect(res.body.email).toEqual('sahra@heig.ch');
+    expect(res.body).toContainAllKeys(['_id', 'name', 'email'])
+  })
 })
 
 
