@@ -19,31 +19,17 @@ paths:
 ######## LOGIN
   /login/:
     post:
-      tags:
-      - login
-
-######## RDVS
-  /rdvs/:
-    get:
       tags: 
-      - rdvs
-      summary: Chercher tous les rdvs
-      description: Un rdv est créé quand un user provider propose un service et un user reciever valide le service. Créant ainsi un rdv unique identifiable avec son id
-      operationId: GetRdvs
-      parameters:
-      - $ref: '#/components/parameters/relatedService'
-      - $ref: '#/components/parameters/provider'
-      - $ref: '#/components/parameters/reciever'
-      - $ref: '#/components/parameters/isAccepted'
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                title: successful response
-                type: object
-                properties:
+      - login
+      summary: Ajouter un nouveau login 
+      description: ça ajoute un nouveau login
+      operationId: addLogin
+      requestBody:
+        description: Ajouter un nouveau login
+        content:
+          application/json:
+            schema:
+              properties:
                   relatedService :
                     $ref: '#/components/schemas/relatedService'
                   provider:
@@ -70,7 +56,101 @@ paths:
                     title: isAccepted
                     type: boolean
                     example: true
-      example:
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/name'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/name'
+        '405':
+          description: Invalid input
+
+######## RDVS
+  /rdvs/:
+    get:
+      tags: 
+      - rdvs
+      summary: Chercher tous les rdvs
+      description: Un rdv est créé quand un user provider propose un service et un user reciever valide le service. Créant ainsi un rdv unique identifiable avec son id
+      operationId: GetRdvs
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    _id:
+                      title: _id
+                      type: string
+                      example: 637512518cdb7960acf1ae2a
+                    relatedService:
+                      title: relatedService
+                      type: object
+                      properties:
+                        location:
+                          $ref: '#/components/schemas/location'
+                        _id:
+                          title: _id
+                          type: string
+                          example: 6373831d8d8224f8daa6ac73
+                        titre:
+                          title: _id
+                          type: string
+                          example: Check
+                        type:
+                          title: _id
+                          type: string
+                          example: Autres
+                        date:
+                          title: _id
+                          type: date
+                          example: 2022-02-04T00:00:00.000Z
+                        provider:
+                          title: _id
+                          type: string
+                          example: 6370fdc0f1ba534053028507
+                        createdAt:
+                          title: _id
+                          type: date
+                          example: 2022-11-15T12:16:29.894Z
+                        updatedAt:
+                          title: _id
+                          type: date
+                          example: 2022-11-15T12:16:29.894Z
+                    provider:
+                      title: provider
+                      type: object
+                      properties:
+                        _id:
+                          $ref: '#/components/schemas/user_id'
+                        name:
+                          $ref: '#/components/schemas/name'
+                        email:
+                          $ref: '#/components/schemas/email'
+                    reciever:
+                      title: provider
+                      type: object
+                      properties:
+                        _id:
+                          $ref: '#/components/schemas/user_id'
+                        name:
+                          $ref: '#/components/schemas/name'
+                        email:
+                          $ref: '#/components/schemas/email'
+                    isAccepted:
+                      title: isAccepted
+                      type: boolean
+                      example: true
         '400':
           description: if resultReciever._id.equals(resultProvider.provider)
           content:
@@ -99,8 +179,114 @@ paths:
           application/json:
             schema:
               properties:
-                  relatedService :
-                    $ref: '#/components/schemas/relatedService'
+                _id:
+                  title: _id
+                  type: string
+                  example: 637512518cdb7960acf1ae2a
+                relatedService:
+                  title: relatedService
+                  type: object
+                  properties:
+                    location:
+                      $ref: '#/components/schemas/location'
+                    _id:
+                      title: _id
+                      type: string
+                      example: 6373831d8d8224f8daa6ac73
+                    titre:
+                      title: _id
+                      type: string
+                      example: Check
+                    type:
+                      title: _id
+                      type: string
+                      example: Autres
+                    date:
+                      title: _id
+                      type: date
+                      example: 2022-02-04T00:00:00.000Z
+                    provider:
+                      title: _id
+                      type: string
+                      example: 6370fdc0f1ba534053028507
+                    createdAt:
+                      title: _id
+                      type: date
+                      example: 2022-11-15T12:16:29.894Z
+                    updatedAt:
+                      title: _id
+                      type: date
+                      example: 2022-11-15T12:16:29.894Z
+                provider:
+                  title: provider
+                  type: object
+                  properties:
+                    _id:
+                      $ref: '#/components/schemas/user_id'
+                    name:
+                      $ref: '#/components/schemas/name'
+                    email:
+                      $ref: '#/components/schemas/email'
+                reciever:
+                  title: provider
+                  type: object
+                  properties:
+                    _id:
+                      $ref: '#/components/schemas/user_id'
+                    name:
+                      $ref: '#/components/schemas/name'
+                    email:
+                      $ref: '#/components/schemas/email'
+                isAccepted:
+                  title: isAccepted
+                  type: boolean
+                  example: true
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                properties:
+                  _id:
+                    title: _id
+                    type: string
+                    example: 637512518cdb7960acf1ae2a
+                  relatedService:
+                    title: relatedService
+                    type: object
+                    properties:
+                      location:
+                        $ref: '#/components/schemas/location'
+                      _id:
+                        title: _id
+                        type: string
+                        example: 6373831d8d8224f8daa6ac73
+                      titre:
+                        title: _id
+                        type: string
+                        example: Check
+                      type:
+                        title: _id
+                        type: string
+                        example: Autres
+                      date:
+                        title: _id
+                        type: date
+                        example: 2022-02-04T00:00:00.000Z
+                      provider:
+                        title: _id
+                        type: string
+                        example: 6370fdc0f1ba534053028507
+                      createdAt:
+                        title: _id
+                        type: date
+                        example: 2022-11-15T12:16:29.894Z
+                      updatedAt:
+                        title: _id
+                        type: date
+                        example: 2022-11-15T12:16:29.894Z
                   provider:
                     title: provider
                     type: object
@@ -125,17 +311,6 @@ paths:
                     title: isAccepted
                     type: boolean
                     example: true
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/name'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/name'
         '405':
           description: Invalid input
 
@@ -148,12 +323,136 @@ paths:
       description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
       operationId: GetServices
       parameters:
-      - $ref: '#/components/parameters/location'
-      - $ref: '#/components/parameters/_id_header'
-      - $ref: '#/components/parameters/titre'
-      - $ref: '#/components/parameters/type'
-      - $ref: '#/components/parameters/date'
-      - $ref: '#/components/parameters/provider'
+      - name: provider
+        in: query #header, path, query, cookie
+        description: l'id de l'utilisateur qui a mis en ligne le service
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  location:
+                    $ref: '#/components/schemas/location'
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  titre:
+                    $ref: '#/components/schemas/titre'
+                  type:
+                    $ref: '#/components/schemas/type'
+                  date:
+                    $ref: '#/components/schemas/date'
+                  provider:
+                    title: provider
+                    type: string
+                    example: 6370fdc0f1ba534053028507
+                  createdAt:
+                    title: createdAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z
+                  updatedAt:
+                    title: updatedAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z
+        '404':
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Users not found
+                type: string
+                example: Not found
+    post:
+      tags:
+      - services
+      summary: Ajouter un nouveau service 
+      description: Un user ajoute un nouveau service en indicant la date(+heure), l'endroit, un titre et le type de service.
+      operationId: addService
+      requestBody:
+        description: Ajouter un nouveau service
+        content:
+          application/json:
+            schema:
+              title: successful response
+              type: object
+              properties:
+                location:
+                  $ref: '#/components/schemas/location'
+                _id:
+                  $ref: '#/components/schemas/user_id'
+                titre:
+                  $ref: '#/components/schemas/titre'
+                type:
+                  $ref: '#/components/schemas/type'
+                date:
+                  $ref: '#/components/schemas/date'
+                provider:
+                  title: provider
+                  type: string
+                  example: 6370fdc0f1ba534053028507
+                createdAt:
+                  title: createdAt
+                  type: date
+                  example: 2022-11-15T12:16:49.910Z
+                updatedAt:
+                  title: updatedAt
+                  type: date
+                  example: 2022-11-15T12:16:49.910Z
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  location:
+                    $ref: '#/components/schemas/location'
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  titre:
+                    $ref: '#/components/schemas/titre'
+                  type:
+                    $ref: '#/components/schemas/type'
+                  date:
+                    $ref: '#/components/schemas/date'
+                  provider:
+                    title: provider
+                    type: string
+                    example: 6370fdc0f1ba534053028507
+                  createdAt:
+                    title: createdAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z
+                  updatedAt:
+                    title: updatedAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z  
+        '405':
+          description: Invalid input
+  /services/{id}:
+    get:
+      get:
+      tags:
+      - services
+      summary: Chercher tous les services
+      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
+      operationId: GetServices
+      parameters:
+      - name: id
+        in: path #header, path, query, cookie
+        description: l'id du service
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: successful operation
@@ -178,11 +477,25 @@ paths:
                     type: object
                     properties:
                       _id:
-                        $ref: '#/components/schemas/user_id'
+                        title: _id
+                        type: string
+                        example: 6370fdc0f1ba534053028507
                       name:
-                        $ref: '#/components/schemas/name'
+                        name: name
+                        type: string
+                        example: Roja
                       email:
-                        $ref: '#/components/schemas/email'
+                        title: email
+                        type: string
+                        example: roja@gmail.com
+                  createdAt:
+                    title: createdAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z
+                  updatedAt:
+                    title: updatedAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z
         '404':
           description: Not found response
           content:
@@ -191,88 +504,6 @@ paths:
                 title: Users not found
                 type: string
                 example: Not found
-    post:
-      tags:
-      - services
-      summary: Ajouter un nouveau service 
-      description: Un user ajoute un nouveau service en indicant la date(+heure), l'endroit, un titre et le type de service.
-      operationId: addService
-      requestBody:
-        description: Ajouter un nouveau service
-        content:
-          application/json:
-            schema:
-              properties:
-                  relatedService :
-                    $ref: '#/components/schemas/relatedService'
-                  provider:
-                    title: provider
-                    type: object
-                    properties:
-                      _id:
-                        $ref: '#/components/schemas/user_id'
-                      name:
-                        $ref: '#/components/schemas/name'
-                      email:
-                        $ref: '#/components/schemas/email'
-                  reciever:
-                    title: provider
-                    type: object
-                    properties:
-                      _id:
-                        $ref: '#/components/schemas/user_id'
-                      name:
-                        $ref: '#/components/schemas/name'
-                      email:
-                        $ref: '#/components/schemas/email'
-                  isAccepted:
-                    title: isAccepted
-                    type: boolean
-                    example: true
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/name'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/name'
-        '405':
-          description: Invalid input
-  /services/{id}:
-    get:
-      tags:
-      - services
-      summary: Chercher un service en utilisant son id
-      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
-      operationId: GetServiceId
-      parameters:
-        name:
-        in:
-        description:
-        required: true
-        schema:
-          type:
-          default:
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '/model/schemas/Rdv'          
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '/component/schemas/Rdv'
-        '400':
-          description: Invalid status value
     delete:
       tags:
       - services
@@ -292,7 +523,7 @@ paths:
       tags:
       - users
       summary: Chercher tous les utilisateurs
-      description: #Ici on trouve tous les utilisateurs avec leur identifiant unique, un nom, un email, et le mot de passe hashé
+      description: Ici on trouve tous les utilisateurs avec leur identifiant unique, un nom, un email, et le mot de passe hashé
       operationId: GetUsers
       responses:
         '200':
@@ -302,15 +533,17 @@ paths:
               schema:
                 title: successful response
                 type: array
-                properties:
-                  _id:
-                    $ref: '#/components/schemas/user_id'
-                  name:
-                    $ref: '#/components/schemas/name'
-                  email:
-                    $ref: '#/components/schemas/email'
-                  password:
-                    $ref: '#/components/schemas/password'
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      $ref: '#/components/schemas/user_id'
+                    name:
+                      $ref: '#/components/schemas/name'
+                    email:
+                      $ref: '#/components/schemas/email'
+                    password:
+                      $ref: '#/components/schemas/password'
         '404':
           description: Not found response
           content:
@@ -322,9 +555,50 @@ paths:
     post:
       tags:
       - users
-      summary: Ajouter un nouveau service
-      description: #Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
-      operationId: GetServices
+      summary: Ajouter un nouvel utilisateur
+      description: Un utilisateur est ajouté
+      operationId: addUser
+      requestBody:
+        description: Ajouter un nouvel utilisateur
+        content:
+          application/json:
+            schema:
+              title: successful response
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  name:
+                    $ref: '#/components/schemas/name'
+                  email:
+                    $ref: '#/components/schemas/email'
+                  password:
+                    $ref: '#/components/schemas/password'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      $ref: '#/components/schemas/user_id'
+                    name:
+                      $ref: '#/components/schemas/name'
+                    email:
+                      $ref: '#/components/schemas/email'
+                    password:
+                      $ref: '#/components/schemas/password'
+        '405':
+          description: Invalid input
+  
 
   /users/{_id}:
     get:
@@ -342,16 +616,18 @@ paths:
             application/json:
               schema:
                 title: successful response
-                type: object
-                properties:
-                  _id:
-                    $ref: '#/components/schemas/user_id'
-                  name:
-                    $ref: '#/components/schemas/name'
-                  email:
-                    $ref: '#/components/schemas/email'
-                  password:
-                    $ref: '#/components/schemas/password'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    _id:
+                      $ref: '#/components/schemas/user_id'
+                    name:
+                      $ref: '#/components/schemas/name'
+                    email:
+                      $ref: '#/components/schemas/email'
+                    password:
+                      $ref: '#/components/schemas/password'
         '404':
           description: Not found response
           content:
@@ -376,18 +652,11 @@ paths:
 ######## components
 components:
   parameters:
-    _id_header:
-      name: _id
-      in: header #header, path, query, cookie
-      description: L'identifiant unique
-      required: false
-      schema:
-        type: string
     _id_path:
       name: _id
       in: path #header, path, query, cookie
       description: L'identifiant unique
-      required: false
+      required: true
       schema:
         type: string
     name:
@@ -508,7 +777,8 @@ components:
       title: titre
       type: date
       example: '2022-12-04T00:00:00.000Z'
-    relatedService:
-      title: relatedService
-      type: string
-      example: je dois revoir ce truc, parce que normalement c'est un objet
+    # relatedService:
+    #   title: relatedService
+    #   type: object
+    #   example:
+    #     $ref: '#/components/schemas/location'
