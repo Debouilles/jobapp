@@ -169,9 +169,9 @@ router.post("/", authenticate , async (req, res, next) => {
 // /services/:id
 router.delete("/:id", authenticate , loadService, checkServiceOwner, async (req, res) => {
   try {
-    const service = await Service.findByIdAndDelete(req.params.id)
-    res.status(200)
-    res.send(service);
+    await Service.findByIdAndDelete(req.params.id)
+    res.status(200).send("service deleted")
+    // res.send(service);
   } catch (e) {
     res.send(e)
   }
