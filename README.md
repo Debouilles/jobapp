@@ -35,4 +35,4 @@ Rdv :
 Bonne découverte de notre API ! 
 
 
-Daniel, Déborah, Tania, Julie 
+Daniel, Déborah, Tanya, Julie 
