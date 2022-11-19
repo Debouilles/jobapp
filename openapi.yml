@@ -167,6 +167,12 @@ paths:
                 title: Users not found
                 type: string
                 example: Not found
+        delete:
+      tags:
+      - rdvs
+      summary: Delete un rdv
+      description: Un rdv est créé quand un user provider propose un service et un user reciever valide le service. Créant ainsi un rdv unique identifiable avec son id
+      operationId: DeleteRDV       
     post:
       tags: 
       - rdvs
