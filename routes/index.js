@@ -20,7 +20,7 @@ const connection = mongoose.connect(process.env.MONGO_URI, {
 //end added code----------------------
 
 router.get("/", function (req, res, next) {
-  res.send("Ignition!");
+  res.send("Bienvenue sur l'API de Jobapp, une application qui vous permet de trouver des petits jobs à faire dans votre région !");
 });
 
 export default router;
