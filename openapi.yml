@@ -17,7 +17,7 @@ info:
     description: permet à l'utilisateur de se connecter
 
 servers:
-  - url: https://jobapp.onrender.com    # The "url: " prefix is required
+  - url: https://jobapp.onrender.com
 paths:
 ######## LOGIN
   /login/:
@@ -896,8 +896,3 @@ components:
       title: titre
       type: date
       example: '2022-12-04T00:00:00.000Z'
-    # relatedService:
-    #   title: relatedService
-    #   type: object
-    #   example:
-    #     $ref: '#/components/schemas/location'
