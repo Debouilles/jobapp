@@ -4,9 +4,54 @@ import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
 import { broadcastMessage } from '../ws.js';
 import { authenticate } from "./login.js";
+import { failedOperationOnId } from "./services.js";
+
+import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
 
 
 const router = express.Router();
+
+
+
+//functions
+
+async function loadRdv(req, res, next) {
+  const rdvId = req.params.id;
+  if (!ObjectId.isValid(rdvId)) {
+    return failedOperationOnId(res,rdvId)
+  }
+
+  const rdv = await RDV.findById(req.params.id);
+  if (!rdv) {
+    return failedOperationOnId(res,rdvId)
+  }
+
+  req.rdv = rdv;
+  next();
+}
+
+
+function checkRdvOwner(req, res, next){
+  console.log(req.service)
+  let isOwner = req.rdv.provider.toString() === req.currentUserId;
+  if(!isOwner){
+    return res.status(403).send('You don\'t have the permissions to access this data')
+  }
+  next();
+}
+
+
+function checkRdvOwnerOrReciever(req, res, next){
+  console.log(req.service)
+  let isOwner = req.rdv.provider.toString() === req.currentUserId || req.rdv.reciever.toString() === req.currentUserId ;
+  if(!isOwner){
+    return res.status(403).send('You don\'t have the permissions to access this data')
+  }
+  next();
+}
+
+
 
 //GET
 router.get("/", async (req, res, next) => {
@@ -20,7 +65,7 @@ router.get("/", async (req, res, next) => {
 });
 
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id",authenticate, loadRdv, checkRdvOwnerOrReciever, async (req, res, next) => {
   //finds rdv by ID
   try {
     const rdv = await RDV.findById(req.params.id)
@@ -38,7 +83,7 @@ router.get("/:id", async (req, res, next) => {
 
 //  POST 
 // /rdvs
-router.post("/", authenticate, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const theService = await Service.findOne({ _id: req.body.relatedService })
     const resultService = theService._id;
@@ -75,6 +120,18 @@ router.post("/", authenticate, async (req, res, next) => {
   } catch (e) {
     // res.send(e)
     next(e)
+  }
+});
+
+
+router.delete("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) => {
+  try {
+    res.send(req.rdv);
+    const rdv = await RDV.findByIdAndDelete(req.params.id)
+    res.status(200).send('RDV deleted')
+    
+  } catch (e) {
+    res.send(e)
   }
 });
 

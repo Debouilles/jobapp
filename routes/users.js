@@ -1,9 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
+const ObjectId = mongoose.Types.ObjectId;
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { authenticate } from "./login.js";
-const ObjectId = mongoose.Types.ObjectId;
+
 
 
 //model user
@@ -17,21 +18,14 @@ const router = express.Router();
 
 
 export function verifyOwner(req,res,next){
-  const OWNER = req.params.id.toString() === req.currentUserId;
+  const OWNER = req.user.id.toString() === req.currentUserId;
   if (!OWNER) {
     return res.status(403).send('Insufficient permissions')
   }
   next()
 }
 
-export function verifyService(req, res, next){
-  console.log(req.body)
-  const OWNER = req.params.provider.toString()  === req.currentUserId;
-  if (!OWNER) {
-    return res.status(403).send('Insufficient permissions')
-  }
-  next()
-}
+
 
  function failedOperationOnId(res, userID) {
   return res.status(404).type('text').send(userID + ' is an invalid ID');

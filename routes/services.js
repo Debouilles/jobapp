@@ -3,15 +3,16 @@ import express from "express";
 import { ObjectId } from 'bson';
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
-import { idCheckValidity, verifyOwner, verifyService } from "./users.js";
+import { idCheckValidity } from "./users.js";
 import { authenticate } from "./login.js";
+
 
 
 
 
 //Fonctions-----------------------------------
 
-function failedOperationOnId(res, id) {
+export function failedOperationOnId(res, id) {
   return res.status(404).type('text').send(id + ' is an invalid ID');
 }
 
