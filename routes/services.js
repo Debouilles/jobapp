@@ -3,16 +3,39 @@ import express from "express";
 import { ObjectId } from 'bson';
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
-import { idCheckValidity } from "./users.js";
+import { idCheckValidity, verifyOwner, verifyService } from "./users.js";
+import { authenticate } from "./login.js";
+
 
 
 
 //Fonctions-----------------------------------
-function checkOwner(){
-  let isOwner = req.user.id.toString() === req.currentUserId;
+
+function failedOperationOnId(res, id) {
+  return res.status(404).type('text').send(id + ' is an invalid ID');
+}
+
+function checkServiceOwner(req, res, next){
+  let isOwner = req.service.provider.toString() === req.currentUserId;
   if(!isOwner){
     return res.status(403).send('You don\'t have the permissions to access this data')
   }
+  next();
+}
+
+
+async function loadService(req, res, next) {
+  const serviceId = req.params.id;
+  if (!ObjectId.isValid(serviceId)) {
+    return failedOperationOnId(res,serviceId)
+  }
+
+  const service = await Service.findById(req.params.id);
+  if (!service) {
+    return failedOperationOnId(res,serviceId)
+  }
+
+  req.service = service;
   next();
 }
 
@@ -109,10 +132,7 @@ router.get("/:id", async (req, res, next) => {
       await theService.populate('provider')
       res.send(theService);
     }
-
-
   } catch (e) {
-
     next(e)
   }
 });
@@ -120,9 +140,7 @@ router.get("/:id", async (req, res, next) => {
 
 //  POST -----------------------------------------------------------------------------------------------
 // /services
-router.post("/", async (req, res, next) => {
-  
-
+router.post("/", authenticate , async (req, res, next) => {
   try {
     idCheckValidity(req.body.provider)
     const newService = await new Service({
@@ -146,8 +164,7 @@ router.post("/", async (req, res, next) => {
 
 //DELETE
 // /services/:id
-router.delete("/:id", async (req, res) => {
-
+router.delete("/:id", authenticate , loadService, checkServiceOwner, async (req, res) => {
   try {
     const service = await Service.findByIdAndDelete(req.params.id)
     res.status(200)

@@ -3,6 +3,8 @@ import { RDV } from "../model/Rdv.js";
 import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
 import { broadcastMessage } from '../ws.js';
+import { authenticate } from "./login.js";
+
 
 const router = express.Router();
 
@@ -18,9 +20,25 @@ router.get("/", async (req, res, next) => {
 });
 
 
+router.get("/:id", async (req, res, next) => {
+  //finds rdv by ID
+  try {
+    const rdv = await RDV.findById(req.params.id)
+    if (rdv === null) {
+      res.status(404)
+    } else {
+      await rdv.populate('relatedService provider reciever')
+      res.send(rdv);
+    }
+  } catch (e) {
+    next(e)
+  }
+});
+
+
 //  POST 
 // /rdvs
-router.post("/", async (req, res, next) => {
+router.post("/", authenticate, async (req, res, next) => {
   try {
     const theService = await Service.findOne({ _id: req.body.relatedService })
     const resultService = theService._id;

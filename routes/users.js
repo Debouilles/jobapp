@@ -16,8 +16,17 @@ const router = express.Router();
 //Middlewares------------------------------------------
 
 
-function verifyOwner(req,res,next){
+export function verifyOwner(req,res,next){
   const OWNER = req.params.id.toString() === req.currentUserId;
+  if (!OWNER) {
+    return res.status(403).send('Insufficient permissions')
+  }
+  next()
+}
+
+export function verifyService(req, res, next){
+  console.log(req.body)
+  const OWNER = req.params.provider.toString()  === req.currentUserId;
   if (!OWNER) {
     return res.status(403).send('Insufficient permissions')
   }
