@@ -33,7 +33,7 @@ async function loadRdv(req, res, next) {
 
 
 function checkRdvOwner(req, res, next){
-  console.log(req.service)
+
   let isOwner = req.rdv.provider.toString() === req.currentUserId;
   if(!isOwner){
     return res.status(403).send('You don\'t have the permissions to access this data')
@@ -138,4 +138,14 @@ router.delete("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) =>
 });
 
 
+
+router.put("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) => {
+  try {
+    let modif = req.body
+    await RDV.findByIdAndUpdate(req.params.id, modif)
+    res.status(200).send('Modification applied with success')
+  } catch (e) {
+    res.send(e)
+  }
+});
 export default router;
