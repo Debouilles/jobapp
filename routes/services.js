@@ -5,6 +5,7 @@ import { Service } from "../model/Service.js"
 import { User } from "../model/User.js"
 import { idCheckValidity } from "./users.js";
 import { authenticate } from "./login.js";
+import mongoose from "mongoose";
 
 
 
@@ -149,7 +150,7 @@ router.post("/", authenticate , async (req, res, next) => {
       titre: req.body.titre,
       type: req.body.type,
       date: req.body.date,
-      provider: req.body.provider,
+      provider: req.currentUserId,
       picture: req.body.picture,
       location: req.body.location,
     })
@@ -178,7 +179,7 @@ router.delete("/:id", authenticate , loadService, checkServiceOwner, async (req,
 
 //  PUT 
 // /services/:id
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticate, checkServiceOwner,  async (req, res) => {
   let modif = req.body
   try {
     await Service.findByIdAndUpdate(req.params.id, modif)
@@ -186,5 +187,8 @@ router.put("/:id", async (req, res) => {
     res.send(e)
   }
 });
+
+
+
 
 export default router;
