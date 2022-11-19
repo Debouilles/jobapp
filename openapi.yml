@@ -17,48 +17,30 @@ info:
     description: permet à l'utilisateur de se connecter
 
 servers:
-  - url: https://jobapp.onrender.com    # The "url: " prefix is required
+  - url: https://jobapp.onrender.com
 paths:
 ######## LOGIN
   /login/:
     post:
       tags: 
       - login
-      summary: Ajouter un nouveau login 
-      description: ça ajoute un nouveau login
+      summary: Se connecter
+      description: se connecter
       operationId: addLogin
       requestBody:
         description: Ajouter un nouveau login
         content:
           application/json:
             schema:
+              title: successful response
+              type: object
               properties:
-                  relatedService :
-                    $ref: '#/components/schemas/relatedService'
-                  provider:
-                    title: provider
-                    type: object
-                    properties:
-                      _id:
-                        $ref: '#/components/schemas/user_id'
-                      name:
-                        $ref: '#/components/schemas/name'
-                      email:
-                        $ref: '#/components/schemas/email'
-                  reciever:
-                    title: provider
-                    type: object
-                    properties:
-                      _id:
-                        $ref: '#/components/schemas/user_id'
-                      name:
-                        $ref: '#/components/schemas/name'
-                      email:
-                        $ref: '#/components/schemas/email'
-                  isAccepted:
-                    title: isAccepted
-                    type: boolean
-                    example: true
+                name:
+                  $ref: '#/components/schemas/name'
+                email:
+                  $ref: '#/components/schemas/email'
+                password:
+                  $ref: '#/components/schemas/password'
         required: true
       responses:
         '200':
@@ -66,10 +48,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/name'          
-            application/xml:
+                example: Welcome Taya Licorne!
+        '401':
+          description: Authorization header is missing
+          content:
+            application/json:
               schema:
-                $ref: '#/components/schemas/name'
+                example: Authorization header is missing
         '405':
           description: Invalid input
 
@@ -178,7 +163,7 @@ paths:
       description: ça ajoute un nouveau rdv quand le user reciever accepte un service
       operationId: addRdv
       requestBody:
-        description: Ajouter un nouveau rdv
+        description: Objet rdv créé
         content:
           application/json:
             schema:
@@ -332,7 +317,7 @@ paths:
       description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
       operationId: GetServices
       parameters:
-      - name: provider
+      - name: idProvider
         in: query #header, path, query, cookie
         description: l'id de l'utilisateur qui a mis en ligne le service
         required: false
@@ -452,9 +437,9 @@ paths:
       get:
       tags:
       - services
-      summary: Chercher tous les services
-      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
-      operationId: GetServices
+      summary: Cherche un service
+      description: Trouver un service par son identifiant
+      operationId: GetServiceId
       parameters:
       - name: id
         in: path #header, path, query, cookie
@@ -515,16 +500,86 @@ paths:
                 example: Not found
     delete:
       tags:
-      - services
-      summary: Delete un service
-      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
-      operationId: DeleteService
+        - services
+      summary: Supprimer un service
+      description: Supprimer un service
+      operationId: deleteService
+      parameters:
+        - name: _id
+          in: path
+          description: Identifiant du service à supprimer
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid service value
     put:
       tags:
       - services
       summary: Update un service
-      description: Un service est mis en ligne par un user provider et est défini par son identifiant unique. Dedans on trouvera sa localisation, un titre (nom du service), son type et l'id de l'user provider.
-      operationId: GetServices
+      description: Mettre à jour un service selon son identifiant
+      operationId: UpdateService
+      parameters:
+        - name: _id
+          in: path
+          description: L'identifiant unique
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Mettre à jour un service déjà existant
+        content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  location:
+                    $ref: '#/components/schemas/location'
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  titre:
+                    $ref: '#/components/schemas/titre'
+                  type:
+                    $ref: '#/components/schemas/type'
+                  date:
+                    $ref: '#/components/schemas/date'
+                  provider:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        title: _id
+                        type: string
+                        example: 6370fdc0f1ba534053028507
+                      name:
+                        name: name
+                        type: string
+                        example: Roja
+                      email:
+                        title: email
+                        type: string
+                        example: roja@gmail.com
+                  createdAt:
+                    title: createdAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z
+                  updatedAt:
+                    title: updatedAt
+                    type: date
+                    example: 2022-11-15T12:16:49.910Z
+      responses:
+        default:
+          description: successful operation
+        '401':
+          description: 'Error: Unauthorized'
+          content:
+            text/plain:
+              schema:
+                title: 'Error: Unauthorized'
+                type: string
+                example: Authorization header is missing
 
 ######## USERS
   /users/:
@@ -573,8 +628,24 @@ paths:
           application/json:
             schema:
               title: successful response
-              type: array
-              items:
+              type: object
+              properties:
+                _id:
+                  $ref: '#/components/schemas/user_id'
+                name:
+                  $ref: '#/components/schemas/name'
+                email:
+                  $ref: '#/components/schemas/email'
+                password:
+                  $ref: '#/components/schemas/password'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
                 type: object
                 properties:
                   _id:
@@ -585,26 +656,6 @@ paths:
                     $ref: '#/components/schemas/email'
                   password:
                     $ref: '#/components/schemas/password'
-        required: true
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                title: successful response
-                type: array
-                items:
-                  type: object
-                  properties:
-                    _id:
-                      $ref: '#/components/schemas/user_id'
-                    name:
-                      $ref: '#/components/schemas/name'
-                    email:
-                      $ref: '#/components/schemas/email'
-                    password:
-                      $ref: '#/components/schemas/password'
         '405':
           description: Invalid input
   
@@ -645,18 +696,77 @@ paths:
                 title: Users not found
                 type: string
                 example: Not found
-    put:
+    patch:
       tags:
-      - users
-      summary: Update un user
-      description: 
-      operationId: PutUser
+        - users
+      summary: Update un utilisateur
+      description: Cela ne peut être fait que par l'utilisateur connecté.
+      operationId: updateUser
+      parameters:
+        - name: _id
+          in: path
+          description: _id pour identifier l'utilisateur
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Mettre à jour un utilisateur déjà existant
+        content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  _id:
+                    $ref: '#/components/schemas/user_id'
+                  name:
+                    $ref: '#/components/schemas/name'
+                  email:
+                    $ref: '#/components/schemas/email'
+                  password:
+                    $ref: '#/components/schemas/password'
+      responses:
+        default:
+          description: successful operation
+        '401':
+          description: 'Error: Unauthorized'
+          content:
+            text/plain:
+              schema:
+                title: 'Error: Unauthorized'
+                type: string
+                example: Authorization header is missing
     delete:
       tags:
-      - users
-      summary: Delete un user
-      description: Delete un user
-      operationId: DeleteUser
+        - users
+      summary: Supprimer un utilisateur
+      description: Supprimer un utilisateur
+      operationId: deleteUser
+      parameters:
+        - name: _id
+          in: path
+          description: L'identifiant de l'utilisateur à supprimer
+          required: true
+          schema:
+            type: string
+      responses:
+        '403':
+          description: Insufficient permissions
+          content:
+            text/plain:
+              schema:
+                title: Insufficient permissions
+                type: string
+                example: Insufficient permissions
+        '404':
+          descriction: 
+          description: No access
+          content:
+            text/plain:
+              schema:
+                title: You don't have the permissions to access this data
+                type: string
+                example: You don't have the permissions to access this data
     
 ######## components
 components:
@@ -786,8 +896,3 @@ components:
       title: titre
       type: date
       example: '2022-12-04T00:00:00.000Z'
-    # relatedService:
-    #   title: relatedService
-    #   type: object
-    #   example:
-    #     $ref: '#/components/schemas/location'
