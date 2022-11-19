@@ -255,12 +255,209 @@ paths:
                     example: true
         '405':
           description: Invalid input
-    delete:
+  /rdvs/{id}:
+    get:
       tags:
       - rdvs
-      summary: Delete un rdv
-      description: Un rdv est créé quand un user provider propose un service et un user reciever valide le service. Créant ainsi un rdv unique identifiable avec son id
-      operationId: DeleteRDV   
+      summary: Cherche un rdv
+      description: Trouver un rdv par son identifiant
+      operationId: GetRdvId
+      parameters:
+      - name: id
+        in: path #header, path, query, cookie
+        description: l'id du rdv
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  _id:
+                    title: _id
+                    type: string
+                    example: 637512518cdb7960acf1ae2a
+                  relatedService:
+                    title: relatedService
+                    type: object
+                    properties:
+                      location:
+                        $ref: '#/components/schemas/location'
+                      _id:
+                        title: _id
+                        type: string
+                        example: 6373831d8d8224f8daa6ac73
+                      titre:
+                        title: _id
+                        type: string
+                        example: Check
+                      type:
+                        title: _id
+                        type: string
+                        example: Autres
+                      date:
+                        title: _id
+                        type: date
+                        example: 2022-02-04T00:00:00.000Z
+                      provider:
+                        title: _id
+                        type: string
+                        example: 6370fdc0f1ba534053028507
+                      createdAt:
+                        title: _id
+                        type: date
+                        example: 2022-11-15T12:16:29.894Z
+                      updatedAt:
+                        title: _id
+                        type: date
+                        example: 2022-11-15T12:16:29.894Z
+                  provider:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  reciever:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  isAccepted:
+                    title: isAccepted
+                    type: boolean
+                    example: true
+        '404':
+          description: Not found response
+          content:
+            text/plain:
+              schema:
+                title: Users not found
+                type: string
+                example: Not found
+    delete:
+      tags:
+        - rdvs
+      summary: Supprimer un rdv
+      description: Supprimer un rdv
+      operationId: deleteRdv
+      parameters:
+        - name: _id
+          in: path
+          description: Identifiant du rdv à supprimer
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid service value
+    put:
+      tags:
+      - rdvs
+      summary: Update un rdv
+      description: Mettre à jour un rdv selon son identifiant
+      operationId: UpdateRdv
+      parameters:
+        - name: _id
+          in: path
+          description: L'identifiant unique
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Mettre à jour un rdv déjà existant
+        content:
+            application/json:
+              schema:
+                title: successful response
+                type: object
+                properties:
+                  _id:
+                    title: _id
+                    type: string
+                    example: 637512518cdb7960acf1ae2a
+                  relatedService:
+                    title: relatedService
+                    type: object
+                    properties:
+                      location:
+                        $ref: '#/components/schemas/location'
+                      _id:
+                        title: _id
+                        type: string
+                        example: 6373831d8d8224f8daa6ac73
+                      titre:
+                        title: _id
+                        type: string
+                        example: Check
+                      type:
+                        title: _id
+                        type: string
+                        example: Autres
+                      date:
+                        title: _id
+                        type: date
+                        example: 2022-02-04T00:00:00.000Z
+                      provider:
+                        title: _id
+                        type: string
+                        example: 6370fdc0f1ba534053028507
+                      createdAt:
+                        title: _id
+                        type: date
+                        example: 2022-11-15T12:16:29.894Z
+                      updatedAt:
+                        title: _id
+                        type: date
+                        example: 2022-11-15T12:16:29.894Z
+                  provider:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  reciever:
+                    title: provider
+                    type: object
+                    properties:
+                      _id:
+                        $ref: '#/components/schemas/user_id'
+                      name:
+                        $ref: '#/components/schemas/name'
+                      email:
+                        $ref: '#/components/schemas/email'
+                  isAccepted:
+                    title: isAccepted
+                    type: boolean
+                    example: true
+      responses:
+        default:
+          description: successful operation
+        '401':
+          description: 'Error: Unauthorized'
+          content:
+            text/plain:
+              schema:
+                title: 'Error: Unauthorized'
+                type: string
+                example: Authorization header is missing
 ######## SERVICES
   /services/:
     get:
@@ -611,7 +808,12 @@ paths:
       description: Trouver un user avec son id
       operationId: FindUserId
       parameters:
-        - $ref: '#/components/parameters/_id_path'
+      - name: _id
+        in: path #header, path, query, cookie
+        description: l'id de l'utilisateur
+        required: true
+        schema:
+          type: string
       responses:
         '200':
           description: successful operation
@@ -713,93 +915,6 @@ paths:
     
 ######## components
 components:
-  parameters:
-    _id_path:
-      name: _id
-      in: path #header, path, query, cookie
-      description: L'identifiant unique
-      required: true
-      schema:
-        type: string
-    name:
-      name: name
-      in: header #header, path, query, cookie
-      description: Nom de l'utilisateur
-      required: false
-      schema:
-        type: string
-    email:
-      name: email
-      in: header #header, path, query, cookie
-      description: Email de l'utilisateur
-      required: false
-      schema:
-        type: string
-    password:
-      name: password
-      in: header #header, path, query, cookie
-      description: L'identifiant unique de l'utilisateur
-      required: false
-      schema:
-        type: string
-        #qqch de spécial ici?
-    location:
-      name: location
-      in: header 
-      description: La localisation du service. Elle est définie par des coordonnées [x, y]
-      required: true
-      schema:
-        type: Point
-    titre:
-      name: titre
-      in: header 
-      description: Le titre du service que l'user provider peut choisir librement
-      required: true
-      schema:
-        type: String
-    type:
-      name: type
-      in: header 
-      description: C'est la catégorie du service
-      required: true
-      schema:
-        type: String
-        enum: ['Assistance', 'Promenade', 'Jardinage', 'Prêt']
-    date:
-      name: date
-      in: header 
-      description: La date que le service doit être accompli (choisi par le user provider)
-      required: true
-      schema:
-        type: date
-    reciever:
-      name: reciever
-      in: header
-      description: L'user reciever (ne peut pas être égal au user provider)
-      required: true
-      schema:
-        type: string
-    provider:
-      name: provider
-      in: header 
-      description: L'user provider
-      required: true
-      schema:
-        type: string
-    relatedService:
-      name: relatedService
-      in: header 
-      description: Le service lié au rdv
-      required: true
-      schema:
-        type: string
-    isAccepted:
-      name: isAccepted
-      in: header 
-      description: il passe au true quand l'user reciever accepte le rdv
-      required: true
-      schema:
-        type: boolean
   schemas:
     user_id:
       title: _id
