@@ -53,8 +53,8 @@ router.post("/", async function (req, res, next) {
       const exp = Math.floor(Date.now() / 1000) + 7 * 24 * 3600;
       const payload = { sub: user._id.toString(), exp: exp };
       jwt.sign(payload, secretKey, function (err, token) {
-        console.log("Payload:" + payload + " secret:" + secretKey)
-        console.log(token)
+        // console.log("Payload:" + payload + " secret:" + secretKey)
+        // console.log(token)
         if (err) { return next(err); }
         res.send({ token: token }); // Send the token to the client.
       });

@@ -16,6 +16,7 @@ function failedOperationOnId(res, id) {
 }
 
 function checkServiceOwner(req, res, next){
+  console.log(req.service)
   let isOwner = req.service.provider.toString() === req.currentUserId;
   if(!isOwner){
     return res.status(403).send('You don\'t have the permissions to access this data')
