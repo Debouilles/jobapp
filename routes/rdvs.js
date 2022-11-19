@@ -83,15 +83,17 @@ router.get("/:id",authenticate, loadRdv, checkRdvOwnerOrReciever, async (req, re
 
 //  POST 
 // /rdvs
-router.post("/", async (req, res, next) => {
+router.post("/", authenticate ,async (req, res, next) => {
   try {
     const theService = await Service.findOne({ _id: req.body.relatedService })
     const resultService = theService._id;
     const resultProvider =  theService.provider;
-    const resultReciever = await User.findOne({ _id: req.body.reciever }).select("_id")
-
+    // const resultReciever = await User.findOne({ _id: req.body.reciever }).select("_id")
+    //fait avec auth maintenant
+    console.log(req.currentUserId)
+    const resultReciever = req.currentUserId;
     //400 si le reciever est le même id que le provider
-    if (resultReciever._id.equals(resultProvider.provider)) {
+    if (resultReciever === resultProvider.toString()) {
       res.status(400).send('The provider and the reciever can\'t be the same person')//bonne erreur????
       return
     }
