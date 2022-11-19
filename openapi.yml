@@ -3,7 +3,7 @@ openapi: 3.0.3
 info:
   version: "1.0.0"
   title: "jobapp - OpenAPI"
-  description: "API for jobapp"
+  description: "API document for jobapp"
   tags:
   - name: auth
     description: toutes les infos sur le login
@@ -603,8 +603,6 @@ paths:
                     $ref: '#/components/schemas/password'
         '405':
           description: Invalid input
-  
-
   /users/{_id}:
     get:
       tags:
