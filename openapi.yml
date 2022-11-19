@@ -1,6 +1,5 @@
 openapi: 3.0.3
-    servers:
-      - url: https://jobapp.onrender.com    # The "url: " prefix is required
+
 info:
   version: "1.0.0"
   title: "jobapp - OpenAPI"
@@ -18,7 +17,7 @@ info:
     description: permet à l'utilisateur de se connecter
 
 servers:
-  - url: https://api.example.com/v1    # The "url: " prefix is required
+  - url: https://jobapp.onrender.com    # The "url: " prefix is required
 paths:
 ######## LOGIN
   /login/:
