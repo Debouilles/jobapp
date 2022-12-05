@@ -18,7 +18,7 @@ const router = express.Router();
 
 
 export function verifyOwner(req,res,next){
-  const OWNER = req.user.id.toString() === req.currentUserId;
+  const OWNER = req.params.id.toString() === req.currentUserId;
   if (!OWNER) {
     return res.status(403).send('Insufficient permissions')
   }
@@ -142,17 +142,18 @@ router.post("/", async function (req, res, next) {
 // /users/:id
 router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
   try {
-    let modif = req.body
-    console.log(req.params._id)
+    // let modif = req.body
+    console.log(req.params.id)
     //gestion password
-    if (modif.password !== undefined) {
+    if (req.body.password !== undefined) {
       const plainPassword = req.body.password;
       const costFactor = 10;
       const hashedPassword = await bcrypt.hash(plainPassword, costFactor)
       modif.password = hashedPassword;
     }
 
-    const theUser = await User.findByIdAndUpdate(req.params._id, modif, { returnDocument: 'after' })
+    const theUser = await User.findByIdAndUpdate(req.currentUserId, req.body, { returnDocument: 'after' }).exec()
+    console.log(theUser)
     return res.status(200).send(theUser);
   } catch (e) {
     console.log('hello')
