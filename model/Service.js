@@ -8,6 +8,13 @@ let serviceSchema = new Schema({
     minlength: 3,
     maxlength: 30
   },
+
+  description: {
+    type: String,
+    minlength: 5,
+    maxlength: 200
+  },
+
   type: {
     type: String,
     required: [true, 'You must provide a type'],
