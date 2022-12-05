@@ -18,7 +18,6 @@ export function failedOperationOnId(res, id) {
 }
 
 function checkServiceOwner(req, res, next){
-  console.log(req.service)
   let isOwner = req.service.provider.toString() === req.currentUserId;
   if(!isOwner){
     return res.status(403).send('You don\'t have the permissions to access this data')
@@ -58,7 +57,6 @@ router.get("/", async (req, res, next) => {
     let query = Service.find();
     let users = await User.find();
     const totalServices = await Service.count();
-    console.log(req.query)
     //QUERIES-----------------------------------------------------------------------
     //note: switch avec (true) marchait pas. donc si imbriqué, sorry
     //PROVIDER------------------------------
@@ -174,18 +172,20 @@ router.delete("/:id", authenticate , loadService, checkServiceOwner, async (req,
     // res.send(service);
   } catch (e) {
     res.send(e)
+    next(e)
   }
 });
 
 //  PUT 
 // /services/:id
-router.put("/:id", authenticate, checkServiceOwner,  async (req, res) => {
+router.put("/:id", authenticate, loadService, checkServiceOwner,  async (req, res) => {
   let modif = req.body
   try {
-    await Service.findByIdAndUpdate(req.params.id, modif)
+    let theServ = await Service.findByIdAndUpdate(req.params.id, modif, { returnDocument: 'after' }).exec()
+    res.status(200).send(theServ)
   } catch (e) {
-    res.send(e)
-    // next(e)
+    // res.send(e)
+    next(e)
   }
 });
 
