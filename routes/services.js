@@ -185,6 +185,7 @@ router.put("/:id", authenticate, checkServiceOwner,  async (req, res) => {
     await Service.findByIdAndUpdate(req.params.id, modif)
   } catch (e) {
     res.send(e)
+    // next(e)
   }
 });
 

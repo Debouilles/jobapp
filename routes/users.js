@@ -140,7 +140,7 @@ router.post("/", async function (req, res, next) {
 
 //  PUT 
 // /users/:id
-router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
+router.patch("/:_id", authenticate, verifyOwner, async (req, res, next) => {
   try {
     let modif = req.body
     //gestion password
