@@ -140,9 +140,10 @@ router.post("/", async function (req, res, next) {
 
 //  PUT 
 // /users/:id
-router.patch("/:_id", authenticate, verifyOwner, async (req, res, next) => {
+router.patch("/:id", authenticate, verifyOwner, async (req, res, next) => {
   try {
     let modif = req.body
+    console.log(req.params._id)
     //gestion password
     if (modif.password !== undefined) {
       const plainPassword = req.body.password;
@@ -150,9 +151,11 @@ router.patch("/:_id", authenticate, verifyOwner, async (req, res, next) => {
       const hashedPassword = await bcrypt.hash(plainPassword, costFactor)
       modif.password = hashedPassword;
     }
-    const theUser = await User.findByIdAndUpdate(req.params.id, modif, { returnDocument: 'after' })
+
+    const theUser = await User.findByIdAndUpdate(req.params._id, modif, { returnDocument: 'after' })
     return res.status(200).send(theUser);
   } catch (e) {
+    console.log('hello')
     next(e)
   }
 });
