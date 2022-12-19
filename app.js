@@ -42,7 +42,7 @@ app.use(cors());
 //   origin: 'http://yourapp.com'
 // }))
 
-// let allowedOrigins = ['http://localhost:8100',
+// let allowedOrigins = ['https://localhost:8100',
 //                       'https://jobapp.onrender.com'];
 // app.use(cors({
 //   origin: function(origin, callback){
