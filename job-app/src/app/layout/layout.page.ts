@@ -17,9 +17,9 @@ export class LayoutPage {
 
   constructor() {
     this.tabs = [
-      { title: "Nouveau service", icon: "add", path: "create-service" },
-      { title: "Carte des services", icon: "map", path: "service-carte" },
-      { title: "Liste des services", icon: "list", path: "service-list" },
+      { title: "Liste des services", icon: "briefcase", path: "service-list" },
+      { title: "Rendez-vous", icon: "calendar", path: "rdvs" },
+      { title: "Profil", icon: "person-circle", path: "profil" },
     ];
   }
 }
