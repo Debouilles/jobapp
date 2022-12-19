@@ -8,6 +8,11 @@ const routes: Routes = [
     path: '',
     component: LayoutPage,
     children: [
+      {
+        path: "",
+        redirectTo: "service-list",
+        pathMatch: "full"
+      },
 
       {
         path: 'create-service',
@@ -15,7 +20,6 @@ const routes: Routes = [
       },
       {
         path: 'service-list',
-        redirectTo: "service-list",
         pathMatch: "full",
         loadChildren: () => import('./service-list/service-list.module').then(m => m.ServiceListPageModule)
       },

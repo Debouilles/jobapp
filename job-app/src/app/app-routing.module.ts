@@ -1,11 +1,20 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from "./auth/auth.guard";
+
 
 const routes: Routes = [
   {
     path: "",
+    // Add the guard to the canActivate array of this route
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import("./layout/layout.module").then((m) => m.LayoutPageModule),
+  },
+  
+  {
+    path: 'login',
+    loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)
   },
 ];
 
@@ -21,4 +30,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
