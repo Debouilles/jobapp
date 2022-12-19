@@ -6,7 +6,7 @@ import usersRouter from "./routes/users.js";
 import rdvsRouter from "./routes/rdvs.js";
 import servicesRouter from "./routes/services.js";
 import loginRouter from "./routes/login.js";
-
+import cors from "cors";
 //openapi
 import fs from 'fs';
 import yaml from 'js-yaml';
@@ -36,6 +36,26 @@ const openApiDocument = yaml.load(fs.readFileSync('./openapi.yml'));
 // Serve the Swagger UI documentation.
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocument));
 
+// app.use(cors({
+//   origin: 'http://yourapp.com'
+// }))
+
+let allowedOrigins = ['http://localhost:8100',
+                      'https://jobapp.onrender.com'];
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin 
+    // (like mobile apps or curl requests)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
+
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -48,6 +68,8 @@ app.use("/rdvs", rdvsRouter);
 app.use("/login", loginRouter);
 
 
+
+//CORS
 
 // error handler---------------------------------------------------------------------------------
 app.use(function (err, req, res, next) {
