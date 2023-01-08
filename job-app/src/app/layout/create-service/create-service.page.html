@@ -1,11 +1,36 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>CreateService</ion-title>
+    <ion-title>JobApp</ion-title>
     
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-<h1>Hello</h1>
-gsbnkctfvzgubhnijmntcfvzgbhnjm
+<h1>Création d'une annonce</h1>
+<ion-list>
+  <ion-item>
+    <ion-label>Title</ion-label>
+    <ion-input placeholder="Enter a title"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Date</ion-label>
+    <ion-datetime locale="ch-CH">
+      <span slot="time-label">Heure</span>
+    </ion-datetime>
+  </ion-item>
+  <ion-item>
+    <ion-label>Type</ion-label>
+    <ion-select interface="popover" placeholder="Select type">
+      <ion-select-option value="apples">Jardinage</ion-select-option>
+      <ion-select-option value="oranges">Bricolage</ion-select-option>
+      <ion-select-option value="bananas">Autres</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Description</ion-label>
+    <ion-input placeholder="Enter text"></ion-input>
+  </ion-item>
+</ion-list>
+
+<ion-button color="secondary">Valider</ion-button>
 </ion-content>
