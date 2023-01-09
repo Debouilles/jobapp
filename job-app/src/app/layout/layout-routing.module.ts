@@ -26,9 +26,18 @@ const routes: Routes = [
       {
         path: 'service-carte',
         loadChildren: () => import('./service-carte/service-carte.module').then(m => m.ServiceCartePageModule)
+      },
+      {
+        path: 'rdvs',
+        loadChildren: () => import('./rdvs/rdvs.module').then(m => m.RDVSPageModule)
+      },
+      {
+        path: 'profil',
+        loadChildren: () => import('./profil/profil.module').then(m => m.ProfilPageModule)
       }
     ]
-  }];
+  },]
+  ;
 
 
 @NgModule({
