@@ -5,5 +5,30 @@
 </ion-header>
 
 <ion-content>
+  <h3>Mes RdVs:</h3>
+
+  <ion-segment [(ngModel)]="selectTabs" color="secondary" value="default">
+    <ion-segment-button value="default">
+      <ion-label>A venir</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enAttente">
+      <ion-label>En attente</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="historique">
+      <ion-label>Historique</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <section *ngIf="selectTabs == 'default'">
+    [liste des rdvs à venir]
+  </section>
+
+  <section *ngIf="selectTabs == 'enAttente'">
+    [liste des rdvs à confirmer]
+  </section>
+
+  <section *ngIf="selectTabs == 'historique'">
+    [liste des rdvs réalisés]
+  </section>
 
 </ion-content>
