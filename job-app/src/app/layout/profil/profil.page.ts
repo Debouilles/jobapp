@@ -10,6 +10,8 @@ import { Router } from "@angular/router";
 })
 export class ProfilPage implements OnInit {
 
+  selectTabs = 'default';
+  
   constructor(
     // Inject the authentication provider.
     private auth: AuthService,

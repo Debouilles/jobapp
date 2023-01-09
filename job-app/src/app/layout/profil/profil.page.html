@@ -1,12 +1,61 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Profil</ion-title>
-    <ion-button (click)="logOut()">
+    <!-- <ion-button (click)="logOut()">
       <ion-icon name="log-out"></ion-icon>
-    </ion-button>
+    </ion-button> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+  <ion-segment [(ngModel)]="selectTabs" color="secondary" value="default">
+    <ion-segment-button value="default">
+      <ion-label>Profil</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="mesAnnonces">
+      <ion-label>Mes annonces</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+
+  <section *ngIf="selectTabs == 'default'">
+    <div class="infosUser">
+      <h3 class="enteteSection">Connecté·e en tant que</h3>
+      <!-- <p class="userName">{{user.name}}</p> -->
+      <p class="email">
+        email de la personne
+        <ion-button class="buttonLinks" color="medium" fill="clear">
+          <ion-icon name="pencil"></ion-icon>
+        </ion-button>
+      </p>
+    </div>
+    <div class="linksProfile">
+      <div>
+        <ion-button class="buttonLinks" color="secondary" fill="clear">
+          <ion-icon name="pencil"></ion-icon>
+          <p> Modifier le mot de passe</p>
+        </ion-button>
+      </div>
+      <div>
+        <ion-button class="buttonLinks" color="secondary" fill="clear" (click)="logOut()">
+          <ion-icon name="power"></ion-icon>
+          <p> Se déconnecter</p>
+        </ion-button>
+      </div>
+      <div>
+        <ion-button class="buttonLinks" color="danger" fill="clear">
+          <ion-icon name="close"></ion-icon>
+          <p> Supprimer le compte</p>
+        </ion-button>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section *ngIf="selectTabs == 'mesAnnonces'">
+    <h3>Mes annonces</h3>
+  </section>
+
 
 </ion-content>
