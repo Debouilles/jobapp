@@ -35,3 +35,12 @@ ion-button {
     --background: #36ABE0;
     --color: white;
 }
+
+ion-toolbar {
+    background-color: #36ABE0;
+}
+
+ion-toolbar ion-title {
+    --color: #36ABE0;
+}
+
