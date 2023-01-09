@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RDVSPage implements OnInit {
 
+  selectTabs = 'default';
+  
   constructor() { }
 
   ngOnInit() {
