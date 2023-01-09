@@ -1,5 +1,3 @@
-
-
 <ion-content [fullscreen]="true">
   <ion-segment [(ngModel)]="selectTabs" color="secondary" value="default">
     <ion-segment-button value="default">
@@ -11,10 +9,10 @@
   </ion-segment>
 
 
-  <section *ngIf="selectTabs == 'default'">
+  <section *ngIf="selectTabs === 'default'">
     <div class="infosUser">
       <h3 class="enteteSection">Connecté·e en tant que</h3>
-      <!-- <p class="userName">{{user.name}}</p> -->
+      <p class="userName">Nom de la personne</p>
       <p class="email">
         email de la personne
         <ion-button class="buttonLinks" color="medium" fill="clear">
