@@ -29,14 +29,12 @@ constructor(public http: HttpClient) {
       .subscribe((data) => {
         console.log(data);
 
-        // this.serviceData.titre = data[0].titre;
+       return this.serviceData.titre = data[0].titre;
         // console.log(this.serviceData.titre)
       });
   
   }
   
-
-
 readAPI(URL: string){
   return this.http.get(URL)
 }
