@@ -28,8 +28,9 @@ constructor(public http: HttpClient) {
     this.readAPI('https://jobapp.onrender.com/services')
       .subscribe((data) => {
         console.log(data);
+        console.log(data['titre']);
 
-       return this.serviceData.titre = data[0].titre;
+      //  return this.serviceData.titre = data[0].titre;
         // console.log(this.serviceData.titre)
       });
   
