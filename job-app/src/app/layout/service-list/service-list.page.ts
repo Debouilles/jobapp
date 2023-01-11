@@ -7,40 +7,64 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./service-list.page.scss'],
 })
 
-export class services{
+
+export class services {
+  services: any;
   serviceApiUrl = '';
   serviceData = {
     _id: '',
     titre:'',
-    // type: '',
-    // date: '',
-    // provider: '',
-    // location:''
-
-
+    type: '',
+    date: '',
+    provider: '',
+    location:''
   }
 
-
-
-constructor(public http: HttpClient) {
-
-
+  constructor(public http: HttpClient) {
     this.readAPI('https://jobapp.onrender.com/services')
       .subscribe((data) => {
-        console.log(data);
-        console.log(data['titre']);
-
-      //  return this.serviceData.titre = data[0].titre;
-        // console.log(this.serviceData.titre)
+        this.services = data['data'];
       });
-  
   }
-  
-readAPI(URL: string){
-  return this.http.get(URL)
+
+  readAPI(URL: string){
+    return this.http.get(URL)
+  }
 }
 
-}
+
+
+
+// export class services{
+//   serviceApiUrl = '';
+//   serviceData = {
+//     _id: '',
+//     titre:'',
+//     type: '',
+//     date: '',
+//     provider: '',
+//     location:''
+
+
+//   }
+
+
+
+// constructor(public http: HttpClient) {
+//     this.readAPI('https://jobapp.onrender.com/services')
+//       .subscribe((data) => {
+//         console.log(data)
+//         // this.serviceData.titre = data['data']['titre']
+//         this.serviceData = data['data'];
+//       });
+  
+//   }
+  
+// readAPI(URL: string){
+//   return this.http.get(URL)
+// }
+
+
 // export class ServiceListPage implements OnInit {
 
 

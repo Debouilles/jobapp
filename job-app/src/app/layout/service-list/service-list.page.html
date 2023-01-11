@@ -4,18 +4,39 @@
       <ion-icon id="btnadd" name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      
+
     </ion-fab-list>
     <ion-fab-list side="end">
-      
+
     </ion-fab-list>
   </ion-fab>
   <ion-icon id="icon1" name="map-sharp"></ion-icon>
-<ion-searchbar animated="true" placeholder="Rechercher un service"></ion-searchbar>
-<ion-icon id="icon2" name="options"></ion-icon>
-<!-- <div> -->
-<!-- <h1>{{ serviceData.titre }}</h1>
+  <ion-searchbar animated="true" placeholder="Rechercher un service"></ion-searchbar>
+  <ion-icon id="icon2" name="options"></ion-icon>
+  <!-- <div> -->
+  <!-- <h1>{{ serviceData.titre }}</h1>
 <p>{{ serviceData._id }}</p></div> -->
-<h1>{{ serviceData.titre }}</h1>
-<p>{{ serviceData._id }}</p>
+  <!-- <h1>{{ serviceData.titre }}</h1>
+<p>{{ serviceData._id }}</p> -->
+  <ion-list>
+    <div class="service" *ngFor="let service of services">
+      <ion-item>
+        <!-- <div class="serviceImage">
+
+    </div>
+    <div class="serviceInfo">
+      <h2>{{ service.titre }}</h2>
+      <p>{{ service.type }}</p>
+      <p>{{ service.date }}</p>
+      <p>{{ service.provider }}</p>
+      <p>{{ service.location }}</p>
+    </div> -->
+        <h2>{{ service.titre }}</h2>
+        <p>{{ service.type }}</p>
+        <p>{{ service.date }}</p>
+        <p>{{ service.provider }}</p>
+        <p>{{ service.location }}</p>
+      </ion-item>
+    </div>
+  </ion-list>
 </ion-content>
