@@ -4,6 +4,16 @@ import { Router } from "@angular/router";
 
 import { AuthService } from "../auth.service";
 import { AuthRequest } from "../../models/auth-request";
+// import { NgModule } from '@angular/core';
+// import { Routes, RouterModule } from '@angular/router';
+// import { RegistratePage } from "src/app/registrate/registrate.page";
+// import { AppRoutingModule } from "src/app/app-routing.module";
+
+
+// @NgModule({
+//   imports: [RouterModule.forRoot(Routes)],
+//   exports: [RouterModule]
+// })
 
 /**
  * Login page.
