@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-create-service',
@@ -6,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-service.page.scss'],
 })
 export class CreateServicePage implements OnInit {
-
-  constructor() { }
+  constructor(public modalController: ModalController) { }
+  closeModal() {
+    this.modalController.dismiss();
+  }
 
   ngOnInit() {
   }

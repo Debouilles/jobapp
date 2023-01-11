@@ -1,5 +1,17 @@
 <ion-content>
-<h1>Création d'une annonce</h1>
+  <ion-header>
+    <ion-toolbar>
+        <ion-title>Create Service</ion-title>
+        <ion-buttons slot="end">
+            <ion-button width="80px" class="closeButton" (click)="closeModal()">
+              CLOSE
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<!-- <h1>Création d'une annonce</h1> -->
 <form>
   <ion-item>
     <ion-label>Title</ion-label>

@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ModalController, NavParams } from '@ionic/angular';
+import { CreateServicePage } from '../create-service/create-service.page';
 
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.page.html',
   styleUrls: ['./service-list.page.scss'],
 })
+
 
 
 export class services {
@@ -20,7 +23,9 @@ export class services {
     location:''
   }
 
-  constructor(public http: HttpClient) {
+
+  constructor(public http: HttpClient, private modalController: ModalController) {
+
     this.readAPI('https://jobapp.onrender.com/services')
       .subscribe((data) => {
         this.services = data['data'];
@@ -30,6 +35,23 @@ export class services {
   readAPI(URL: string){
     return this.http.get(URL)
   }
+
+  async openCreateServiceModal() {
+    const modal = await this.modalController.create({
+        component: CreateServicePage,
+        componentProps: {
+          // pass any props that your create service component needs
+        },
+        cssClass: 'createServiceModal'
+    });
+    return await modal.present();
+}
+
+//géré dans create-service
+// async closeModal() {
+//   await this.modalController.dismiss();
+
+// }
 }
 
 
