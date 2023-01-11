@@ -1,3 +1,4 @@
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Login</ion-title>
@@ -10,49 +11,35 @@
       <!-- Username input -->
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input
-          inputmode="text"
-          #email="ngModel"
-          required="true"
-          name="username"
-          [(ngModel)]="authRequest.email"
-        ></ion-input>
+        <ion-input inputmode="text" #email="ngModel" required="true" name="username"
+          [(ngModel)]="authRequest.email"></ion-input>
       </ion-item>
-  
+
       <!-- Error message displayed if the username is invalid -->
       <ion-item lines="none" *ngIf="email.invalid && email.touched">
         <ion-text color="danger">Username is required.</ion-text>
       </ion-item>
-  
+
       <!-- Password input -->
       <ion-item>
-        <ion-label position="floating">Password</ion-label>
-        <ion-input
-          inputmode="text"
-          #password="ngModel"
-          required="true"
-          type="password"
-          name="password"
-          [(ngModel)]="authRequest.password"
-        ></ion-input>
+        <ion-label position="floating">Mot de passe</ion-label>
+        <ion-input inputmode="text" #password="ngModel" required="true" type="password" name="password"
+          [(ngModel)]="authRequest.password"></ion-input>
       </ion-item>
-  
+
       <!-- Error message displayed if the password is invalid -->
       <ion-item lines="none" *ngIf="password.invalid && password.touched">
         <ion-text color="danger">Password is required.</ion-text>
       </ion-item>
     </ion-list>
-  
+
     <div class="ion-padding">
       <!-- Submit button -->
-      <ion-button type="submit" expand="block" [disabled]="loginForm.invalid"
-        >Log in</ion-button
-      >
-  
-      <!-- Error message displayed if the login failed -->
-      <ion-text color="danger" *ngIf="loginError"
-        >Email or password is invalid.</ion-text
-      >
+      <ion-button type="submit" expand="block" [disabled]="loginForm.invalid">Log in</ion-button>
+      <!-- <ion-button (click)="registratePage">Inscription</ion-button> -->
+      <ion-button routerLink="/registrate">S'inscrire</ion-button>
+           <!-- Error message displayed if the login failed -->
+      <ion-text color="danger" *ngIf="loginError">Email or password is invalid.</ion-text>
     </div>
   </form>
 </ion-content>
