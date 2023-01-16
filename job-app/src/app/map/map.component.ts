@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Map, latLng, MapOptions, marker, Marker, tileLayer} from 'leaflet';
-import { defaultIcon } from './default-marker';
+import { defaultIcon } from '../service-map/default-marker';
 
 @Component({
   selector: 'app-map',

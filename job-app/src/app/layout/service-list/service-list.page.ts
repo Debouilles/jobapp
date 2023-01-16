@@ -20,7 +20,8 @@ export class services {
     type: '',
     date: '',
     provider: '',
-    location:''
+    location:'',
+    img:'',
   }
 
 
