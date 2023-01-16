@@ -70,7 +70,5 @@ Thumbs.db
 # ./src/environments/environments.prod.ts
 # ./src/environments/environments.ts
 
-node_modules 
-.env
 job-app/src/environments/environment.prod.ts
 job-app/src/environments/environment.ts
