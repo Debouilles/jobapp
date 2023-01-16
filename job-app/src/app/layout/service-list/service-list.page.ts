@@ -21,7 +21,7 @@ export class services {
     date: '',
     provider: '',
     location:'',
-    img:'',
+    picture:'',
   }
 
 
