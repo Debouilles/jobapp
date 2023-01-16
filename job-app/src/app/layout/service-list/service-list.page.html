@@ -1,5 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>JobApp</ion-title>
+    <ion-button id="notifButton" slot="end">
+      <ion-icon name="notifications-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <ion-fab  z-index="30002" slot="fixed" horizontal="end" vertical="bottom">
+  <ion-fab z-index="30002" slot="fixed" horizontal="end" vertical="bottom">
     <ion-fab-button class="addButton" (click)="openCreateServiceModal()" color="secondary">
       <ion-icon id="btnadd" name="add"></ion-icon>
     </ion-fab-button>
@@ -21,20 +30,21 @@
       <ion-item>
         <!-- <div class="serviceImage">
 
-    </div>
-    <div class="serviceInfo">
-      <h2>{{ service.titre }}</h2>
-      <p>{{ service.type }}</p>
-      <p>{{ service.date }}</p>
-      <p>{{ service.provider }}</p>
-      <p>{{ service.location }}</p>
-    </div> -->
-    <div class="serviceImage"><img width="200" src="" alt="image indisponible"></div>
-        <h2>{{ service.titre }}</h2>
-        <p>{{ service.type }}</p>
-        <p>{{ service.date }}</p>
-        <p>{{ service.provider }}</p>
-        <p>{{ service.location }}</p>
+        </div>
+        <div class="serviceInfo">
+          <h2>{{ service.titre }}</h2>
+          <p>{{ service.type }}</p>
+          <p>{{ service.date }}</p>
+          <p>{{ service.provider }}</p>
+          <p>{{ service.location }}</p>
+        </div> -->
+        <div class="serviceImage">
+          <img width="200" src="" alt="image indisponible">
+        </div>
+          <div class="infosService">
+          <h2 class="serviceTitre">{{ service.titre }}</h2>
+          <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
+        </div>
       </ion-item>
     </div>
   </ion-list>

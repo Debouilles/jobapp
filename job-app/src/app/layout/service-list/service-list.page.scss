@@ -1,40 +1,38 @@
 #icon1 {
     size: 35px;
-
 }
 
-ion-searchbar{
-width: 70%;
-
+ion-searchbar {
+    width: 70%;
 }
 
-.div{
-    
-    min-height: 800px;
+.div {
+    min-height: 900px;
 }
 
-// .service{
-//     display: flex;
-// }
-
-.serviceImage{
-    width: 100px;
-    height: 100px;
-    background-color: black;
+.serviceImage {
+    width: 80px;
+    height: 80px;
+    background-color: rgba(0, 0, 0, 0.605);
+    border-radius: 5px;
 }
 
+.serviceTitre{
+    font-size: 18px;
+    margin-left: 20px;
+}
 
-.createServiceModal{
+.serviceDate{
+    color:rgb(142, 142, 142);
+    font-size: 14px;
+    margin-left: 20px;
+}
+
+.createServiceModal {
     // z-index:1;
 }
 
 
-.addButton{
+.addButton {
     // z-index: 300001;
 }
-
-//tentative pour avoir un fond blanc et le texte en noir
-// .md body {
-//     --ion-background-color: #ffffff;
-    
-// }
