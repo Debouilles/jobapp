@@ -4,22 +4,24 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <form>
-    <!-- <form #registrateForm="ngForm" (submit)="onSubmit(registrateForm)"> -->
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
      <ion-list>
         <ion-item>
           <ion-label position="floating">Nom</ion-label>
-          <ion-input type="text" name="lastName" pattern="[a-zA-Z ]*" min-length="1" max-length="30"></ion-input>
+          <ion-input type="text" name="name" [(ngModel)]="name" pattern="[a-zA-Z ]*" min-length="1" max-length="30"></ion-input>
         </ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" name="email"></ion-input>
+        <ion-input type="email" name="email" [(ngModel)]="email"></ion-input>
         <ion-item>
           <ion-label position="floating">Mot de passe</ion-label>
-          <ion-input type="password" name="password" min-length="6" max-length="150"></ion-input>
+          <ion-input type="password" name="password" [(ngModel)]="password" min-length="6" max-length="150"></ion-input>
         </ion-item>
-        <form #greetingForm="ngForm" (submit)="displayGreeting(greetingForm)"></form>
-        <ion-button [disabled]="greetingForm.invalid" type="submit">Submit</ion-button>
+       
+        <ion-button type="submit">Submit</ion-button>
         <ion-button routerLink="/login">Connexion</ion-button>
 </ion-list>
     </form>
 </ion-content>
+
+
+ <!-- <form #greetingForm="ngForm" (submit)="displayGreeting(greetingForm)"></form> -->
