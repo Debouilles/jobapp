@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-<<<<<<< Updated upstream
-import { Map, latLng, MapOptions, marker, Marker, tileLayer} from 'leaflet';
-import { defaultIcon } from '../service-map/default-marker';
-=======
+
+
 import { Map, latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
-import { defaultIcon } from './default-marker';
+import { defaultIcon } from '../service-map/default-marker';
 import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
 import { ServiceOverlayComponent } from '../service-overlay/service-overlay.component';
->>>>>>> Stashed changes
 
 @Component({
   selector: 'app-map',
