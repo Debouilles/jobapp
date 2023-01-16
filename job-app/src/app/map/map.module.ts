@@ -3,18 +3,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { MapComponent } from './map.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
-import { ServiceCartePageRoutingModule } from './service-carte-routing.module';
-
-import { ServiceCartePage } from './service-carte.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ServiceCartePageRoutingModule
+    LeafletModule,
   ],
-  declarations: [ServiceCartePage]
+  declarations: [MapComponent],
+  exports: [MapComponent]
 })
-export class ServiceCartePageModule {}
+export class MapModule {}
