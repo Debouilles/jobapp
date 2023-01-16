@@ -6,8 +6,19 @@ let userSchema = new Schema({
   name: {
     type: String,
     required: [true, 'You must provide a name'],
+    unique: [true, 'This username is already taken'],
     minlength: 3,
-    maxlength: 30
+    maxlength: 30,
+    validate:
+    // Manually validate uniqueness to send a "pretty" validation error
+    // rather than a MongoDB duplicate key error
+    [
+      {
+        validator: validateUserNameUniqueness,
+        message: 'Username {VALUE} already exists'
+      }
+    ]
+    
   },
   email: {
     type: String,
@@ -48,6 +59,18 @@ function transformJsonUser(doc, json, options) {
   return this.constructor
     .findOne()
     .where('email')
+    .equals(value)
+    .exec()
+    .then(existingPerson => {
+      return !existingPerson || existingPerson._id.equals(this._id);
+    });
+}
+
+
+function validateUserNameUniqueness(value) {
+  return this.constructor
+    .findOne()
+    .where('name')
     .equals(value)
     .exec()
     .then(existingPerson => {
