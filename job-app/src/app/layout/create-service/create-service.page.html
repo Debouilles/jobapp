@@ -16,7 +16,7 @@
     <ion-label>Image</ion-label>
     <ion-button (click)="takePicture()"> Take picture 
       <ion-icon name="camera-outline"></ion-icon></ion-button>
-    <!-- <img *ngIf="picture" [src]="picture.url" /> -->
+    <img *ngIf="picture" [src]="picture" />
   </ion-item>
   <ion-item>
     <ion-label>Title</ion-label>

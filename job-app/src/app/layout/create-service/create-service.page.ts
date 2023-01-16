@@ -10,14 +10,16 @@ import { QimgImage } from 'src/app/models/image';
   styleUrls: ['./create-service.page.scss'],
 })
 export class CreateServicePage implements OnInit {
-
-  constructor(public modalController: ModalController) { }
+  picture = "";
+  constructor(public modalController: ModalController, private pictureService: PictureService) { }
   closeModal() {
     this.modalController.dismiss();
   }
 
   takePicture(){
-
+    this.pictureService.takeAndUploadPicture().subscribe((uploadedImage) => {
+      this.picture = uploadedImage.url;
+    });
   }
 
   ngOnInit() {

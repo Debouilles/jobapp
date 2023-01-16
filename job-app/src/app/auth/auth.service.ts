@@ -27,6 +27,8 @@ export class AuthService {
     });
   }
 
+
+  
   isAuthenticated$(): Observable<boolean> {
     return this.#auth$.pipe(map((auth) => Boolean(auth)));
   }
