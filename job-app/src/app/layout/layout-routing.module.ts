@@ -23,10 +23,7 @@ const routes: Routes = [
         pathMatch: "full",
         loadChildren: () => import('./service-list/service-list.module').then(m => m.ServiceListPageModule)
       },
-      {
-        path: 'service-carte',
-        loadChildren: () => import('./service-carte/service-carte.module').then(m => m.ServiceCartePageModule)
-      },
+     
       {
         path: 'rdvs',
         loadChildren: () => import('./rdvs/rdvs.module').then(m => m.RDVSPageModule)
