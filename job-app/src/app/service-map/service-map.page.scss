@@ -9,3 +9,10 @@
     font-size: 25px;
     color: black;
 }
+
+.wrapper {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-auto-flow: row;
+    height: 100%;
+  }
