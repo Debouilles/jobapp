@@ -22,15 +22,15 @@
     </ion-segment-button>
   </ion-segment>
 
-  <section *ngIf="selectTabs == 'default'">
+  <section *ngIf="selectTabs === 'default'">
     [liste des rdvs à venir]
   </section>
 
-  <section *ngIf="selectTabs == 'enAttente'">
+  <section *ngIf="selectTabs === 'enAttente'">
     [liste des rdvs à confirmer]
   </section>
 
-  <section *ngIf="selectTabs == 'historique'">
+  <section *ngIf="selectTabs === 'historique'">
     [liste des rdvs réalisés]
   </section>
 
