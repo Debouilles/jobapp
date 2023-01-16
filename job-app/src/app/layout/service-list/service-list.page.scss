@@ -1,13 +1,17 @@
-#icon1 {
-    size: 35px;
+
+.barreRecherche{
+    display:flex;
+    align-items: center;
 }
 
 ion-searchbar {
-    width: 70%;
+    margin-left: -10px;
+    margin-right: -10px;
 }
 
-.div {
-    min-height: 900px;
+.icon{
+    margin: 10px;
+    font-size: 25px;
 }
 
 .serviceImage {
@@ -26,13 +30,4 @@ ion-searchbar {
     color:rgb(142, 142, 142);
     font-size: 14px;
     margin-left: 20px;
-}
-
-.createServiceModal {
-    // z-index:1;
-}
-
-
-.addButton {
-    // z-index: 300001;
 }

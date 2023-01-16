@@ -12,14 +12,11 @@
     <ion-fab-button class="addButton" (click)="openCreateServiceModal()" color="secondary">
       <ion-icon id="btnadd" name="add"></ion-icon>
     </ion-fab-button>
-    <!-- <ion-fab-list side="top">
-    </ion-fab-list>
-    <ion-fab-list side="end">
-    </ion-fab-list> -->
   </ion-fab>
-    <ion-button routerLink="/service-map"><ion-icon id="icon1" name="map-sharp"></ion-icon></ion-button>
+  <ion-button routerLink="/service-map"><ion-icon id="icon1" name="map-sharp"></ion-icon></ion-button>
   <ion-searchbar animated="true" placeholder="Rechercher un service"></ion-searchbar>
-  <ion-button><ion-icon id="icon2" name="options"></ion-icon></ion-button>
+  <ion-button><ion-icon id="icon2" name="options"></ion-icon></ion-button> <ion-icon id="icon1" name="map-sharp"></ion-icon>
+ 
   <!-- <div> -->
   <!-- <h1>{{ serviceData.titre }}</h1>
 <p>{{ serviceData._id }}</p></div> -->
@@ -28,8 +25,8 @@
   <ion-list>
     <div class="service" *ngFor="let service of services">
       <ion-item>
-        <!-- <div class="serviceImage">
 
+        <!-- <div class="serviceImage">
         </div>
         <div class="serviceInfo">
           <h2>{{ service.titre }}</h2>
@@ -38,10 +35,11 @@
           <p>{{ service.provider }}</p>
           <p>{{ service.location }}</p>
         </div> -->
+
         <div class="serviceImage">
           <img width="200" src="" alt="image indisponible">
         </div>
-          <div class="infosService">
+        <div class="infosService">
           <h2 class="serviceTitre">{{ service.titre }}</h2>
           <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
         </div>
