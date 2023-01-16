@@ -8,6 +8,7 @@ import { ServiceMapPageRoutingModule } from './service-map-routing.module';
 
 import { ServiceMapPage } from './service-map.page';
 import { MapModule } from '../map/map.module';
+import { MapComponent } from '../map/map.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { MapModule } from '../map/map.module';
     ServiceMapPageRoutingModule,
     MapModule
   ],
+  entryComponents: [MapComponent],
   declarations: [ServiceMapPage]
 })
 
