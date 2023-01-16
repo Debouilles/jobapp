@@ -21,12 +21,17 @@ const routes: Routes = [
     path: 'registrate',
     loadChildren: () => import('./registrate/registrate.module').then( m => m.RegistratePageModule)
   },
-  { path: 'create-service', component: CreateServicePage },  {
+  { path: 'create-service', component: CreateServicePage },
+  {
     path: 'service-map',
     loadChildren: () => import('./service-map/service-map.module').then( m => m.ServiceMapPageModule)
-  }
+  },
 
-
+  // {
+  //   path: 'service-list',
+  //   loadChildren: () => import('./service-list/service-list.module').then( m => m.ServiceListPageModule)
+  // }
+  
 ];
 
 // const routes: Routes = [

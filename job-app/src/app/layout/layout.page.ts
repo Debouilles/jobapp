@@ -17,8 +17,8 @@ export class LayoutPage {
 
   constructor() {
     this.tabs = [
-      { title: "Liste des services", icon: "briefcase", path: "service-list" },
-      { title: "Rendez-vous", icon: "calendar", path: "rdvs" },
+      { title: "Services", icon: "briefcase", path: "service-list" },
+      { title: "Mes rendez-vous", icon: "calendar", path: "rdvs" },
       { title: "Profil", icon: "person-circle", path: "profil" },
     ];
   }
