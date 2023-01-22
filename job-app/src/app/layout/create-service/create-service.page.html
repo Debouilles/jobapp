@@ -10,7 +10,9 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
+
 <!-- <h1>Création d'une annonce</h1> -->
+
 <ion-item>
   <ion-label>Image</ion-label>
   <ion-button (click)="takePicture()"> Take picture 
@@ -21,6 +23,15 @@
   <ion-item>
     <ion-label>Title</ion-label>
     <ion-input [(ngModel)]="titre" name="titre" placeholder="Titre du service" ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>
+      Location
+    </ion-label>
+    <ion-button (click)="getCurrentPosition()">get position</ion-button>
+    {{ latitude }}
+    {{ longitude }}
+    <input type="hidden" [(ngModel)]="location" name="location">
   </ion-item>
   <ion-item>
     <!-- Le date se cache derrière le calendrier, à gérer pour la suite en CSS-->

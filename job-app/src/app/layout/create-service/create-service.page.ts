@@ -5,6 +5,13 @@ import { QimgImage } from 'src/app/models/image';
 import { NgForm } from '@angular/forms';
 import { Service } from 'src/app/models/service';
 import { ServiceService } from 'src/app/services/service.service';
+import { Geolocation } from '@capacitor/geolocation';
+
+// const printCurrentPosition = async () => {
+//   const coordinates = await Geolocation.getCurrentPosition();
+
+//   console.log('Current position:', coordinates);
+// };
 
 
 @Component({
@@ -14,15 +21,29 @@ import { ServiceService } from 'src/app/services/service.service';
 })
 export class CreateServicePage implements OnInit {
   picture: string;
-  location: object;
+  location: any;
   titre: string;
   date: Date;
   type: string;
   description: string;
 
+  //pour test
+  latitude: number;
+  longitude: number;
+
 
   pictureString = "";
   constructor(public modalController: ModalController, private pictureService: PictureService, private ServiceService: ServiceService) { }
+
+
+
+  // async printCurrentPosition() {
+  //   const coordinates = await Geolocation.getCurrentPosition();
+  //   this.location = coordinates
+  //   console.log('Current position:', coordinates);
+  //   return coordinates;
+  // }
+
   closeModal() {
     this.modalController.dismiss();
   }
@@ -41,7 +62,7 @@ export class CreateServicePage implements OnInit {
     let picture =  this.pictureString
     let oneLocation = {
       "type": "Point",
-      "coordinates": [ -72.856077, 40.848447 ]
+      "coordinates": [ this.latitude, this.longitude]
     }
     // picture: string, location: object, titre: string, date: Date, type: string, description: string
     this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
@@ -59,37 +80,30 @@ export class CreateServicePage implements OnInit {
 
 
   ngOnInit() {
+    // this.requestPermissions();
   }
 
+  async requestPermissions() {
+    try {
+      await Geolocation.requestPermissions();
+      this.getCurrentPosition();
+    } catch (err) {
+      console.log('Error requesting location permissions', err);
+    }
+  }
+
+  async getCurrentPosition() {
+    try {
+      const coordinates = await Geolocation.getCurrentPosition();
+      this.location = coordinates;
+      this.latitude = coordinates.coords.latitude
+      this.longitude = coordinates.coords.longitude
+      console.log(this.location)
+    } catch (err) {
+      console.log('Error getting location', err);
+    }
+  }
 }
 
 
-
-// export class RegistratePage implements OnInit {
-//   name: string;
-//   email: string;
-//   password: string;
-//   ngOnInit(): void {
-
-//   }
-
-//   constructor(private userService: UserService) {
-
-//   }
-
-//   onSubmit(form: NgForm) {
-//     const { name, email, password } = form.value;
-//     this.userService.createUser(name, email, password).subscribe((response) => {
-//       console.log(response);
-
-//     },
-//       (error) => {
-//         console.error(error);
-//       }
-
-//     );
-//   }
-
-
-// }
 
