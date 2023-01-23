@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CreateServicePage } from '../create-service/create-service.page';
+import { ServiceDetailComponent } from 'src/app/service-detail/service-detail.component';
 
 @Component({
   selector: 'app-service-list',
@@ -22,6 +23,7 @@ export class services {
     provider: '',
     location:'',
     picture:'',
+    description:'',
   }
 
 
@@ -37,6 +39,8 @@ export class services {
     return this.http.get(URL)
   }
 
+
+
   async openCreateServiceModal() {
     const modal = await this.modalController.create({
         component: CreateServicePage,
@@ -46,6 +50,22 @@ export class services {
         cssClass: 'createServiceModal'
     });
     return await modal.present();
+}
+
+async afficheService(service : any) {
+  const modal = await this.modalController.create({
+    
+      component: ServiceDetailComponent,
+      componentProps: { 
+        data: service
+        // pass any props that your create service component needs
+      },
+      cssClass: 'ModalPage'
+      
+  });
+
+
+  return await modal.present();
 }
 
 //géré dans create-service

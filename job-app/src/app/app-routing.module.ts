@@ -25,10 +25,11 @@ const routes: Routes = [
   {
     path: 'service-map',
     loadChildren: () => import('./service-map/service-map.module').then( m => m.ServiceMapPageModule)
-  },  {
+  },
+  {
     path: 'page-service',
     loadChildren: () => import('./page-service/page-service.module').then( m => m.PageServicePageModule)
-  },
+  }
 
 
   // {

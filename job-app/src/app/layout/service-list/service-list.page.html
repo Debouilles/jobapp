@@ -30,8 +30,8 @@
   <!-- <h1>{{ serviceData.titre }}</h1>
 <p>{{ serviceData._id }}</p> -->
   <ion-list>
-    <div class="service" *ngFor="let service of services">
-      <ion-item>
+    <ion-item class="service" *ngFor="let service of services">
+      
 
         <!-- <div class="serviceImage">
         </div>
@@ -43,7 +43,7 @@
           <p>{{ service.location }}</p>
         </div> -->
 
-        <div class="serviceImage">
+        <div class="serviceImage" (click)="afficheService(service)">
           <img src={{service.picture}} height="100%" width="" >
           <!-- alt="image indisponible" -->
         </div>
@@ -52,6 +52,5 @@
           <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
         </div>
       </ion-item>
-    </div>
   </ion-list>
 </ion-content>
