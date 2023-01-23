@@ -14,6 +14,7 @@ export class ProfilPage implements OnInit {
 
   selectTabs = 'default';
 
+  userID: any;
   services: any;
   
   serviceData = {
@@ -33,6 +34,13 @@ export class ProfilPage implements OnInit {
     // Inject the router
     private router: Router
   ) {
+    this.userID = this.auth.getUser$();
+    this.auth.getUser$().subscribe(data => {
+      this.userID = data._id;
+      console.log(this.userID)
+    });
+
+
 
     this.readAPI('https://jobapp.onrender.com/services')
       .subscribe((data) => {
@@ -40,7 +48,7 @@ export class ProfilPage implements OnInit {
         return this.services;
       });
 
-      console.log(this.services)
+      
   }
 
   ngOnInit() {

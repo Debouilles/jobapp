@@ -52,7 +52,7 @@
 
     <ion-list>
       <div class="service" *ngFor="let service of services">
-        <ion-item *ngIf="service.provider==='63720c4e5c227cfeb5fade48'">
+        <ion-item *ngIf="service.provider === userID">
   
           <div class="serviceImage">
             <img src={{service.picture}} height="100%" width="" >
