@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>JobApp</ion-title>
     <ion-button id="notifButton" slot="end">
-      <ion-icon  name="notifications-circle-outline"></ion-icon>
+      <ion-icon name="notifications-circle-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
@@ -31,31 +31,26 @@
       </p>
     </div>
     <div class="linksProfile">
-      <div>
-        <ion-button class="buttonLinks" color="secondary" fill="clear">
-          <ion-icon name="pencil"></ion-icon>
-          <p> Modifier le mot de passe</p>
-        </ion-button>
-      </div>
-      <div>
-        <ion-button class="buttonLinks" color="secondary" fill="clear" (click)="logOut()">
-          <ion-icon name="power"></ion-icon>
-          <p> Se déconnecter</p>
-        </ion-button>
-      </div>
-      <div>
-        <ion-button class="buttonLinks" color="danger" fill="clear">
-          <ion-icon name="close"></ion-icon>
-          <p> Supprimer le compte</p>
-        </ion-button>
-      </div>
+      <ion-button class="buttonLinks" color="secondary" fill="clear">
+        <ion-icon name="pencil"></ion-icon>
+        <p> Modifier le mot de passe</p>
+      </ion-button>
+      <ion-button class="buttonLinks" color="secondary" fill="clear" (click)="logOut()">
+        <ion-icon name="power"></ion-icon>
+        <p> Se déconnecter</p>
+      </ion-button>
+      <ion-button class="buttonLinks" color="danger" fill="clear">
+        <ion-icon name="close"></ion-icon>
+        <p> Supprimer le compte</p>
+      </ion-button>
     </div>
   </section>
-
-
+  
 
   <section *ngIf="selectTabs === 'mesAnnonces'">
-    <h3>Mes annonces</h3>
+    <h3 class="enteteSection">Mes annonces</h3>
+
+    
   </section>
 
 

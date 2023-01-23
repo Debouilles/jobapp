@@ -1,2 +1,22 @@
-ion-button {
-  }
+.infosUser{
+  margin-left: 10px;
+}
+
+.userName, .email{
+  margin-left: 10px;
+}
+
+.email{
+  color: #666666;
+}
+
+.linksProfile {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.buttonLinks{
+  align-self: flex-start;
+  margin:0%;
+}
