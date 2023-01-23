@@ -50,6 +50,21 @@
   <section *ngIf="selectTabs === 'mesAnnonces'">
     <h3 class="enteteSection">Mes annonces</h3>
 
+    <ion-list>
+      <div class="service" *ngFor="let service of services">
+        <ion-item *ngIf="service.provider==='63720c4e5c227cfeb5fade48'">
+  
+          <div class="serviceImage">
+            <img src={{service.picture}} height="100%" width="" >
+          </div>
+          <div class="infosService">
+            <h2 class="serviceTitre">{{ service.titre }}</h2>
+            <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
+          </div>
+          
+        </ion-item>
+      </div>
+    </ion-list>
     
   </section>
 

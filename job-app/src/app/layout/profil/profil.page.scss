@@ -20,3 +20,21 @@
   align-self: flex-start;
   margin:0%;
 }
+
+.serviceImage {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(0, 0, 0, 0.605);
+  border-radius: 5px;
+}
+
+.serviceTitre{
+  font-size: 18px;
+  margin-left: 20px;
+}
+
+.serviceDate{
+  color:rgb(142, 142, 142);
+  font-size: 14px;
+  margin-left: 20px;
+}
