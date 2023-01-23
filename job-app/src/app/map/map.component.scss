@@ -1,3 +1,12 @@
 .map {
     height: 100%;
+    z-index: 0;
+  }
+
+  ion-card {
+    position: absolute;
+    bottom: 10px; /* adjust as necessary */
+    width: 80%;
+    right: 10px; /* adjust as necessary */
+    z-index: 1; /* set to a higher value than the map */
   }

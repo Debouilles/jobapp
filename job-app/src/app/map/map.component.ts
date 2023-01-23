@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 
 import { Map, latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
@@ -16,11 +16,12 @@ export class MapComponent implements OnInit {
   mapOptions: MapOptions;
   mapMarkers: Marker[];
   markerSetup: any[];
+  selectedService: any;
 
   map: Map;
   currentMarker: any;
 
-  constructor(private http: HttpClient, private modalController: ModalController) {
+  constructor(private http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef) {
     this.mapOptions = {
       layers: [
         tileLayer(
@@ -32,11 +33,6 @@ export class MapComponent implements OnInit {
       center: latLng(46.778186, 6.641524)
     };
 
-    // this.mapMarkers = [
-    //   marker([ 46.778186, 6.641524 ], { icon: defaultIcon }).bindTooltip('Hello'),
-    //   marker([ 46.780796, 6.647395 ], { icon: defaultIcon }),
-    //   marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
-    // ];
     this.mapMarkers = [];
     this.markerSetup = [];
 
@@ -63,39 +59,18 @@ export class MapComponent implements OnInit {
       });
 
 
+
       this.markerSetup.forEach(markSet =>{
-      console.log(markSet)
-      markSet.marker.on("click", event=>{
-        console.log(event)
-        this.markerSetup = markSet
-        console.log(this.markerSetup)
-      })
-      })
-
-      
-
-
+        markSet.marker.on("click", event=>{
+          this.selectedService = markSet.data;
+          this.cdr.detectChanges();
+        });
+  });
       /* console.log(this.mapMarkers) */
-      this.mapMarkers.forEach(marker => {
-       marker.on("click", (event) => {
-        this.currentMarker = marker;
-        console.log(this.currentMarker)
-       })
-      });
+
     });
   }
 
-
-
-/*   async openModal(data: any) {
-    const modal = await this.modalController.create({
-      component: ServiceOverlayComponent,
-      componentProps: {
-        data: data
-      }
-    });
-    return await modal.present();
-  } */
 
   onMapReady(map: Map) {
     this.map = map;
@@ -103,6 +78,8 @@ export class MapComponent implements OnInit {
       this.mapMarkers.forEach(marker => {
         marker.on("click", event => {
           this.currentMarker = marker;
+          this.selectedService = event.target.options.data;
+         
           /* this.openModal(event.target.options.data); */
         });
 
@@ -114,6 +91,16 @@ export class MapComponent implements OnInit {
     }, 0);
   }
 
+
+  /*   async openModal(data: any) {
+    const modal = await this.modalController.create({
+      component: ServiceOverlayComponent,
+      componentProps: {
+        data: data
+      }
+    });
+    return await modal.present();
+  } */
 
 
 }
