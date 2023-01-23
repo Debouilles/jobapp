@@ -39,17 +39,8 @@ export class ProfilPage implements OnInit {
     this.userID = this.auth.getUser$();
     this.auth.getUser$().subscribe(data => {
       this.userID = data._id;
-      console.log(this.userID)
-    });
-
-    this.auth.getUser$().subscribe(data => {
       this.userName = data.name;
-      console.log(this.userName)
-    });
-
-    this.auth.getUser$().subscribe(data => {
       this.userEmail = data.email;
-      console.log(this.userEmail)
     });
 
     this.readAPI('https://jobapp.onrender.com/services')
