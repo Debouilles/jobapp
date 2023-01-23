@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ServiceMapPage } from './service-map.page';
 
+
 describe('ServiceMapPage', () => {
   let component: ServiceMapPage;
   let fixture: ComponentFixture<ServiceMapPage>;

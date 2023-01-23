@@ -5,7 +5,7 @@ import { Map, latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
 import { defaultIcon } from '../service-map/default-marker';
 import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
-import { ServiceOverlayComponent } from '../service-overlay/service-overlay.component';
+
 
 @Component({
   selector: 'app-map',
@@ -15,7 +15,10 @@ import { ServiceOverlayComponent } from '../service-overlay/service-overlay.comp
 export class MapComponent implements OnInit {
   mapOptions: MapOptions;
   mapMarkers: Marker[];
+  markerSetup: any[];
+
   map: Map;
+  currentMarker: any;
 
   constructor(private http: HttpClient, private modalController: ModalController) {
     this.mapOptions = {
@@ -35,27 +38,56 @@ export class MapComponent implements OnInit {
     //   marker([ 46.784992, 6.652267 ], { icon: defaultIcon })
     // ];
     this.mapMarkers = [];
+    this.markerSetup = [];
 
   }
 
 
 
   ngOnInit() {
+    
     this.http.get<any>('https://jobapp.onrender.com/services/').subscribe(data => {
       data.data.forEach(service => {
+
+        
         const newMarker = marker([service.location.coordinates[0], service.location.coordinates[1]], { icon: defaultIcon }).bindTooltip(service.titre).on("click", event => {
-          console.log('hello')
-          this.openModal(service);
+        /*   this.openModal(service); */
         });
+        this.markerSetup.push({
+          marker: newMarker,
+          data: service
+        }) 
+
         this.mapMarkers.push(newMarker);
-        console.log([service.location.coordinates[0], service.location.coordinates[1]])
+        // console.log([service.location.coordinates[0], service.location.coordinates[1]])
+      });
+
+
+      this.markerSetup.forEach(markSet =>{
+      console.log(markSet)
+      markSet.marker.on("click", event=>{
+        console.log(event)
+        this.markerSetup = markSet
+        console.log(this.markerSetup)
+      })
+      })
+
+      
+
+
+      /* console.log(this.mapMarkers) */
+      this.mapMarkers.forEach(marker => {
+       marker.on("click", (event) => {
+        this.currentMarker = marker;
+        console.log(this.currentMarker)
+       })
       });
     });
   }
 
 
 
-  async openModal(data: any) {
+/*   async openModal(data: any) {
     const modal = await this.modalController.create({
       component: ServiceOverlayComponent,
       componentProps: {
@@ -63,15 +95,15 @@ export class MapComponent implements OnInit {
       }
     });
     return await modal.present();
-  }
+  } */
 
   onMapReady(map: Map) {
     this.map = map;
     if (this.mapMarkers.length > 0) {
       this.mapMarkers.forEach(marker => {
         marker.on("click", event => {
-          console.log('hello')
-          this.openModal(event.target.options.data);
+          this.currentMarker = marker;
+          /* this.openModal(event.target.options.data); */
         });
 
       });
