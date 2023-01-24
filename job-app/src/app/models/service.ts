@@ -1,6 +1,7 @@
 export class Service {
+    _id: string;
     picture: string;
-    title: string;
+    titre: string;
     date: Date;
     type: string;
     description: string;

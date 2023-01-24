@@ -7,14 +7,19 @@ import { IonicModule } from '@ionic/angular';
 import { CreateServicePageRoutingModule } from './create-service-routing.module';
 
 import { CreateServicePage } from './create-service.page';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
+
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CreateServicePageRoutingModule
+    CreateServicePageRoutingModule,
+    LeafletModule
   ],
   declarations: [CreateServicePage]
 })
-export class CreateServicePageModule {}
+export class CreateServicePageModule { }
