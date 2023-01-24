@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PictureService } from 'src/app/picture/picture.service';
 import { QimgImage } from 'src/app/models/image';
@@ -20,6 +20,9 @@ import { Geolocation } from '@capacitor/geolocation';
   styleUrls: ['./create-service.page.scss'],
 })
 export class CreateServicePage implements OnInit {
+
+  @Input() serviceToUpdate: any;
+
   picture: string;
   location: any;
   titre: string;
@@ -58,29 +61,40 @@ export class CreateServicePage implements OnInit {
 
   onSubmit(form: NgForm) {
     console.log(form.value)
-    const {titre, type, date, description} = form.value;
-    let picture =  this.pictureString
+    const { titre, type, date, description } = form.value;
+    let picture = this.pictureString
     let oneLocation = {
       "type": "Point",
-      "coordinates": [ this.latitude, this.longitude]
+      "coordinates": [this.latitude, this.longitude]
     }
-    // picture: string, location: object, titre: string, date: Date, type: string, description: string
-    this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
-      console.log(response);
 
-    },
-      (error) => {
-        console.error(error);
-      }
 
-    );
 
-    console.log("hello")
+    if (this.serviceToUpdate === undefined) {
+      console.log("Creating a new service");
+      // picture: string, location: object, titre: string, date: Date, type: string, description: string
+      this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
+        console.log(response);
+
+      },
+        (error) => {
+          console.error(error);
+        }
+
+      );
+      console.log("hello")
+    } else {
+      console.log("Updating an existing service");
+
+    }
+
+
   }
 
 
   ngOnInit() {
     // this.requestPermissions();
+    console.log(this.serviceToUpdate)
   }
 
   async requestPermissions() {

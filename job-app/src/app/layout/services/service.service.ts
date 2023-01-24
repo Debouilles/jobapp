@@ -89,10 +89,17 @@ async getAuth(){
 }
 
 
+
+
+async updateService(id: string){
+
+  let httpOptions = await this.getAuth()
+
+}
+
   async deleteService(id: string) {
     // const httpOptions = await this.getAuth()
     let httpOptions = await this.getAuth()
-    console.log("LES HEADERS:"+httpOptions.headers)
     this.http.delete(`${this.baseUrl}/${id}`,  httpOptions ).subscribe(async data => {
         
     });

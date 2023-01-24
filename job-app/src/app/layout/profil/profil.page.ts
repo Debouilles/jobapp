@@ -5,8 +5,9 @@ import { Router } from "@angular/router";
 import { Service } from 'src/app/models/service';
 import { HttpClient } from '@angular/common/http';
 import { ServiceService } from 'src/app/layout/services/service.service';
-import { ToastController } from '@ionic/angular';
-
+import { ModalController, ToastController } from '@ionic/angular';
+import { ServiceUpdateComponent } from '../service-update/service-update.component';
+import { CreateServicePage } from '../create-service/create-service.page';
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.page.html',
@@ -20,17 +21,17 @@ export class ProfilPage implements OnInit {
   userName: any;
   userEmail: any;
   services: any;
-  
+
   serviceData = {
     _id: '',
-    titre:'',
+    titre: '',
     type: '',
     date: '',
     provider: '',
-    location:'',
-    picture:'',
+    location: '',
+    picture: '',
   }
-  
+
   constructor(
     public http: HttpClient,
     // Inject the authentication provider.
@@ -38,7 +39,8 @@ export class ProfilPage implements OnInit {
     // Inject the router
     private router: Router,
     private serviceService: ServiceService,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private modalController: ModalController
   ) {
     this.userID = this.auth.getUser$();
     this.auth.getUser$().subscribe(data => {
@@ -53,7 +55,7 @@ export class ProfilPage implements OnInit {
         return this.services;
       });
 
-      
+
   }
 
   ngOnInit() {
@@ -63,16 +65,44 @@ export class ProfilPage implements OnInit {
     this.auth.logOut();
     this.router.navigateByUrl("/login");
   }
-  
-  readAPI(URL: string){
+
+  readAPI(URL: string) {
     return this.http.get(URL)
   }
 
 
- async deleteServ(service: Service){
- await this.serviceService.deleteService(service._id)
-console.log("deleted")
+  async deleteServ(service: Service) {
+    await this.serviceService.deleteService(service._id)
+    await this.deletedMessage()
+    console.log("deleted")
   }
+
+
+
+
+  async deletedMessage() {
+    const toast = await this.toastController.create({
+      message: 'Deleted',
+      duration: 1500,
+      position: 'middle'
+    });
+
+    await toast.present();
+  }
+
+
+  async updateServ(serviceId) {
+    // console.log(service)
+    const modal = await this.modalController.create({
+        component: CreateServicePage,
+        componentProps: {
+          // pass any props that your create service component needs
+          serviceToUpdate: serviceId
+        },
+        cssClass: 'createServiceModal'
+    });
+    return await modal.present();
+}
   // deleteServ(service: Service) {
   //   // this.http.delete(`https://jobapp.onrender.com/services/${service._id}`)
   //   // .subscribe(() => {
@@ -80,49 +110,46 @@ console.log("deleted")
   //   //   this.services = this.services.filter(s => s._id !== service._id);
   //   // });
 
-    
+
   // }
 
-//   async deleteServ(service: Service) {
-//     try {
-//         await this.serviceService.deleteService(service._id).toPromise();
-//         const toast =  this.toastController.create({
-//             message: 'Service deleted.',
-//             duration: 2000
-//         });
-//         toast.present();
-//     } catch (error) {
-//         const toast = await this.toastController.create({
-//             message: error.error.message,
-//             duration: 2000
-//         });
-//         toast.present();
-//     }
-// }
+  //   async deleteServ(service: Service) {
+  //     try {
+  //         await this.serviceService.deleteService(service._id).toPromise();
+  //         const toast =  this.toastController.create({
+  //             message: 'Service deleted.',
+  //             duration: 2000
+  //         });
+  //         toast.present();
+  //     } catch (error) {
+  //         const toast = await this.toastController.create({
+  //             message: error.error.message,
+  //             duration: 2000
+  //         });
+  //         toast.present();
+  //     }
+  // }
 
-//  async deleteServ(service: Service) {
-//     this.serviceService.deleteService(service._id).then(() => {
-//       this.services = this.services.filter(s => s._id !== service._id);
-//       // remove the deleted service from the services array
-//       // this.services = this.services.filter(s => s._id !== service._id);
-//       // console.log("done")
-//       const toast = await this.toastController.create({
-//         message: 'Service deleted.',
-//         duration: 2000
-//       });
-//       await toast.present();
-//     }, async error => {
-//       const toast = await this.toastController.create({
-//         message: error.error.message,
-//         duration: 2000
-//       });
-//       toast.present();
+  //  async deleteServ(service: Service) {
+  //     this.serviceService.deleteService(service._id).then(() => {
+  //       this.services = this.services.filter(s => s._id !== service._id);
+  //       // remove the deleted service from the services array
+  //       // this.services = this.services.filter(s => s._id !== service._id);
+  //       // console.log("done")
+  //       const toast = await this.toastController.create({
+  //         message: 'Service deleted.',
+  //         duration: 2000
+  //       });
+  //       await toast.present();
+  //     }, async error => {
+  //       const toast = await this.toastController.create({
+  //         message: error.error.message,
+  //         duration: 2000
+  //       });
+  //       toast.present();
 
-//     });
-//   }
+  //     });
+  //   }
 
-  updateServ(){
-    console.log('update')
-  }
 
 }

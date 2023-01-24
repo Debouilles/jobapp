@@ -60,7 +60,7 @@
             <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
           </div>
           <ion-button (click)="deleteServ(service)">DELETE</ion-button>
-          <!-- <ion-button (click)="updateServ()">UPDATE</ion-button> -->
+          <ion-button (click)="updateServ(service._id)">UPDATE</ion-button>
         </ion-item>
       </div>
     </ion-list>
