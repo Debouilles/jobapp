@@ -17,6 +17,8 @@ export class ProfilPage implements OnInit {
   selectTabs = 'default';
 
   userID: any;
+  userName: any;
+  userEmail: any;
   services: any;
   
   serviceData = {
@@ -41,10 +43,9 @@ export class ProfilPage implements OnInit {
     this.userID = this.auth.getUser$();
     this.auth.getUser$().subscribe(data => {
       this.userID = data._id;
-      console.log(this.userID)
+      this.userName = data.name;
+      this.userEmail = data.email;
     });
-
-
 
     this.readAPI('https://jobapp.onrender.com/services')
       .subscribe((data) => {

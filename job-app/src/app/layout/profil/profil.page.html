@@ -22,13 +22,11 @@
   <section *ngIf="selectTabs === 'default'">
     <div class="infosUser">
       <h3 class="enteteSection">Connecté·e en tant que</h3>
-      <p class="userName">Nom de la personne</p>
-      <p class="email">
-        email de la personne
-        <ion-button class="buttonLinks" color="medium" fill="clear">
-          <ion-icon name="pencil"></ion-icon>
-        </ion-button>
-      </p>
+      <p class="userName">{{ userName }}</p>
+      <p class="email">{{ userEmail }}</p>
+      <ion-button class="buttonLinks" color="medium" fill="clear">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
     </div>
     <div class="linksProfile">
       <ion-button class="buttonLinks" color="secondary" fill="clear">
@@ -45,7 +43,7 @@
       </ion-button>
     </div>
   </section>
-  
+
 
   <section *ngIf="selectTabs === 'mesAnnonces'">
     <h3 class="enteteSection">Mes annonces</h3>
@@ -53,9 +51,9 @@
     <ion-list>
       <div class="service" *ngFor="let service of services">
         <ion-item *ngIf="service.provider === userID">
-  
+
           <div class="serviceImage">
-            <img src={{service.picture}} height="100%" width="" >
+            <img src={{service.picture}} height="100%" width="">
           </div>
           <div class="infosService">
             <h2 class="serviceTitre">{{ service.titre }}</h2>
@@ -66,7 +64,7 @@
         </ion-item>
       </div>
     </ion-list>
-    
+
   </section>
 
 
