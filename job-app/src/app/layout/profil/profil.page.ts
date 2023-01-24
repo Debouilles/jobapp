@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 
 import { Service } from 'src/app/models/service';
 import { HttpClient } from '@angular/common/http';
-import { ServiceService } from 'src/app/services/service.service';
+import { ServiceService } from 'src/app/layout/services/service.service';
 import { ToastController } from '@ionic/angular';
 
 @Component({

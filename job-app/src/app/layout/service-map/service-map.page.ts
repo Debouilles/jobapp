@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ModalController, NavParams } from '@ionic/angular';
-import { CreateServicePage } from '../layout/create-service/create-service.page';
+import { CreateServicePage } from '../create-service/create-service.page';
 
 @Component({
   selector: 'app-service-map',

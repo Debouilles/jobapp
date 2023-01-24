@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Service } from '../models/service';
-import { AuthService } from '../auth/auth.service';
+import { Service } from '../../models/service';
+import { AuthService } from '../../auth/auth.service';
 
 import { catchError } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';

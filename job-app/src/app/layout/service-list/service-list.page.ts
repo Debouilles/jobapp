@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CreateServicePage } from '../create-service/create-service.page';
-import { ServiceDetailComponent } from 'src/app/service-detail/service-detail.component';
+import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-detail.component';
 
 @Component({
   selector: 'app-service-list',

@@ -19,17 +19,14 @@ const routes: Routes = [
   },
   {
     path: 'registrate',
-    loadChildren: () => import('./registrate/registrate.module').then( m => m.RegistratePageModule)
+    loadChildren: () => import('./layout/registrate/registrate.module').then( m => m.RegistratePageModule)
   },
   { path: 'create-service', component: CreateServicePage },
   {
     path: 'service-map',
-    loadChildren: () => import('./service-map/service-map.module').then( m => m.ServiceMapPageModule)
+    loadChildren: () => import('./layout/service-map/service-map.module').then( m => m.ServiceMapPageModule)
   },
-  {
-    path: 'page-service',
-    loadChildren: () => import('./page-service/page-service.module').then( m => m.PageServicePageModule)
-  }
+
 
 
   // {

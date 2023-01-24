@@ -4,7 +4,7 @@ import { PictureService } from 'src/app/picture/picture.service';
 import { QimgImage } from 'src/app/models/image';
 import { NgForm } from '@angular/forms';
 import { Service } from 'src/app/models/service';
-import { ServiceService } from 'src/app/services/service.service';
+import { ServiceService } from 'src/app/layout/services/service.service';
 import { Geolocation } from '@capacitor/geolocation';
 
 // const printCurrentPosition = async () => {
