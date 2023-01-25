@@ -19,11 +19,7 @@
     </a>
     <ion-searchbar animated="true" placeholder="Rechercher un service" [debounce]="1000"
       (ionChange)="handleChange($event)"></ion-searchbar> 
-  <ion-list>
-      <ion-item *ngFor="let result of results">
-        <ion-label>{{ result }}</ion-label>
-      </ion-item>
-    </ion-list>
+
 
 
     <!-- <a routerLink="">
@@ -43,8 +39,6 @@
 <p>{{ serviceData._id }}</p> -->
   <ion-list>
     <ion-item class="service" (click)="afficheService(service)" *ngFor="let service of services">
-
-
       <!-- <div class="serviceImage">
         </div>
         <div class="serviceInfo">

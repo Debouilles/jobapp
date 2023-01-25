@@ -38,15 +38,46 @@ export class services {
 
   
   // public datatest = ['Amsterdam', 'Buenos Aires', 'Cairo', 'Geneva', 'Hong Kong', 'Istanbul', 'London', 'Madrid', 'New York', 'Panama City'];
-  public datatest = ['Amsterdam', 'Buenos Aires', 'Cairo', 'Geneva', 'Hong Kong', 'Istanbul', 'London', 'Madrid', 'New York', 'Panama City'];
+ 
 
-  public results = [...this.datatest];
-  
+  public results;
+  public allServices:[];
+
   handleChange(event) {
-    console.log(event);
+    
+   
+
+    // console.log(event);
     const query = event.target.value.toLowerCase();
-    this.results = this.datatest.filter(d => d.toLowerCase().indexOf(query) > -1);
-  }
+    console.log(query)
+    this.results = this.services.filter(d => {
+        // console.log(d);
+        return d.titre.toLowerCase().indexOf(query) > -1;
+    });
+    console.log(this.results)
+    if(query.length === 0) {
+      this.services = this.allServices;
+   }
+     else {
+      this.services = this.results;
+    }
+  
+    // console.log(this.services)
+    this.cdr.detectChanges();
+
+    // console.log(this.results)
+    // console.log(this.services)
+}
+  
+  // handleChange(event) {
+  //   console.log(event);
+  //   const query = event.target.value.toLowerCase();
+  //   this.results = this.services.filter(d => d.titre.toLowerCase().indexOf(query) > -1);
+  //   console.log(this.results)
+  //   // console.log(this.services)
+    
+
+  // }
 
 
   constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef) {
@@ -54,6 +85,8 @@ export class services {
     this.readAPI('https://jobapp.onrender.com/services')
     .subscribe((data) => {
       this.services = data['data'];
+      this.allServices = this.services
+      // console.log(this.services)
       this.cdr.detectChanges();
       
     });
