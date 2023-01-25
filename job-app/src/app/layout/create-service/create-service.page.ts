@@ -6,6 +6,8 @@ import { NgForm } from '@angular/forms';
 import { Service } from 'src/app/models/service';
 import { ServiceService } from 'src/app/layout/services/service.service';
 import { Geolocation } from '@capacitor/geolocation';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 // const printCurrentPosition = async () => {
 //   const coordinates = await Geolocation.getCurrentPosition();
@@ -22,6 +24,24 @@ import { Geolocation } from '@capacitor/geolocation';
 export class CreateServicePage implements OnInit {
 
   @Input() serviceToUpdate: any;
+
+
+  form = new FormGroup({
+    'titre': new FormControl(null, Validators.compose([Validators.required, this.customValidator]))
+  });
+  
+  customValidator(control: FormControl): {[s: string]: boolean} {
+    if (control.value === 'bad') {
+      return {'isBad': true};
+    } else if(control.value.length < 5){
+      return {'minLength': true};
+    }
+  //   if(control.value.length < 5) {
+  //     return {'minLength': true};
+  // }
+    return null;
+  }
+
 
   picture: string;
   location: any;
@@ -64,6 +84,8 @@ export class CreateServicePage implements OnInit {
 
    onSubmit(form: NgForm) {
     // console.log(form.value)
+
+    
     const { titre, type, date, description } = form.value;
     let picture = this.pictureString
     let oneLocation = {

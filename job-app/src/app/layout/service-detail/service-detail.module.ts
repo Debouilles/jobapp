@@ -4,11 +4,12 @@ import { IonicModule } from '@ionic/angular';
 import { ServiceDetailComponent } from './service-detail.component';
 import { MapComponent } from '../map/map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MiniMapComponent } from '../mini-map/mini-map.component';
 
 @NgModule({
-  declarations: [ServiceDetailComponent],
+  declarations: [ServiceDetailComponent, MiniMapComponent],
   imports: [
-   CommonModule , IonicModule,
+   CommonModule , IonicModule
   ],
   exports: [ServiceDetailComponent]
 })
