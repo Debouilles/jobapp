@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Service } from '../../models/service';
-import { NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController, ModalController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 
@@ -12,7 +12,7 @@ import { ToastController } from '@ionic/angular';
 export class ServiceDetailComponent implements OnInit {
   data: any;
 
-  constructor(alertController: AlertController, public viewCtrl : NavController) {
+  constructor(alertController: AlertController, public viewCtrl : NavController, private modalController: ModalController) {
 
     async function presentAlert() {
       const alert = await this.alertController.create({
@@ -23,10 +23,13 @@ export class ServiceDetailComponent implements OnInit {
     }
   }
 
-  public closeModal() {
-    this.viewCtrl.back();
-}
+//   public closeModal() {
+//     this.viewCtrl.back();
+// }
 
+closeModal() {
+  this.modalController.dismiss();
+}
   ngOnInit() {
 
 
