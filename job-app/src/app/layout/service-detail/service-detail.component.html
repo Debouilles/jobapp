@@ -6,14 +6,20 @@
       <ion-card-title>
         <img src="{{ data.picture}}" alt="" maxwidth="400px" maxheight="150px">
       {{ data.titre}}</ion-card-title>
-    <ion-card-content>{{ data.date | date: "dd MMM yyyy" }} {{data.date | date: "hh : mm" }}</ion-card-content>
-    <ion-card-content>{{ data.type }}</ion-card-content>
-    <ion-card-content>{{ data.description }}</ion-card-content>
+    <ion-card-content>{{ data.date | date: "dd MMM yyyy" }} {{data.date | date: "hh : mm" }}
+      <div>
+        {{ data.type }}
+      </div>
+      <div>
+        {{ data.description }}
+      </div>
+      <div>
+        <ion-button>Prendre rendez-vous</ion-button>
+      </div>
+    </ion-card-content>
 
     <!-- <div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" [leafletLayers]="mapMarkers"></div> -->
-    <ion-card-content>
-      <ion-button>Prendre rendez-vous</ion-button>
-    </ion-card-content>
+
     <!-- <ion-card-content>  -->
        <!-- {{ data.location }} -->
       <!-- <ion-button class="btnprendrerdv" type="submit" (click)="presentAlert()">Prendre rendez-vous</ion-button> -->
