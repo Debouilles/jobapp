@@ -26,21 +26,21 @@ export class CreateServicePage implements OnInit {
   @Input() serviceToUpdate: any;
 
 
-  form = new FormGroup({
-    'titre': new FormControl(null, Validators.compose([Validators.required, this.customValidator]))
-  });
+  // form = new FormGroup({
+  //   'titre': new FormControl(null, Validators.compose([Validators.required, this.customValidator]))
+  // });
   
-  customValidator(control: FormControl): {[s: string]: boolean} {
-    if (control.value === 'bad') {
-      return {'isBad': true};
-    } else if(control.value.length < 5){
-      return {'minLength': true};
-    }
-  //   if(control.value.length < 5) {
+  // customValidator(control: FormControl): {[s: string]: boolean} {
+  //   if (control.value === 'bad') {
+  //     return {'isBad': true};
+  //   } else if(control.value.length < 5){
   //     return {'minLength': true};
+  //   }
+  // //   if(control.value.length < 5) {
+  // //     return {'minLength': true};
+  // // }
+  //   return null;
   // }
-    return null;
-  }
 
 
   picture: string;
