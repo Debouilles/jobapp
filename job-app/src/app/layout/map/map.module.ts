@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { MapComponent } from './map.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
-import { services } from '../service-list/service-list.page';
 
 
 @NgModule({
@@ -14,7 +13,7 @@ import { services } from '../service-list/service-list.page';
     FormsModule,
     IonicModule,
     LeafletModule,
-    
+
   ],
   declarations: [MapComponent],
   exports: [MapComponent]
