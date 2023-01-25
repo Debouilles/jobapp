@@ -5,6 +5,7 @@ export class Service {
     titre: string;
     date: Date;
     type: string;
+    description: string;
 
 
 
@@ -15,6 +16,7 @@ export class Service {
       titre: string,
       type: string,
       date: Date,
+      description: string,
     
 
   ) {
@@ -24,6 +26,7 @@ export class Service {
       this.titre = titre;
       this.date = date;
       this.type = type;
+      this.description = description;
 
   }
 

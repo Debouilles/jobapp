@@ -51,7 +51,7 @@ export class ServiceService {
         map(response => {
           // map the response to a User object
           console.log(response)
-          return new Service(picture, location, titre, type, date);
+          return new Service(picture, location, titre, type, date, description);
 
         }),
         catchError(error => {
@@ -140,30 +140,30 @@ export class ServiceService {
 
 
 
-  updateServiceOld(id: string, picture: string, location: object, titre: string, date: Date, type: string, description: string): Observable<Service> {
-    console.log("HELP")
+  // updateServiceOld(id: string, picture: string, location: object, titre: string, date: Date, type: string, description: string): Observable<Service> {
+  //   console.log("HELP")
 
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      })
-    };
-    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
-    const serviceData = { picture, location, titre, type, date };
-    return this.http.put(`${this.baseUrl}/${id}`, serviceData, httpOptions)
-      .pipe(
-        map(response => {
-          // map the response to a Service object
-          console.log("THE RESPONSE: " + response)
-          return new Service(picture, location, titre, type, date);
-        }),
-        catchError(error => {
-          // handle errors here
-          return throwError(error);
-        })
+  //   let httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     })
+  //   };
+  //   httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+  //   const serviceData = { picture, location, titre, type, date };
+  //   return this.http.put(`${this.baseUrl}/${id}`, serviceData, httpOptions)
+  //     .pipe(
+  //       map(response => {
+  //         // map the response to a Service object
+  //         console.log("THE RESPONSE: " + response)
+  //         return new Service(picture, location, titre, type, date);
+  //       }),
+  //       catchError(error => {
+  //         // handle errors here
+  //         return throwError(error);
+  //       })
 
-      );
-  }
+  //     );
+  // }
 
   //  updateService(id: string, picture: string, location: object, titre: string, date: Date, type: string, description: string): Observable<Service>{
   //  console.log("HELP")
