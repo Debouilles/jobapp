@@ -75,6 +75,18 @@ export class CreateServicePage implements OnInit {
     this.modalController.dismiss();
   }
 
+  async createdMessage() {
+    const toast = await this.toast.create({
+      message: 'Service créé !',
+      duration: 2500,
+      position: 'bottom'
+    });
+
+    await toast.present();
+  }
+
+
+
   takePicture() {
     this.pictureService.takeAndUploadPicture().subscribe((uploadedImage) => {
       this.pictureString = uploadedImage.url;
@@ -99,6 +111,8 @@ export class CreateServicePage implements OnInit {
       this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
         console.log(response);
         this.closeModal();
+        this.createdMessage()
+
       
       },
         (error) => {

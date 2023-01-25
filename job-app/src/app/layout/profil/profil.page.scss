@@ -43,3 +43,10 @@
   font-size: 14px;
   margin-left: 20px;
 }
+
+
+ion-toast {
+  --background: rgb(180, 0, 0);
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #ffffff;
+}
