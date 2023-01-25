@@ -38,6 +38,7 @@ export class services {
 //ts..-_-
   public results;
   public allServices:[];
+  public allDataLoaded: boolean;
 
   handleChange(event) {
     
@@ -84,6 +85,9 @@ export class services {
     .subscribe((data) => {
       this.services.push(...data['data']);
       this.cdr.detectChanges();
+      if(this.services.length >= this.allServices.length){
+        this.allDataLoaded = true;
+      }
     });
   }
 
