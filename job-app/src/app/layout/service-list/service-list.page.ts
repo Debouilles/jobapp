@@ -34,19 +34,13 @@ export class services {
   }
 
 
-  //Arriver à faire appatraitre la liste au clic sur la searchbar + récupérer nos données
 
-  
-  // public datatest = ['Amsterdam', 'Buenos Aires', 'Cairo', 'Geneva', 'Hong Kong', 'Istanbul', 'London', 'Madrid', 'New York', 'Panama City'];
- 
-
+//ts..-_-
   public results;
   public allServices:[];
 
   handleChange(event) {
     
-   
-
     // console.log(event);
     const query = event.target.value.toLowerCase();
     console.log(query)
@@ -61,24 +55,13 @@ export class services {
      else {
       this.services = this.results;
     }
-  
-    // console.log(this.services)
+
     this.cdr.detectChanges();
 
-    // console.log(this.results)
-    // console.log(this.services)
+
 }
   
-  // handleChange(event) {
-  //   console.log(event);
-  //   const query = event.target.value.toLowerCase();
-  //   this.results = this.services.filter(d => d.titre.toLowerCase().indexOf(query) > -1);
-  //   console.log(this.results)
-  //   // console.log(this.services)
-    
-
-  // }
-
+ 
 
   constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef) {
 
@@ -86,9 +69,8 @@ export class services {
     .subscribe((data) => {
       this.services = data['data'];
       this.allServices = this.services
-      // console.log(this.services)
+      console.log(this.services)
       this.cdr.detectChanges();
-      
     });
   }
 
@@ -96,6 +78,30 @@ export class services {
     return this.http.get(URL)
     
   }
+
+  loadMoreData() {
+    this.readAPI('https://jobapp.onrender.com/services')
+    .subscribe((data) => {
+      this.services.push(...data['data']);
+      this.cdr.detectChanges();
+    });
+  }
+
+  async afficheService(service : any) {
+    const modal = await this.modalController.create({
+        component: ServiceDetailComponent,
+        componentProps: { 
+          data: service
+          // pass any props that your create service component needs
+        },
+        cssClass: 'ModalPage'
+        
+    });
+  
+  
+    return await modal.present();
+  }
+  
 
   // handleChange(event) {
   //     console.log(event);
@@ -124,21 +130,6 @@ export class services {
     return await modal.present();
 }
 
-async afficheService(service : any) {
-  const modal = await this.modalController.create({
-    
-      component: ServiceDetailComponent,
-      componentProps: { 
-        data: service
-        // pass any props that your create service component needs
-      },
-      cssClass: 'ModalPage'
-      
-  });
-
-
-  return await modal.present();
-}
 
 
 

@@ -19,36 +19,12 @@
     </a>
     <ion-searchbar animated="true" placeholder="Rechercher un service" [debounce]="1000"
       (ionChange)="handleChange($event)"></ion-searchbar> 
-
-
-
-    <!-- <a routerLink="">
-      <ion-icon id="icon2" class="icon" name="options"></ion-icon>
-    </a> -->
   </div>
 
 
-  <!-- <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar> -->
 
-
-
-  <!-- <div> -->
-  <!-- <h1>{{ serviceData.titre }}</h1>
-<p>{{ serviceData._id }}</p></div> -->
-  <!-- <h1>{{ serviceData.titre }}</h1>
-<p>{{ serviceData._id }}</p> -->
   <ion-list>
-    <ion-item class="service" (click)="afficheService(service)" *ngFor="let service of services">
-      <!-- <div class="serviceImage">
-        </div>
-        <div class="serviceInfo">
-          <h2>{{ service.titre }}</h2>
-          <p>{{ service.type }}</p>
-          <p>{{ service.date }}</p>
-          <p>{{ service.provider }}</p>
-          <p>{{ service.location }}</p>
-        </div> -->
-
+    <ion-item class="service" (click)="afficheService(service)" *ngFor="let service of services; let index">
       <div class="serviceImage">
         <img src={{service.picture}} height="100%" width="">
         <!-- alt="image indisponible" -->
@@ -61,4 +37,8 @@
       </div>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadMoreData()">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>
