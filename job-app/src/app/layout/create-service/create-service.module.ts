@@ -12,13 +12,16 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 
+
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     CreateServicePageRoutingModule,
-    LeafletModule
+    LeafletModule,
+    FormsModule,
   ],
   declarations: [CreateServicePage]
 })
