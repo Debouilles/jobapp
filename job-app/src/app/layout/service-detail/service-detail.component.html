@@ -1,27 +1,34 @@
 <!-- <div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" ></div> -->
-
-<ion-card>
+<ion-card class="card">
   <ion-card-header>
-    <button ion-button (click)="closeModal()">Close</button>
-    <ion-card-title>
-      <img src="{{ data.picture}}" alt="" maxwidth="400px" maxheight="150px">
-      {{ data.titre}}
+    <ion-card-title class="cardTitle">
+      <div class="img">
+        <img src="{{ data.picture}}" alt="" maxwidth="400px" maxheight="150px">
+      </div>
+      <div class="titreService">{{ data.titre}}</div>
     </ion-card-title>
+    <button ion-button (click)="closeModal()" class="buttonCloseModal" color="danger" fill="clear">
+      <ion-icon name="arrow-back"></ion-icon>
+    </button>
   </ion-card-header>
-  <ion-card-content>{{ data.date | date: "dd MMM yyyy" }} {{data.date | date: "hh : mm" }}</ion-card-content>
+  <ion-card-content class="dateHeure">
+    <div class="date">{{ data.date | date: "dd MMM yyyy" }}</div>
+    <div class="heure">{{data.date | date: "hh : mm" }}</div>
+  </ion-card-content>
+  <h2 class="description">Description:</h2>
   <ion-card-content>{{ data.type }}</ion-card-content>
   <ion-card-content>{{ data.description }}</ion-card-content>
   <!-- <div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" [leafletLayers]="mapMarkers"></div> -->
   <ion-card-content>
-    <ion-button>Prendre rendez-vous</ion-button>
+    <ion-button color="success">PRENDRE RENDEZ-VOUS</ion-button>
   </ion-card-content>
-  </ion-card>
-  <!-- <ion-card-content>  -->
-  <!-- {{ data.location }} -->
-  <!-- <ion-button class="btnprendrerdv" type="submit" (click)="presentAlert()">Prendre rendez-vous</ion-button> -->
-  <!-- <ion-button class="btnannulerrdv" type="submit">Annuler rendez-vous</ion-button> -->
-  <!-- </ion-card-content>  -->
+</ion-card>
+<!-- <ion-card-content>  -->
+<!-- {{ data.location }} -->
+<!-- <ion-button class="btnprendrerdv" type="submit" (click)="presentAlert()">Prendre rendez-vous</ion-button> -->
+<!-- <ion-button class="btnannulerrdv" type="submit">Annuler rendez-vous</ion-button> -->
+<!-- </ion-card-content>  -->
 
-  <!-- </ion-card> -->
+<!-- </ion-card> -->
 
-  <!-- *ngIf="selectedService" -->
+<!-- *ngIf="selectedService" -->

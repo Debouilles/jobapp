@@ -59,8 +59,14 @@
             <h2 class="serviceTitre">{{ service.titre }}</h2>
             <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
           </div>
-          <ion-button (click)="deleteServ(service)">DELETE</ion-button>
-          <ion-button (click)="updateServ(service._id)">UPDATE</ion-button>
+          <div class="buttonsLinks">
+            <ion-button (click)="updateServ(service._id)" class="buttonLinks" color="medium" fill="clear">
+              <ion-icon name="pencil"></ion-icon>
+            </ion-button>
+            <ion-button (click)="deleteServ(service)" class="buttonLinks" color="danger" fill="clear">
+              <ion-icon name="trash-bin-outline"></ion-icon>
+            </ion-button>
+          </div>
         </ion-item>
       </div>
     </ion-list>
