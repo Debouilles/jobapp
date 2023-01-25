@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CreateServicePage } from '../create-service/create-service.page';
 import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-detail.component';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.page.html',
@@ -27,16 +27,19 @@ export class services {
   }
 
 
-  constructor(public http: HttpClient, private modalController: ModalController) {
+  constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef) {
 
     this.readAPI('https://jobapp.onrender.com/services')
-      .subscribe((data) => {
-        this.services = data['data'];
-      });
+    .subscribe((data) => {
+      this.services = data['data'];
+      this.cdr.detectChanges();
+      
+    });
   }
 
   readAPI(URL: string){
     return this.http.get(URL)
+    
   }
 
 
@@ -49,6 +52,16 @@ export class services {
         },
         cssClass: 'createServiceModal'
     });
+
+    modal.onDidDismiss().then(() => {
+      // refresh the list of services after the modal is closed
+      this.readAPI('https://jobapp.onrender.com/services')
+        .subscribe((data) => {
+          this.services = data['data'];
+        });
+    });
+
+
     return await modal.present();
 }
 

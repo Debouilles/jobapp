@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { PictureService } from 'src/app/picture/picture.service';
 import { QimgImage } from 'src/app/models/image';
 import { NgForm } from '@angular/forms';
@@ -36,16 +36,19 @@ export class CreateServicePage implements OnInit {
 
 
   pictureString = "";
-  constructor(public modalController: ModalController, private pictureService: PictureService, private ServiceService: ServiceService) { }
+  constructor(public modalController: ModalController, private pictureService: PictureService, private ServiceService: ServiceService, private toast: ToastController) { }
+
+  async updateMessage() {
+    const toast = await this.toast.create({
+      message: 'Service updated !',
+      duration: 1500,
+      position: 'middle'
+    });
+
+    await toast.present();
+  }
 
 
-
-  // async printCurrentPosition() {
-  //   const coordinates = await Geolocation.getCurrentPosition();
-  //   this.location = coordinates
-  //   console.log('Current position:', coordinates);
-  //   return coordinates;
-  // }
 
   closeModal() {
     this.modalController.dismiss();
@@ -60,7 +63,7 @@ export class CreateServicePage implements OnInit {
 
 
    onSubmit(form: NgForm) {
-    console.log(form.value)
+    // console.log(form.value)
     const { titre, type, date, description } = form.value;
     let picture = this.pictureString
     let oneLocation = {
@@ -74,6 +77,7 @@ export class CreateServicePage implements OnInit {
       // picture: string, location: object, titre: string, date: Date, type: string, description: string
       this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
         console.log(response);
+        this.closeModal();
       },
         (error) => {
           console.error(error);
@@ -85,6 +89,8 @@ export class CreateServicePage implements OnInit {
       console.log("Updating an existing service");
       this.ServiceService.updateService(this.serviceToUpdate, picture, oneLocation, titre, date, type, description)
       console.log("areYouHere")
+      this.closeModal();
+      this.updateMessage()
 
 
 
