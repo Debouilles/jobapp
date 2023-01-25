@@ -17,13 +17,24 @@
     <a routerLink="/service-map">
       <ion-icon id="icon1" class="icon" name="map-sharp"></ion-icon>
     </a>
-    <ion-searchbar animated="true" placeholder="Rechercher un service"></ion-searchbar>
-    <a routerLink="" >
+    <!-- <ion-searchbar animated="true" placeholder="Rechercher un service" [debounce]="1000"
+      (ionChange)="handleChange($event)"></ion-searchbar> -->
+    <!-- <ion-list>
+      <ion-item *ngFor="let result of results">
+        <ion-label>{{ result }}</ion-label>
+      </ion-item>
+    </ion-list> -->
+
+    <a routerLink="">
       <ion-icon id="icon2" class="icon" name="options"></ion-icon>
     </a>
   </div>
-  
- 
+
+
+  <!-- <ion-searchbar [debounce]="1000" (ionChange)="handleChange($event)"></ion-searchbar> -->
+
+
+
   <!-- <div> -->
   <!-- <h1>{{ serviceData.titre }}</h1>
 <p>{{ serviceData._id }}</p></div> -->
@@ -31,9 +42,9 @@
 <p>{{ serviceData._id }}</p> -->
   <ion-list>
     <ion-item class="service" (click)="afficheService(service)" *ngFor="let service of services">
-      
 
-        <!-- <div class="serviceImage">
+
+      <!-- <div class="serviceImage">
         </div>
         <div class="serviceInfo">
           <h2>{{ service.titre }}</h2>
@@ -43,16 +54,16 @@
           <p>{{ service.location }}</p>
         </div> -->
 
-        <div class="serviceImage">
-          <img src={{service.picture}} height="100%" width="" >
-          <!-- alt="image indisponible" -->
-        </div>
-        <div class="infosService">
-          <div class="servicelien">
+      <div class="serviceImage">
+        <img src={{service.picture}} height="100%" width="">
+        <!-- alt="image indisponible" -->
+      </div>
+      <div class="infosService">
+        <div class="servicelien">
           <h2 class="serviceTitre">{{ service.titre }}</h2>
           <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
         </div>
-        </div>
-      </ion-item>
+      </div>
+    </ion-item>
   </ion-list>
 </ion-content>
