@@ -13,6 +13,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     FormsModule,
     IonicModule,
     LeafletModule,
+
   ],
   declarations: [MapComponent],
   exports: [MapComponent]

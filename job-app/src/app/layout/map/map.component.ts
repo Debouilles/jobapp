@@ -5,7 +5,7 @@ import { Map, latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
 import { defaultIcon } from '../service-map/default-marker';
 import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
-
+import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 
 @Component({
   selector: 'app-map',
@@ -17,7 +17,7 @@ export class MapComponent implements OnInit {
   mapMarkers: Marker[];
   markerSetup: any[];
   selectedService: any;
-
+  service: any;
   map: Map;
   currentMarker: any;
 
@@ -36,23 +36,40 @@ export class MapComponent implements OnInit {
     this.mapMarkers = [];
     this.markerSetup = [];
 
+
+   
+  }
+
+  async afficheService(service : any) {
+    const modal = await this.modalController.create({
+
+      component: ServiceDetailComponent,
+      componentProps: {
+        data: service
+        // pass any props that your create service component needs
+      },
+      cssClass: 'ModalPage'
+
+    });
+
+
+    return await modal.present();
   }
 
 
-
   ngOnInit() {
-    
+
     this.http.get<any>('https://jobapp.onrender.com/services/').subscribe(data => {
       data.data.forEach(service => {
 
-        
+
         const newMarker = marker([service.location.coordinates[0], service.location.coordinates[1]], { icon: defaultIcon }).bindTooltip(service.titre).on("click", event => {
-        /*   this.openModal(service); */
+          /*   this.openModal(service); */
         });
         this.markerSetup.push({
           marker: newMarker,
           data: service
-        }) 
+        })
 
         this.mapMarkers.push(newMarker);
         // console.log([service.location.coordinates[0], service.location.coordinates[1]])
@@ -60,12 +77,12 @@ export class MapComponent implements OnInit {
 
 
 
-      this.markerSetup.forEach(markSet =>{
-        markSet.marker.on("click", event=>{
+      this.markerSetup.forEach(markSet => {
+        markSet.marker.on("click", event => {
           this.selectedService = markSet.data;
           this.cdr.detectChanges();
         });
-  });
+      });
       /* console.log(this.mapMarkers) */
 
     });
@@ -79,7 +96,7 @@ export class MapComponent implements OnInit {
         marker.on("click", event => {
           this.currentMarker = marker;
           this.selectedService = event.target.options.data;
-         
+
           /* this.openModal(event.target.options.data); */
         });
 
