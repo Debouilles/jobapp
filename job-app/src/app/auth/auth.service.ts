@@ -46,6 +46,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(authUrl, authRequest).pipe(
       delayWhen((auth) => this.saveAuth$(auth)),
       map((auth) => {
+        localStorage.setItem('access_token', auth.token);
         this.#auth$.next(auth);
         console.log(`User ${auth.user.name} logged in`);
         return auth.user;

@@ -59,7 +59,7 @@ export class CreateServicePage implements OnInit {
   }
 
 
-  onSubmit(form: NgForm) {
+   onSubmit(form: NgForm) {
     console.log(form.value)
     const { titre, type, date, description } = form.value;
     let picture = this.pictureString
@@ -67,28 +67,28 @@ export class CreateServicePage implements OnInit {
       "type": "Point",
       "coordinates": [this.latitude, this.longitude]
     }
-
-
-
+ 
     if (this.serviceToUpdate === undefined) {
+         //CREATION-------------------------------------------------
       console.log("Creating a new service");
       // picture: string, location: object, titre: string, date: Date, type: string, description: string
       this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
         console.log(response);
-
       },
         (error) => {
           console.error(error);
         }
-
       );
       console.log("hello")
     } else {
+         //UPDATE-------------------------------------------------
       console.log("Updating an existing service");
+      this.ServiceService.updateService(this.serviceToUpdate, picture, oneLocation, titre, date, type, description)
+      console.log("areYouHere")
+
+
 
     }
-
-
   }
 
 
