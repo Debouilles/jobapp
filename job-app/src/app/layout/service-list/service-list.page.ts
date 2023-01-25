@@ -34,18 +34,19 @@ export class services {
   }
 
 
-  //Cela fonctionne avec ces données-là
   //Arriver à faire appatraitre la liste au clic sur la searchbar + récupérer nos données
 
-
+  
   // public datatest = ['Amsterdam', 'Buenos Aires', 'Cairo', 'Geneva', 'Hong Kong', 'Istanbul', 'London', 'Madrid', 'New York', 'Panama City'];
-  // public datatest = [this.services.titre];
-  // public results = [...this.datatest];
-  // handleChange(event) {
-  //   console.log(event);
-  //   const query = event.target.value.toLowerCase();
-  //   this.results = this.datatest.filter(d => d.toLowerCase().indexOf(query) > -1);
-  // }
+  public datatest = ['Amsterdam', 'Buenos Aires', 'Cairo', 'Geneva', 'Hong Kong', 'Istanbul', 'London', 'Madrid', 'New York', 'Panama City'];
+
+  public results = [...this.datatest];
+  
+  handleChange(event) {
+    console.log(event);
+    const query = event.target.value.toLowerCase();
+    this.results = this.datatest.filter(d => d.toLowerCase().indexOf(query) > -1);
+  }
 
 
   constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef) {
@@ -56,8 +57,6 @@ export class services {
       this.cdr.detectChanges();
       
     });
-
-    
   }
 
   readAPI(URL: string){
@@ -71,7 +70,6 @@ export class services {
   //     this.services = this.services.filter(d => d.toLowerCase().indexOf(query) > -1);
   //   }
 
-  
   async openCreateServiceModal() {
     const modal = await this.modalController.create({
         component: CreateServicePage,
