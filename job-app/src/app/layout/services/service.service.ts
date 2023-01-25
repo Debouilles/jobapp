@@ -8,7 +8,7 @@ import { AuthService } from '../../auth/auth.service';
 
 import { catchError } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
-
+import { ServiceResponse } from 'src/app/models/service-response';
 import { Subject } from 'rxjs';
 
 
@@ -24,6 +24,12 @@ export class ServiceService {
 
    }
 
+   //Observables
+   getAnimals$(): Observable<Service[]> {
+    // const servicesUrl = `${environment.apiUrl}services`;
+    return this.http.get<ServiceResponse[]>(this.baseUrl);
+  }
+
   //AUTH
   // setAuthorizationHeader(token: string): any {
   //   let httpOptions = {
@@ -37,25 +43,25 @@ export class ServiceService {
 
 
 
-  //SUBJECT
+  //SUBJECT failed...
  
-  getServicesUpdatedListener() {
-    this.servicesMain.asObservable();
-    return this.servicesMain.asObservable();
-  }
+  // getServicesUpdatedListener() {
+  //   this.servicesMain.asObservable();
+  //   return this.servicesMain.asObservable();
+  // }
 
-  updateServicesList(services: Service[]) {
-    this.servicesMain.next(services);
-  }
-  //READ------------------------------
-  async readAPI() {
-    return this.http.get('https://jobapp.onrender.com/services')
+  // updateServicesList(services: Service[]) {
+  //   this.servicesMain.next(services);
+  // }
+  // //READ------------------------------
+  // async readAPI() {
+  //   return this.http.get('https://jobapp.onrender.com/services')
 
-  }
+  // }
 
-  getServices(): any {
-    return this.servicesMain;
-  }
+  // getServices(): any {
+  //   return this.servicesMain;
+  // }
 
   //------------------------------------------------------
 
