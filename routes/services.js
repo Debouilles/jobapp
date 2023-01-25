@@ -151,6 +151,7 @@ router.post("/", authenticate , async (req, res, next) => {
       provider: req.currentUserId,
       picture: req.body.picture,
       location: req.body.location,
+      description: req.body.description,
     })
       .save()
     res.status(200)
