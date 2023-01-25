@@ -9,6 +9,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 
+
 // const printCurrentPosition = async () => {
 //   const coordinates = await Geolocation.getCurrentPosition();
 
@@ -83,9 +84,7 @@ export class CreateServicePage implements OnInit {
 
 
    onSubmit(form: NgForm) {
-    // console.log(form.value)
-
-    
+    // console.log(form.value)DD
     const { titre, type, date, description } = form.value;
     let picture = this.pictureString
     let oneLocation = {
@@ -100,6 +99,7 @@ export class CreateServicePage implements OnInit {
       this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
         console.log(response);
         this.closeModal();
+      
       },
         (error) => {
           console.error(error);
@@ -113,8 +113,6 @@ export class CreateServicePage implements OnInit {
       console.log("areYouHere")
       this.closeModal();
       this.updateMessage()
-
-
 
     }
   }

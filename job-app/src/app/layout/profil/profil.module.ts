@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { ServiceService } from '../services/service.service';
 import { IonicModule } from '@ionic/angular';
 
 import { ProfilPageRoutingModule } from './profil-routing.module';
@@ -13,7 +13,7 @@ import { ProfilPage } from './profil.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilPageRoutingModule
+    ProfilPageRoutingModule,
   ],
   declarations: [ProfilPage]
 })

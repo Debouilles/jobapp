@@ -8,6 +8,9 @@ import { ServiceService } from 'src/app/layout/services/service.service';
 import { ModalController, ToastController } from '@ionic/angular';
 import { ServiceUpdateComponent } from '../service-update/service-update.component';
 import { CreateServicePage } from '../create-service/create-service.page';
+import { ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-profil',
   templateUrl: './profil.page.html',
@@ -32,6 +35,10 @@ export class ProfilPage implements OnInit {
     picture: '',
   }
 
+
+  servicesSub: Service[];
+  private servicesSubscription: Subscription;
+
   constructor(
     public http: HttpClient,
     // Inject the authentication provider.
@@ -40,7 +47,9 @@ export class ProfilPage implements OnInit {
     private router: Router,
     private serviceService: ServiceService,
     private toastController: ToastController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private cdr: ChangeDetectorRef,
+
   ) {
     this.userID = this.auth.getUser$();
     this.auth.getUser$().subscribe(data => {
@@ -48,6 +57,8 @@ export class ProfilPage implements OnInit {
       this.userName = data.name;
       this.userEmail = data.email;
     });
+
+    
 
     this.readAPI('https://jobapp.onrender.com/services')
       .subscribe((data) => {
@@ -58,7 +69,11 @@ export class ProfilPage implements OnInit {
 
   }
 
+
+
   ngOnInit() {
+
+
   }
   logOut() {
     console.log("logging out...");
@@ -70,10 +85,26 @@ export class ProfilPage implements OnInit {
     return this.http.get(URL)
   }
 
+  async updateListOfServices() {
+    this.readAPI('https://jobapp.onrender.com/services')
+      .subscribe((data) => {
+        this.services = data['data'];
+        return this.services;
+      });
+  }
 
   async deleteServ(service: Service) {
     await this.serviceService.deleteService(service._id)
+
     await this.deletedMessage()
+    this.readAPI('https://jobapp.onrender.com/services')
+    .subscribe((data) => {
+      this.services = data['data'];
+      return this.services;
+    });
+    this.cdr.detectChanges();
+
+    this.cdr.detectChanges();
     console.log("deleted")
   }
 
@@ -94,14 +125,17 @@ export class ProfilPage implements OnInit {
   async updateServ(serviceId) {
     // console.log(service)
     const modal = await this.modalController.create({
-        component: CreateServicePage,
-        componentProps: {
-          // pass any props that your create service component needs
-          serviceToUpdate: serviceId
-        },
-        cssClass: 'createServiceModal'
+      component: CreateServicePage,
+      componentProps: {
+        // pass any props that your create service component needs
+        serviceToUpdate: serviceId
+      },
+      cssClass: 'createServiceModal'
     });
     return await modal.present();
+  }
+
+
 }
   // deleteServ(service: Service) {
   //   // this.http.delete(`https://jobapp.onrender.com/services/${service._id}`)
@@ -150,6 +184,3 @@ export class ProfilPage implements OnInit {
 
   //     });
   //   }
-
-
-}

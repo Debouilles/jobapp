@@ -8,6 +8,7 @@ import { CreateServicePageRoutingModule } from './create-service-routing.module'
 
 import { CreateServicePage } from './create-service.page';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ProfilPage } from '../profil/profil.page';
 
 
 
@@ -22,6 +23,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     CreateServicePageRoutingModule,
     LeafletModule,
     FormsModule,
+    
   ],
   declarations: [CreateServicePage]
 })

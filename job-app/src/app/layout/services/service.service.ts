@@ -9,13 +9,20 @@ import { AuthService } from '../../auth/auth.service';
 import { catchError } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
 
+import { Subject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceService {
   baseUrl = 'https://jobapp.onrender.com/services';
-  constructor(private http: HttpClient, private authService: AuthService) { }
+   servicesMain = new Subject<Service[]>();
+
+  constructor(private http: HttpClient, private authService: AuthService) {
+   
+
+   }
 
   //AUTH
   // setAuthorizationHeader(token: string): any {
@@ -29,9 +36,33 @@ export class ServiceService {
   // }
 
 
+
+  //SUBJECT
+ 
+  getServicesUpdatedListener() {
+    this.servicesMain.asObservable();
+    return this.servicesMain.asObservable();
+  }
+
+  updateServicesList(services: Service[]) {
+    this.servicesMain.next(services);
+  }
+  //READ------------------------------
+  async readAPI() {
+    return this.http.get('https://jobapp.onrender.com/services')
+
+  }
+
+  getServices(): any {
+    return this.servicesMain;
+  }
+
   //------------------------------------------------------
 
   //CREATE
+
+
+
   createService(picture: string, location: object, titre: string, date: Date, type: string, description: string): Observable<Service> {
     let httpOptions = {
       headers: new HttpHeaders({
@@ -51,6 +82,8 @@ export class ServiceService {
         map(response => {
           // map the response to a User object
           console.log(response)
+          // calling the subject's next() method with the updated list of services
+          // this.servicesUpdated.next(this.servicesMain);
           return new Service(picture, location, titre, type, date, description);
 
         }),
@@ -61,7 +94,6 @@ export class ServiceService {
         })
       );
   }
-
 
   getAuthSync() {
     let headers = new HttpHeaders();
@@ -107,12 +139,12 @@ export class ServiceService {
     // const serviceData = { picture, location, titre, type, date };
     const serviceData = {
       picture: picture,
-      titre: titre, 
-      date:date,
-      type:type
-      
+      titre: titre,
+      date: date,
+      type: type
+
     };
-    
+
     const serviceDataClean = Object.entries(serviceData)
       .filter(([key, value]) => value)
       .reduce((obj, [key, value]) => {
