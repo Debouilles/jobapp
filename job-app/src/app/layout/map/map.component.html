@@ -1,8 +1,9 @@
 
-<div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" [leafletLayers]="mapMarkers"></div>
-<ion-card *ngIf="selectedService">
+<div class="map"  leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" [leafletLayers]="mapMarkers"></div>
+<ion-card *ngIf="selectedService" (click)="afficheService(selectedService)">
     <ion-card-header>
       <ion-card-title>
+        <div class="servicelien"></div>
         <img src="{{ selectedService.picture}}" alt="" maxwidth="" maxheight="150px">
         {{ selectedService.titre }}
       </ion-card-title>

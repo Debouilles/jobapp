@@ -48,8 +48,10 @@
           <!-- alt="image indisponible" -->
         </div>
         <div class="infosService">
+          <div class="servicelien" (click)="afficheService(service)">
           <h2 class="serviceTitre">{{ service.titre }}</h2>
           <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
+        </div>
         </div>
       </ion-item>
   </ion-list>
