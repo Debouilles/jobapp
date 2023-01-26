@@ -36,6 +36,9 @@
     {{ latitude }}
     {{ longitude }}
     <input type="hidden" [(ngModel)]="location" name="location">
+    <div *ngIf="!validation.isFormValid && validation.formErrors['location']" class="error-message">
+      {{validation.formErrors['location']}}
+    </div>
   </ion-item>
   <ion-item>
     <!-- Le date se cache derrière le calendrier, à gérer pour la suite en CSS-->

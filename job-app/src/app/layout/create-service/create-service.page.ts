@@ -105,10 +105,18 @@ export class CreateServicePage implements OnInit {
         isFormValid = false;
         formErrors['titre'] = 'Le titre doit contenir au moins 3 caractères';
     }
+    if (!formData.location) {
+      isFormValid = false;
+      formErrors['location'] = 'Veuillez entrer votre localisation';
+  } 
+
     return { isFormValid: isFormValid, formErrors: formErrors };
   }
   
 
+ngModelCHange(form: NgForm){
+ this.validation = this.validateForm(form.value)
+}
 
   onSubmit(form: NgForm) {
     console.log(form.value)
