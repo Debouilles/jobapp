@@ -13,6 +13,7 @@ import { MiniMapComponent } from '../mini-map/mini-map.component';
 })
 export class ServiceDetailComponent implements OnInit {
   data: any;
+  isOwner: boolean;
 
   constructor(alertController: AlertController, public viewCtrl: NavController, private modalController: ModalController) {
 
@@ -26,6 +27,8 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   //A FAIRE !! take id from localstorage, send request with body to rdvs avec les 2 userid et leserviceid
+  //aussi faire si service provider = id en localstorage 
+
   async takeRdv(data) {
     console.log(data)
   }
@@ -35,7 +38,11 @@ export class ServiceDetailComponent implements OnInit {
     this.modalController.dismiss();
   }
   ngOnInit() {
-
+    if (this.data.provider === localStorage.getItem('user_id')){
+      this.isOwner = true;
+    } else {
+      this.isOwner = false;
+    }
 
   }
 
