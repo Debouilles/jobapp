@@ -5,6 +5,8 @@ import { CreateServicePage } from '../create-service/create-service.page';
 import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-detail.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { ServiceService } from '../services/service.service';
+
+
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.page.html',
@@ -33,6 +35,8 @@ export class services {
     picture:'',
     description:'',
   }
+
+  index: number;
 
 
 
@@ -66,8 +70,8 @@ export class services {
  
 
   constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef, private serviceService: ServiceService) {
-
-    this.readAPI('https://jobapp.onrender.com/services')
+    this.index = 1;
+    this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
     .subscribe((data) => {
       this.services = data['data'];
       this.allServices = this.services
@@ -82,10 +86,13 @@ export class services {
   }
 
   loadMoreData() {
-    this.readAPI('https://jobapp.onrender.com/services')
+    this.index ++;
+    this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
     .subscribe((data) => {
+      console.log("DATA!!!:"+ data['data'])
       this.services.push(...data['data']);
-      this.cdr.detectChanges();
+      console.log(this.services)
+      // this.cdr.detectChanges();
       if(this.services.length >= this.allServices.length){
         this.allDataLoaded = true;
       }
@@ -94,7 +101,9 @@ export class services {
 
 
   async afficheServiceCall(service : any) {
+    console.log("helloWOrlds")
     this.serviceService.afficheService(service)
+   
   }
 
   // async afficheService(service : any) {

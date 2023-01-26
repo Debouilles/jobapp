@@ -36,9 +36,10 @@
         </div>
       </div>
     </ion-item>
+    <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-list>
-  <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+
 
 </ion-content>
