@@ -21,12 +21,16 @@
 </ion-item>
 <form (ngSubmit)="onSubmit(form)" #form="ngForm">
   <ion-item>
-    <ion-label>Title</ion-label>
-    <ion-input [(ngModel)]="titre" name="titre" inputmode="text" placeholder="Titre du service"></ion-input>
+    <ion-label position="floating">Title</ion-label>
+    <ion-input [(ngModel)]="titre" name="titre" inputmode="text" placeholder="Titre du service" minlength="3" maxlength="64">
+    </ion-input>
+    <div *ngIf="!validation.isFormValid && validation.formErrors['titre']" class="error-message">
+      {{validation.formErrors['titre']}}
+    </div>
   </ion-item>
   <ion-item>
     <ion-label>
-      Location
+      Location <span>*</span>>
     </ion-label>
     <ion-button (click)="getCurrentPosition()">get position</ion-button>
     {{ latitude }}
@@ -35,9 +39,10 @@
   </ion-item>
   <ion-item>
     <!-- Le date se cache derrière le calendrier, à gérer pour la suite en CSS-->
+    <ion-label>Date </ion-label>
     <ion-datetime [(ngModel)]="date" name="date"  locale="ch-CH" >
-      <span slot="title">Select a Reservation Date</span>
-      <span slot="time-label">Heure</span>
+      <!-- <span slot="title">Select a Reservation Date</span>
+      <span slot="time-label">Heure</span> -->
     </ion-datetime>
   </ion-item>
   <ion-item>

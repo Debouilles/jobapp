@@ -6,8 +6,7 @@ import { NgForm } from '@angular/forms';
 import { Service } from 'src/app/models/service';
 import { ServiceService } from 'src/app/layout/services/service.service';
 import { Geolocation } from '@capacitor/geolocation';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
+
 
 
 // const printCurrentPosition = async () => {
@@ -27,21 +26,6 @@ export class CreateServicePage implements OnInit {
   @Input() serviceToUpdate: any;
 
 
-  // form = new FormGroup({
-  //   'titre': new FormControl(null, Validators.compose([Validators.required, this.customValidator]))
-  // });
-  
-  // customValidator(control: FormControl): {[s: string]: boolean} {
-  //   if (control.value === 'bad') {
-  //     return {'isBad': true};
-  //   } else if(control.value.length < 5){
-  //     return {'minLength': true};
-  //   }
-  // //   if(control.value.length < 5) {
-  // //     return {'minLength': true};
-  // // }
-  //   return null;
-  // }
 
 
   picture: string;
@@ -56,8 +40,18 @@ export class CreateServicePage implements OnInit {
   longitude: number;
 
 
+  validation: any;
+  
   pictureString = "";
-  constructor(public modalController: ModalController, private pictureService: PictureService, private ServiceService: ServiceService, private toast: ToastController) { }
+  constructor(
+    public modalController: ModalController,
+    private pictureService: PictureService,
+    private ServiceService: ServiceService,
+    private toast: ToastController,
+    // private formV: FormValidationService
+    ) { 
+      this.validation= { isFormValid: '' , formErrors: '' }
+    }
 
   async updateMessage() {
     const toast = await this.toast.create({
@@ -99,8 +93,31 @@ export class CreateServicePage implements OnInit {
   }
 
 
-   onSubmit(form: NgForm) {
-    // console.log(form.value)DD
+    
+  validateForm(formData: any) {
+    let isFormValid = true;
+    const formErrors = {};
+
+    if (!formData.titre) {
+        isFormValid = false;
+        formErrors['titre'] = 'Veuillez entrer un titre';
+    } else if (formData.titre.length < 3) {
+        isFormValid = false;
+        formErrors['titre'] = 'Le titre doit contenir au moins 3 caractères';
+    }
+    return { isFormValid: isFormValid, formErrors: formErrors };
+  }
+  
+
+
+  onSubmit(form: NgForm) {
+    console.log(form.value)
+
+    this.validation = this.validateForm(form.value)
+    if(!this.validation.isFormValid){
+      console.log("INVALID")
+    }
+    console.log(this.validation.formErrors['titre'])
     let { titre, type, date, description } = form.value;
 
     let picture = this.pictureString
@@ -108,12 +125,12 @@ export class CreateServicePage implements OnInit {
       "type": "Point",
       "coordinates": [this.latitude, this.longitude]
     }
- 
+
     if (this.serviceToUpdate === undefined) {
-      if (date=== undefined){
+      if (date === undefined) {
         date = Date.now();
-     }
-         //CREATION-------------------------------------------------
+      }
+      //CREATION-------------------------------------------------
       console.log("Creating a new service");
       // picture: string, location: object, titre: string, date: Date, type: string, description: string
       this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
@@ -127,7 +144,7 @@ export class CreateServicePage implements OnInit {
       );
       console.log("hello")
     } else {
-         //UPDATE-------------------------------------------------
+      //UPDATE-------------------------------------------------
       console.log("Updating an existing service");
       this.ServiceService.updateService(this.serviceToUpdate, picture, oneLocation, titre, date, type, description)
       console.log("areYouHere")

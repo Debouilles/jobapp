@@ -28,7 +28,7 @@
 
 ion-button {
     display: flex;
-    margin:auto;
+    margin: auto;
     --background: #36ABE0;
     --color: white;
 }
@@ -39,4 +39,29 @@ ion-toolbar {
 
 ion-toolbar ion-title {
     --color: #36ABE0;
+}
+
+.error-message {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    font-size: 10px;
+    color: red;
+
+}
+
+.ion-input.ng-invalid {
+    border-bottom: 1px solid red;
+}
+
+.error-message ion-item {
+    border-bottom: 1px solid red;
+}
+
+.error-message ion-item ion-input.ng-invalid {
+    border-bottom: 1px solid red;
+}
+
+.error-message ion-item ion-label {
+    color: red;
 }
