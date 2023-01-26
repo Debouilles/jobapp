@@ -38,7 +38,6 @@ async openCreateServiceModal() {
   const modal = await this.modalController.create({
       component: CreateServicePage,
       componentProps: {
-        // pass any props that your create service component needs
       },
       cssClass: 'createServiceModal'
   });
@@ -51,7 +50,6 @@ async openCreateServiceModal() {
         component: CreateServicePage,
         componentProps: {
           // data: service
-          // pass any props that your create service component needs
         },
         cssClass: 'createServiceModal'
     });
