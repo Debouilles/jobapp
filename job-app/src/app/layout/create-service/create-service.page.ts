@@ -61,7 +61,7 @@ export class CreateServicePage implements OnInit {
 
   async updateMessage() {
     const toast = await this.toast.create({
-      message: 'Service updated !',
+      message: 'Service mis-à-jour !',
       duration: 1500,
       position: 'middle'
     });
@@ -97,7 +97,8 @@ export class CreateServicePage implements OnInit {
 
    onSubmit(form: NgForm) {
     // console.log(form.value)DD
-    const { titre, type, date, description } = form.value;
+    let { titre, type, date, description } = form.value;
+
     let picture = this.pictureString
     let oneLocation = {
       "type": "Point",
@@ -105,6 +106,9 @@ export class CreateServicePage implements OnInit {
     }
  
     if (this.serviceToUpdate === undefined) {
+      if (date=== undefined){
+        date = Date.now();
+     }
          //CREATION-------------------------------------------------
       console.log("Creating a new service");
       // picture: string, location: object, titre: string, date: Date, type: string, description: string
