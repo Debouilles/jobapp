@@ -25,6 +25,7 @@ export class ServiceDetailComponent implements OnInit {
     }
   }
 
+  //A FAIRE !! take id from localstorage, send request with body to rdvs avec les 2 userid et leserviceid
   async takeRdv(data) {
     console.log(data)
   }

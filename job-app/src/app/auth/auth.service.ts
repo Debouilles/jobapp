@@ -47,6 +47,7 @@ export class AuthService {
       delayWhen((auth) => this.saveAuth$(auth)),
       map((auth) => {
         localStorage.setItem('access_token', auth.token);
+        localStorage.setItem('user_id', auth.user._id);
         this.#auth$.next(auth);
         console.log(`User ${auth.user.name} logged in`);
         return auth.user;
@@ -57,6 +58,8 @@ export class AuthService {
   logOut() {
     this.#auth$.next(null);
     // Remove the stored authentication from storage when logging out.
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('user_id');
     this.storage.remove('auth');
     console.log('User logged out');
   }

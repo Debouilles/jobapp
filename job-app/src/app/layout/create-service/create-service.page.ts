@@ -114,9 +114,9 @@ export class CreateServicePage implements OnInit {
   }
   
 
-ngModelCHange(form: NgForm){
- this.validation = this.validateForm(form.value)
-}
+// ngModelChange(form: NgForm){
+//  this.validation = this.validateForm(form.value)
+// }
 
   onSubmit(form: NgForm) {
     console.log(form.value)
