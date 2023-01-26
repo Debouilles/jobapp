@@ -1,6 +1,6 @@
 export class Rdv {
     // _id: string;
-    provider: string;
+    // provider: string;
     reciever: any;
     relatedService: string;
 
@@ -16,7 +16,7 @@ export class Rdv {
   
     ) {
   
-this.provider = rdv.provider;
+// this.provider = rdv.provider;
 this.reciever = rdv.reciever;
 this.relatedService = rdv.relatedService;
   

@@ -14,7 +14,7 @@ export class RdvService {
     private http: HttpClient
   ) { }
 
-  createRdv(contract: Rdv){
+  async createRdv(contract: Rdv){
     console.log('hewara')
     let httpOptions = {
       headers: new HttpHeaders({
@@ -23,7 +23,7 @@ export class RdvService {
     };
     httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
     console.log (localStorage.getItem('access_token'))
-     this.http.post<Rdv>(this.baseUrl, contract, httpOptions)
+     return this.http.post<Rdv>(this.baseUrl, contract, httpOptions)
       .pipe(
         map(response => {
           console.log("heya")

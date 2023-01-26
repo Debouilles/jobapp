@@ -33,7 +33,7 @@ export class ServiceDetailComponent implements OnInit {
   //si rdv existe pour le service, ne plus l'afficher ? ou si isAccepted?
 
 
-  async takeRdv(service) {
+  async takeRdv(service: any) {
     // console.log(data)
     // console.log(this.loggedUser)
     let contract = {
@@ -42,7 +42,7 @@ export class ServiceDetailComponent implements OnInit {
       relatedService: service._id
     }
     console.log(contract)
-    this.rdvServ.createRdv(contract)
+    await this.rdvServ.createRdv(contract)
 
 
   }
