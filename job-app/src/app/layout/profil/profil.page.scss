@@ -45,11 +45,12 @@
 }
 
 
-ion-toast {
-  --background: rgb(180, 0, 0);
-  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
-  --color: #ffffff;
-}
+ion-toast.deleted-toaser{
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+  }
+
 
 .toast-scheme {
   background: rgb(109, 234, 84) !important ;

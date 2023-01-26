@@ -63,7 +63,9 @@ export class CreateServicePage implements OnInit {
     const toast = await this.toast.create({
       message: 'Service mis-à-jour !',
       duration: 1500,
-      position: 'middle'
+      position: 'middle',
+      color: 'success',
+      cssClass: 'sucess-toaster'
     });
 
     await toast.present();
@@ -79,7 +81,9 @@ export class CreateServicePage implements OnInit {
     const toast = await this.toast.create({
       message: 'Service créé !',
       duration: 2500,
-      position: 'bottom'
+      position: 'bottom',
+      color: 'success',
+      cssClass: 'sucess-toaster'
     });
 
     await toast.present();
@@ -116,8 +120,6 @@ export class CreateServicePage implements OnInit {
         console.log(response);
         this.closeModal();
         this.createdMessage()
-
-      
       },
         (error) => {
           console.error(error);

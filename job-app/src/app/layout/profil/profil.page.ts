@@ -146,9 +146,10 @@ export class ProfilPage implements OnInit {
   async deletedMessage() {
     const toast = await this.toastController.create({
       message: 'Service supprimé !',
-      cssClass: 'toast-scheme',
+      color: 'danger',
       duration: 3500,
-      position: 'bottom'
+      position: 'bottom',
+      cssClass: 'deleted-toaster'
     });
 
     await toast.present();
