@@ -9,6 +9,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { CreateServicePage } from '../create-service/create-service.page';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 
 
 @Component({
@@ -19,6 +20,8 @@ import { Subscription } from 'rxjs';
 export class ProfilPage implements OnInit {
 
   selectTabs = 'default';
+
+  allDataLoaded: boolean;
 
   userID: any;
   userName: any;
@@ -37,6 +40,8 @@ export class ProfilPage implements OnInit {
 
 
   servicesSub: Service[];
+  service : any;
+
   private servicesSubscription: Subscription;
 
   constructor(
@@ -70,6 +75,36 @@ export class ProfilPage implements OnInit {
     });
   }
 
+  // async afficheService(service : any) {
+  //   console.log('hello')
+  //   const modal =  this.modalController.create({
+  //     component: ServiceDetailComponent,
+  //     componentProps: {
+  //       data: service
+  //       // pass any props that your create service component needs
+  //     },
+  //     cssClass: 'ModalPage'
+  //   });
+
+    
+  // }
+
+  loadMoreData() {
+    this.readAPI('https://jobapp.onrender.com/services')
+    .subscribe((data) => {
+      this.services.push(...data['data']);
+      this.cdr.detectChanges();
+      if(this.services.length >= this.services.length){
+        this.allDataLoaded = true;
+      }
+    });
+  }
+
+
+
+  async afficheServiceCall(service : any) {
+    this.serviceService.afficheService(service)
+  }
 
   ngOnInit() {
 
@@ -101,7 +136,11 @@ export class ProfilPage implements OnInit {
     console.log("deleted")
   }
 
-
+  // deleteCompte() {
+  //   console.log('compte supprimé.');
+  //   this.auth.deleteService(user._id);
+  //   this.router.navigateByUrl("/registrate");
+  // }
 
 
   async deletedMessage() {

@@ -37,10 +37,10 @@
         <ion-icon name="power"></ion-icon>
         <p> Se déconnecter</p>
       </ion-button>
-      <ion-button class="buttonLinks" color="danger" fill="clear">
+      <!-- <ion-button class="buttonLinks" color="danger" fill="clear" (click)="deleteCompte()"> -->
         <ion-icon name="close"></ion-icon>
         <p> Supprimer le compte</p>
-      </ion-button>
+      <!-- </ion-button> -->
     </div>
   </section>
 
@@ -52,7 +52,7 @@
       <div class="service" *ngFor="let service of services">
         <ion-item *ngIf="service.provider === userID">
 
-          <div class="serviceImage">
+          <div class="serviceImage" (click)="afficheServiceCall(service)">
             <img src={{service.picture}} height="100%" width="">
           </div>
           <div class="infosService">
@@ -69,6 +69,10 @@
           </div>
         </ion-item>
       </div>
+      <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    
     </ion-list>
 
   </section>

@@ -4,6 +4,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { CreateServicePage } from '../create-service/create-service.page';
 import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-detail.component';
 import { ChangeDetectorRef } from '@angular/core';
+import { ServiceService } from '../services/service.service';
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.page.html',
@@ -64,7 +65,7 @@ export class services {
   
  
 
-  constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef) {
+  constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef, private serviceService: ServiceService) {
 
     this.readAPI('https://jobapp.onrender.com/services')
     .subscribe((data) => {
@@ -91,20 +92,25 @@ export class services {
     });
   }
 
-  async afficheService(service : any) {
-    const modal = await this.modalController.create({
-        component: ServiceDetailComponent,
-        componentProps: { 
-          data: service
-          // pass any props that your create service component needs
-        },
-        cssClass: 'ModalPage'
-        
-    });
-  
-  
-    return await modal.present();
+
+  async afficheServiceCall(service : any) {
+    this.serviceService.afficheService(service)
   }
+
+  // async afficheService(service : any) {
+  //   const modal = await this.modalController.create({
+  //       component: ServiceDetailComponent,
+  //       componentProps: { 
+  //         data: service
+  //         // pass any props that your create service component needs
+  //       },
+  //       cssClass: 'ModalPage'
+        
+  //   });
+  
+  
+  //   return await modal.present();
+  // }
   
 
   // handleChange(event) {

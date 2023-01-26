@@ -7,8 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ServiceListPageRoutingModule } from './service-list-routing.module';
 
 import { services } from './service-list.page';
-import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-detail.component';
-import { ServiceDetailModule } from 'src/app/layout/service-detail/service-detail.module';
+
 
 @NgModule({
   imports: [
@@ -16,7 +15,6 @@ import { ServiceDetailModule } from 'src/app/layout/service-detail/service-detai
     FormsModule,
     IonicModule,
     ServiceListPageRoutingModule,
-    ServiceDetailModule
   ],
   declarations: [services]
 })

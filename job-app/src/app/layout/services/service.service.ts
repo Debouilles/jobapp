@@ -10,6 +10,8 @@ import { catchError } from 'rxjs/operators';
 import { ToastController } from '@ionic/angular';
 import { ServiceResponse } from 'src/app/models/service-response';
 import { Subject } from 'rxjs';
+import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+import { ModalController } from '@ionic/angular';
 
 
 @Injectable({
@@ -19,7 +21,7 @@ export class ServiceService {
   baseUrl = 'https://jobapp.onrender.com/services';
    servicesMain = new Subject<Service[]>();
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService, private modalController: ModalController ) {
    
 
    }
@@ -177,6 +179,21 @@ export class ServiceService {
   }
 
 
+
+  async afficheService(service : any) {
+    const modal = await this.modalController.create({
+        component: ServiceDetailComponent,
+        componentProps: { 
+          data: service
+          // pass any props that your create service component needs
+        },
+        cssClass: 'ModalPage'
+        
+    });
+  
+  
+    return await modal.present();
+  }
 
   // updateServiceOld(id: string, picture: string, location: object, titre: string, date: Date, type: string, description: string): Observable<Service> {
   //   console.log("HELP")
