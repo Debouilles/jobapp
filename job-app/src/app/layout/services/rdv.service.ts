@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Rdv } from 'src/app/models/rdv';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 
 @Injectable({
@@ -14,32 +15,58 @@ export class RdvService {
     private http: HttpClient
   ) { }
 
-  async createRdv(contract: Rdv){
-    console.log('hewara')
-    let httpOptions = {
+  //  createRdv(contract: Rdv){
+  //   console.log('hewara')
+  //   let httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     })
+  //   };
+  //   httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+  //   console.log (localStorage.getItem('access_token'))
+  //    return this.http.post<Rdv>(this.baseUrl, contract, httpOptions)
+  //     .pipe(
+  //       map(response => {
+  //         console.log("heya")
+  //         // map the response to a User object
+  //         console.log(response)
+  //         // calling the subject's next() method with the updated list of services
+  //         // this.servicesUpdated.next(this.servicesMain);
+  //         return new Rdv();
+
+  //       }),
+  //       catchError(error => {
+  //         console.log("heyo")
+  //         // handle errors here
+  //         console.log(error);
+  //         return error
+  //       })
+  //     );
+  // }
+
+  createRdv(contract: any): Observable<Rdv> {
+        let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
     httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
     console.log (localStorage.getItem('access_token'))
-     return this.http.post<Rdv>(this.baseUrl, contract, httpOptions)
-      .pipe(
+   
+    return this.http.post<Rdv>(this.baseUrl, contract, httpOptions)
+    .pipe(
         map(response => {
-          console.log("heya")
-          // map the response to a User object
-          console.log(response)
-          // calling the subject's next() method with the updated list of services
-          // this.servicesUpdated.next(this.servicesMain);
-          return new Rdv(contract);
-
+            // map the response to a User object
+            console.log(response)
+            return new Rdv();
+           
         }),
         catchError(error => {
-          console.log("heyo")
-          // handle errors here
-          console.log(error);
-          return error
+            // handle errors here
+            // console.log(error);
+            
+            return throwError(error);
         })
-      );
-  }
+    );
+}
 }

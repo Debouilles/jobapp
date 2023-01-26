@@ -33,16 +33,25 @@ export class ServiceDetailComponent implements OnInit {
   //si rdv existe pour le service, ne plus l'afficher ? ou si isAccepted?
 
 
-  async takeRdv(service: any) {
+   takeRdv(service: any) {
     // console.log(data)
     // console.log(this.loggedUser)
     let contract = {
-      provider: service.provider,
+      // provider: service.provider,
       reciever: this.loggedUser,
       relatedService: service._id
     }
     console.log(contract)
-    await this.rdvServ.createRdv(contract)
+     this.rdvServ.createRdv(contract).subscribe((response) => {
+      console.log(response);
+
+    },
+      (error) => {
+        console.error(error);
+      }
+
+    );
+  
 
 
   }
