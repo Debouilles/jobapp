@@ -6,6 +6,7 @@ import { ToastController } from '@ionic/angular';
 import { MiniMapComponent } from '../mini-map/mini-map.component';
 import { RdvService } from '../services/rdv.service';
 import { map } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-service-detail',
   templateUrl: './service-detail.component.html',
@@ -24,7 +25,9 @@ export class ServiceDetailComponent implements OnInit {
     public alertController: AlertController,
     public viewCtrl: NavController,
     private modalController: ModalController,
-    private rdvServ: RdvService) {
+    private rdvServ: RdvService,
+    public cdr: ChangeDetectorRef,
+    public toast: ToastController) {
 
 
     this.loggedUser = localStorage.getItem('user_id')
@@ -34,6 +37,52 @@ export class ServiceDetailComponent implements OnInit {
   //A FAIRE !! take id from localstorage, send request with body to rdvs avec les 2 userid et leserviceid
   //aussi faire si service provider = id en localstorage 
   //si rdv existe pour le service, ne plus l'afficher ? ou si isAccepted?
+
+checkAvailability(){
+  if (this.data.provider === this.loggedUser) {
+    this.isOwner = true;
+  } else {
+    this.isOwner = false;
+  }
+  console.log(this.data)
+  this.rdvServ.checkIfIsAlive(this.data._id)
+    .subscribe(response => {
+      console.log(response);
+
+      if(Array.isArray(response) && response.length > 0) {
+        if (response[0].relatedService === this.data._id) {
+            this.isWaiting = true;
+        } else if (response[0].relatedService === undefined) {
+            this.isWaiting = false;
+        }
+    } else {
+        this.isWaiting = false;
+    }
+      // if (response[0].relatedService === this.data._id) {
+      //   this.isWaiting = true;
+      // } else if (response[0].relatedService === undefined) {
+      //   this.isWaiting = false;
+      // }
+    }, error => {
+      console.error(error);
+      this.isWaiting = false;
+    });
+
+}
+
+
+async waitingMessage() {
+  const toast = await this.toast.create({
+    message: 'Service en attente !',
+    duration: 2500,
+    position: 'bottom',
+    color: 'warning',
+    cssClass: 'sucess-toaster'
+  });
+
+  await toast.present();
+}
+
 
 
   takeRdv(service: any) {
@@ -47,6 +96,8 @@ export class ServiceDetailComponent implements OnInit {
     console.log(contract)
     this.rdvServ.createRdv(contract).subscribe((response) => {
       console.log(response);
+      // this.checkAvailability;
+      // this.cdr.detectChanges
 
     },
       (error) => {
@@ -55,7 +106,8 @@ export class ServiceDetailComponent implements OnInit {
 
     );
 
-
+    this.closeModal()
+    this.waitingMessage()
 
   }
 
@@ -63,6 +115,8 @@ export class ServiceDetailComponent implements OnInit {
   closeModal() {
     this.modalController.dismiss();
   }
+
+
 ionViewWillEnter(){
   if (this.data.provider === this.loggedUser) {
     this.isOwner = true;
