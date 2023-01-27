@@ -45,21 +45,23 @@ export class MiniMapComponent implements OnInit {
   ngOnInit() {
     console.log(this.coords)
 
-    this.http.get<any>('https://jobapp.onrender.com/services/').subscribe(data => {
-      data.data.forEach(service => {
+    // this.http.get<any>('https://jobapp.onrender.com/services/').subscribe(data => {
+      // data.data.forEach(service => {
 
 
-        const newMarker = marker([service.location.coordinates[0], service.location.coordinates[1]], { icon: defaultIcon }).bindTooltip(service.titre).on("click", event => {
-          /*   this.openModal(service); */
-        });
+      //   const newMarker = marker([service.location.coordinates[0], service.location.coordinates[1]], { icon: defaultIcon }).bindTooltip(service.titre).on("click", event => {
+      //     /*   this.openModal(service); */
+      //   });
+
+const newMarker = marker([this.coords.coordinates[0], this.coords.coordinates[1]], { icon: defaultIcon })
         this.markerSetup.push({
           marker: newMarker,
-          data: service
+          // data: service
         })
 
         this.mapMarkers.push(newMarker);
         // console.log([service.location.coordinates[0], service.location.coordinates[1]])
-      });
+      // });
 
 
 
@@ -71,9 +73,9 @@ export class MiniMapComponent implements OnInit {
       });
       /* console.log(this.mapMarkers) */
 
-    });
-  }
-
+    // });
+  
+    }
 
   onMapReady(map: Map) {
     this.map = map;
