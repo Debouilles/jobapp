@@ -1,20 +1,23 @@
 <!-- <div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" ></div> -->
 <ion-card class="card">
-    <ion-card-header [ngStyle]="{'background-image': 'url(' + data.picture + ')', 'background-size': 'cover'}">
-      
-    <ion-card-title class="cardTitle">
-        <!-- <img class="imgsize" src="{{ data.picture}}"> -->
-      <div class="titreService">{{ data.titre}}</div>
-    </ion-card-title>
+  <ion-card-header [ngStyle]="{'background-image': 'url(' + data.picture + ')', 'background-size': 'cover'}">
+
+
     <button ion-button (click)="closeModal()" class="buttonCloseModal" color="danger" fill="clear">
       <ion-icon name="arrow-back" class="arrowIcon"></ion-icon>
     </button>
   </ion-card-header>
-  
+
+  <ion-card-title class="cardTitle">
+
+    <!-- <img class="imgsize" src="{{ data.picture}}"> -->
+    <div class="titreService">{{ data.titre}}</div>
+  </ion-card-title>
+
   <ion-card-content class="dateHeure">
     <div class="date">{{ data.date | date: "dd MMM yyyy" }}</div>
     <div class="heure">{{data.date | date: "HH : mm" }}</div>
-  </ion-card-content>    
+  </ion-card-content>
   <h4 class="description">Type :</h4>
   <ion-card-content>{{ data.type }}</ion-card-content>
   <h4 class="description">Description :</h4>
