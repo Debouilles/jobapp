@@ -5,6 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { MiniMapComponent } from '../mini-map/mini-map.component';
 import { RdvService } from '../services/rdv.service';
+import { map } from 'rxjs';
 @Component({
   selector: 'app-service-detail',
   templateUrl: './service-detail.component.html',
@@ -15,6 +16,8 @@ import { RdvService } from '../services/rdv.service';
 export class ServiceDetailComponent implements OnInit {
   data: any;
   isOwner: boolean;
+  isWaiting: boolean;
+  isTaken: boolean;
   loggedUser: string;
 
   constructor(
@@ -33,7 +36,7 @@ export class ServiceDetailComponent implements OnInit {
   //si rdv existe pour le service, ne plus l'afficher ? ou si isAccepted?
 
 
-   takeRdv(service: any) {
+  takeRdv(service: any) {
     // console.log(data)
     // console.log(this.loggedUser)
     let contract = {
@@ -42,7 +45,7 @@ export class ServiceDetailComponent implements OnInit {
       relatedService: service._id
     }
     console.log(contract)
-     this.rdvServ.createRdv(contract).subscribe((response) => {
+    this.rdvServ.createRdv(contract).subscribe((response) => {
       console.log(response);
 
     },
@@ -51,7 +54,7 @@ export class ServiceDetailComponent implements OnInit {
       }
 
     );
-  
+
 
 
   }
@@ -60,23 +63,53 @@ export class ServiceDetailComponent implements OnInit {
   closeModal() {
     this.modalController.dismiss();
   }
-  ngOnInit() {
-    if (this.data.provider === this.loggedUser) {
-      this.isOwner = true;
+ionViewWillEnter(){
+  if (this.data.provider === this.loggedUser) {
+    this.isOwner = true;
+  } else {
+    this.isOwner = false;
+  }
+  console.log(this.data)
+  this.rdvServ.checkIfIsAlive(this.data._id)
+    .subscribe(response => {
+      console.log(response);
+
+      if(Array.isArray(response) && response.length > 0) {
+        if (response[0].relatedService === this.data._id) {
+            this.isWaiting = true;
+        } else if (response[0].relatedService === undefined) {
+            this.isWaiting = false;
+        }
     } else {
-      this.isOwner = false;
+        this.isWaiting = false;
     }
+      // if (response[0].relatedService === this.data._id) {
+      //   this.isWaiting = true;
+      // } else if (response[0].relatedService === undefined) {
+      //   this.isWaiting = false;
+      // }
+    }, error => {
+      console.error(error);
+      this.isWaiting = false;
+    });
+
+}
+
+
+
+  ngOnInit() {
+   
 
   }
 
 
 
-      // async function presentAlert() {
-    //   const alert = await this.alertController.create({
-    //     header: 'Rendez-vous déjà pris',
-    //   });
+  // async function presentAlert() {
+  //   const alert = await this.alertController.create({
+  //     header: 'Rendez-vous déjà pris',
+  //   });
 
-    //   await alert.present();
-    // }
+  //   await alert.present();
+  // }
 
 }

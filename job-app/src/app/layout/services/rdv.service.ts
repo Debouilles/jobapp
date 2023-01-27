@@ -10,6 +10,8 @@ import { Observable, throwError } from 'rxjs';
 })
 export class RdvService {
   baseUrl = 'https://jobapp.onrender.com/rdvs';
+  // isAlive = false;
+  // isWaiting = false;
 
   constructor(
     private http: HttpClient
@@ -44,6 +46,37 @@ export class RdvService {
   //     );
   // }
 
+
+  checkIfIsAlive(serviceId){
+    //note marche pas si en fonction °\__O__/°
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+    console.log("SERVICEID:"+serviceId)
+    return this.http.get<Rdv>(this.baseUrl+"/service/"+serviceId, httpOptions)
+    .pipe(
+        map(response => {
+          console.log(response)
+            // map the response to a User object
+            // console.log(response)
+            // this.isAlive = true
+            // this.isWaiting= true;
+            return response
+           
+           
+        }),
+        catchError(error => {
+            // handle errors here
+            console.log(error);
+          // this.isWaiting = false;
+            return throwError(error);
+        })
+    );
+  }
+
   createRdv(contract: any): Observable<Rdv> {
         let httpOptions = {
       headers: new HttpHeaders({
@@ -64,7 +97,7 @@ export class RdvService {
         catchError(error => {
             // handle errors here
             // console.log(error);
-            
+
             return throwError(error);
         })
     );
