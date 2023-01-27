@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { Map, latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
+import { Map, latLng, MapOptions, marker, Marker, tileLayer, LatLng } from 'leaflet';
 import { defaultIcon } from '../service-map/default-marker';
 import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
@@ -21,7 +21,7 @@ export class MiniMapComponent implements OnInit {
   // service: any;
   map: Map;
   currentMarker: any;
-  
+
 
   constructor(private http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef) {
     this.mapOptions = {
@@ -39,43 +39,49 @@ export class MiniMapComponent implements OnInit {
     this.markerSetup = [];
 
 
-   
+
   }
 
   ngOnInit() {
     console.log(this.coords)
 
     // this.http.get<any>('https://jobapp.onrender.com/services/').subscribe(data => {
-      // data.data.forEach(service => {
+    // data.data.forEach(service => {
 
 
-      //   const newMarker = marker([service.location.coordinates[0], service.location.coordinates[1]], { icon: defaultIcon }).bindTooltip(service.titre).on("click", event => {
-      //     /*   this.openModal(service); */
-      //   });
+    //   const newMarker = marker([service.location.coordinates[0], service.location.coordinates[1]], { icon: defaultIcon }).bindTooltip(service.titre).on("click", event => {
+    //     /*   this.openModal(service); */
+    //   });
 
-const newMarker = marker([this.coords.coordinates[0], this.coords.coordinates[1]], { icon: defaultIcon })
-        this.markerSetup.push({
-          marker: newMarker,
-          // data: service
-        })
-
-        this.mapMarkers.push(newMarker);
-        // console.log([service.location.coordinates[0], service.location.coordinates[1]])
-      // });
+    const newMarker = marker([this.coords.coordinates[0], this.coords.coordinates[1]], { icon: defaultIcon })
+    this.markerSetup.push({
+      marker: newMarker,
+      // data: service
+    })
 
 
 
-      this.markerSetup.forEach(markSet => {
-        markSet.marker.on("click", event => {
-          this.selectedService = markSet.data;
-          this.cdr.detectChanges();
-        });
+    this.mapMarkers.push(newMarker);
+    // this.map.setView();
+    this.mapOptions.center = latLng([this.coords.coordinates[0], this.coords.coordinates[1]])
+
+    // console.log([service.location.coordinates[0], service.location.coordinates[1]])
+    // });
+
+
+
+    this.markerSetup.forEach(markSet => {
+      
+      markSet.marker.on("click", event => {
+        this.selectedService = markSet.data;
+        this.cdr.detectChanges();
       });
-      /* console.log(this.mapMarkers) */
+    });
+    /* console.log(this.mapMarkers) */
 
     // });
-  
-    }
+
+  }
 
   onMapReady(map: Map) {
     this.map = map;
