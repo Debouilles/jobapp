@@ -1,15 +1,19 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { Map, latLng, MapOptions, marker, Marker, tileLayer } from 'leaflet';
 import { defaultIcon } from '../service-map/default-marker';
 import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-mini-map',
   templateUrl: './mini-map.component.html',
   styleUrls: ['./mini-map.component.scss'],
 })
+
+
 export class MiniMapComponent implements OnInit {
+  @Input() coords: any;
   mapOptions: MapOptions;
   mapMarkers: Marker[];
   markerSetup: any[];
@@ -39,6 +43,7 @@ export class MiniMapComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.coords)
 
     this.http.get<any>('https://jobapp.onrender.com/services/').subscribe(data => {
       data.data.forEach(service => {

@@ -20,6 +20,7 @@ export class ServiceDetailComponent implements OnInit {
   isWaiting: boolean;
   isTaken: boolean;
   loggedUser: string;
+  coords: any;
 
   constructor(
     public alertController: AlertController,
@@ -44,10 +45,10 @@ checkAvailability(){
   } else {
     this.isOwner = false;
   }
-  console.log(this.data)
+  // console.log(this.data)
   this.rdvServ.checkIfIsAlive(this.data._id)
     .subscribe(response => {
-      console.log(response);
+      // console.log(response);
 
       if(Array.isArray(response) && response.length > 0) {
         if (response[0].relatedService === this.data._id) {
@@ -93,9 +94,9 @@ async waitingMessage() {
       reciever: this.loggedUser,
       relatedService: service._id
     }
-    console.log(contract)
+    // console.log(contract)
     this.rdvServ.createRdv(contract).subscribe((response) => {
-      console.log(response);
+      // console.log(response);
       // this.checkAvailability;
       // this.cdr.detectChanges
 
@@ -123,10 +124,11 @@ ionViewWillEnter(){
   } else {
     this.isOwner = false;
   }
-  console.log(this.data)
+  this.coords = this.data.location
+  // console.log(this.data)
   this.rdvServ.checkIfIsAlive(this.data._id)
     .subscribe(response => {
-      console.log(response);
+      // console.log(response);
 
       if(Array.isArray(response) && response.length > 0) {
         if (response[0].relatedService === this.data._id) {

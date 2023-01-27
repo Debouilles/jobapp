@@ -17,7 +17,7 @@
     <div class="heure">{{data.date | date: "hh : mm" }}</div>
   </ion-card-content><ion-card-content>{{ data.type }}</ion-card-content>
   <ion-card-content>{{ data.description }}</ion-card-content>
-  <ion-card-content><app-mini-map></app-mini-map></ion-card-content>
+  <ion-card-content><app-mini-map [coords]="this.data.location"></app-mini-map></ion-card-content>
   <!-- <div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" [leafletLayers]="mapMarkers"></div> -->
   <ion-card-content *ngIf="isWaiting && !isOwner">
     <div>Ce rendez-vous est en attente de confirmation par le propriétaire</div>
