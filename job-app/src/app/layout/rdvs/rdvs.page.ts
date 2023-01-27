@@ -5,7 +5,7 @@ import { CreateServicePage } from '../create-service/create-service.page';
 import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-detail.component';
 import { ChangeDetectorRef } from '@angular/core';
 import { ServiceService } from '../services/service.service';
-
+import { AuthService } from "src/app/auth/auth.service";
 
 @Component({
   selector: 'app-rdvs',
@@ -14,6 +14,12 @@ import { ServiceService } from '../services/service.service';
 })
 export class RDVSPage implements OnInit {
   selectTabs = 'default';
+
+  today;
+
+  userID: any;
+  userName: any;
+  userEmail: any;
 
   rdvs: any;
   rdvApiUrl = '';
@@ -53,7 +59,13 @@ export class RDVSPage implements OnInit {
 
   }
 
-  constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef, private serviceService: ServiceService) {
+  constructor(
+      public http: HttpClient, 
+      private modalController: ModalController, 
+      private cdr: ChangeDetectorRef, 
+      private serviceService: ServiceService,
+      private auth: AuthService,) {
+
     this.readAPI('https://jobapp.onrender.com/rdvs')
       .subscribe((data) => {
         this.rdvs = data;
@@ -61,6 +73,13 @@ export class RDVSPage implements OnInit {
         console.log(this.rdvs)
         this.cdr.detectChanges();
       });
+
+    this.userID = this.auth.getUser$();
+    this.auth.getUser$().subscribe(data => {
+      this.userID = data._id;
+      this.userName = data.name;
+      this.userEmail = data.email;
+    });
   }
 
   readAPI(URL: string) {
@@ -111,6 +130,9 @@ export class RDVSPage implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.today = new Date().toISOString();
+    });
   }
 
 }
