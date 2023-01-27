@@ -9,7 +9,7 @@ import { MiniMapComponent } from '../mini-map/mini-map.component';
 @NgModule({
   declarations: [ServiceDetailComponent, MiniMapComponent],
   imports: [
-   CommonModule , IonicModule
+   CommonModule , IonicModule, LeafletModule
   ],
   exports: [ServiceDetailComponent]
 })

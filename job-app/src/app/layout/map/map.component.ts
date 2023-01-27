@@ -29,7 +29,7 @@ export class MapComponent implements OnInit {
           { maxZoom: 18 }
         )
       ],
-      zoom: 13,
+      zoom: 10,
       center: latLng(46.778186, 6.641524)
     };
 
@@ -40,6 +40,8 @@ export class MapComponent implements OnInit {
    
   }
 
+
+  
   async afficheService(service : any) {
     const modal = await this.modalController.create({
 

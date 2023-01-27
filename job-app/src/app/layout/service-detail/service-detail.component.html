@@ -11,12 +11,11 @@
       <ion-icon name="arrow-back" class="arrowIcon"></ion-icon>
     </button>
   </ion-card-header>
+  <h3 class="description">Description:</h3>
   <ion-card-content class="dateHeure">
     <div class="date">{{ data.date | date: "dd MMM yyyy" }}</div>
     <div class="heure">{{data.date | date: "hh : mm" }}</div>
-  </ion-card-content>
-  <h2 class="description">Description:</h2>
-  <ion-card-content>{{ data.type }}</ion-card-content>
+  </ion-card-content><ion-card-content>{{ data.type }}</ion-card-content>
   <ion-card-content>{{ data.description }}</ion-card-content>
   <ion-card-content><app-mini-map></app-mini-map></ion-card-content>
   <!-- <div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" [leafletLayers]="mapMarkers"></div> -->
