@@ -82,8 +82,9 @@ router.get("/:id",authenticate, loadRdv, checkRdvOwnerOrReciever, async (req, re
 
 router.get("/service/:id", async (req, res, next) =>{
   try {
-    const service = await RDV.findOne({}).select({ "relatedService": req.params.id});
-    if (!service.relatedService) {
+    const service = await RDV.find({ "relatedService": req.params.id}).select();
+    console.log(service)
+    if (service === null) {
       res.status(501).send('not found')
     } else {
       res.send(service);
