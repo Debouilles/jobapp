@@ -3,7 +3,7 @@
   <ion-card-header>
     <ion-card-title class="cardTitle">
       <div class="img void">
-        <img src="{{ data.picture}}" alt="" maxwidth="400px" maxheight="150px">
+        <img class="imgsize" src="{{ data.picture}}" max-height="80px">
       </div>
       <div class="titreService">{{ data.titre}}</div>
     </ion-card-title>
@@ -11,14 +11,16 @@
       <ion-icon name="arrow-back" class="arrowIcon"></ion-icon>
     </button>
   </ion-card-header>
-  <h3 class="description">Description:</h3>
+  
   <ion-card-content class="dateHeure">
     <div class="date">{{ data.date | date: "dd MMM yyyy" }}</div>
     <div class="heure">{{data.date | date: "hh : mm" }}</div>
-  </ion-card-content><ion-card-content>{{ data.type }}</ion-card-content>
+  </ion-card-content>    
+  <h4 class="description">Type :</h4>
+  <ion-card-content>{{ data.type }}</ion-card-content>
+  <h4 class="description">Description :</h4>
   <ion-card-content>{{ data.description }}</ion-card-content>
   <ion-card-content><app-mini-map [coords]="this.data.location"></app-mini-map></ion-card-content>
-  <!-- <div class="map" leaflet [leafletOptions]="mapOptions" (leafletMapReady)="onMapReady($event)" [leafletLayers]="mapMarkers"></div> -->
   <ion-card-content *ngIf="isWaiting && !isOwner">
     <div>Ce rendez-vous est en attente de confirmation par le propriétaire</div>
   </ion-card-content>
@@ -30,12 +32,3 @@
   </ion-card-content>
 
 </ion-card>
-<!-- <ion-card-content>  -->
-<!-- {{ data.location }} -->
-<!-- <ion-button class="btnprendrerdv" type="submit" (click)="presentAlert()">Prendre rendez-vous</ion-button> -->
-<!-- <ion-button class="btnannulerrdv" type="submit">Annuler rendez-vous</ion-button> -->
-<!-- </ion-card-content>  -->
-
-<!-- </ion-card> -->
-
-<!-- *ngIf="selectedService" -->

@@ -38,8 +38,8 @@
         <p> Se déconnecter</p>
       </ion-button>
       <!-- <ion-button class="buttonLinks" color="danger" fill="clear" (click)="deleteCompte()"> -->
-        <ion-icon name="close"></ion-icon>
-        <p> Supprimer le compte</p>
+      <ion-icon name="close"></ion-icon>
+      <p> Supprimer le compte</p>
       <!-- </ion-button> -->
     </div>
   </section>
@@ -63,8 +63,10 @@
             <ion-button (click)="updateServ(service._id)" class="buttonLinks" color="medium" fill="clear">
               <ion-icon name="pencil"></ion-icon>
             </ion-button>
-            <ion-button (click)="deleteServ(service)" class="buttonLinks" color="danger" fill="clear">
-              <ion-icon name="trash-bin-outline"></ion-icon>
+            <!-- <ion-button (click)="deleteServ(service)" class="buttonLinks" color="danger" fill="clear"> -->
+            <ion-button (click)="presentAlert()" class="buttonLinks" color="danger" fill="clear">
+
+            <ion-icon name="trash-bin-outline"></ion-icon>
             </ion-button>
           </div>
         </ion-item>
@@ -72,7 +74,7 @@
       <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-    
+
     </ion-list>
 
   </section>

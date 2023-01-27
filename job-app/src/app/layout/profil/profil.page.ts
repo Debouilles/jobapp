@@ -10,6 +10,7 @@ import { CreateServicePage } from '../create-service/create-service.page';
 import { ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ServiceDetailComponent } from '../service-detail/service-detail.component';
+import { AlertController } from '@ionic/angular';
 
 
 @Component({
@@ -19,6 +20,9 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
 })
 export class ProfilPage implements OnInit {
 
+
+  handlerMessage = '';
+  roleMessage = '';
   selectTabs = 'default';
 
   allDataLoaded: boolean;
@@ -56,6 +60,7 @@ export class ProfilPage implements OnInit {
     private toastController: ToastController,
     private modalController: ModalController,
     private cdr: ChangeDetectorRef,
+    private alertController: AlertController,
 
   ) {
     this.userID = this.auth.getUser$();
@@ -85,50 +90,36 @@ export class ProfilPage implements OnInit {
       // this.cdr.detectChanges();
       
     });
+
   }
 
-  // async afficheService(service : any) {
-  //   console.log('hello')
-  //   const modal =  this.modalController.create({
-  //     component: ServiceDetailComponent,
-  //     componentProps: {
-  //       data: service
-  //       // pass any props that your create service component needs
-  //     },
-  //     cssClass: 'ModalPage'
-  //   });
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Voulez-vous vraiment supprimer cette annonce ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => {
+            this.handlerMessage = 'Alert canceled';
+          },
+        },
+        {
+          text: 'Supprimer',
+          role: 'confirm',
+          handler: () => {
+          this.deleteServ(this.service)
+          },
+        },
+      ],
+    });
 
-    
-  // }
+    await alert.present();
 
-  // loadMoreData() {
-  //   this.readAPI('https://jobapp.onrender.com/services')
-  //   .subscribe((data) => {
-  //     this.services.push(...data['data']);
-  //     this.cdr.detectChanges();
-  //     if(this.services.length >= this.services.length){
-  //       this.allDataLoaded = true;
-  //     }
-  //   });
-  // }
+    const { role } = await alert.onDidDismiss();
+    this.roleMessage = `Dismissed with role: ${role}`;
+  }
 
-
-  
-  // constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef, private serviceService: ServiceService) {
-  //   this.index = 1;
-  //   this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
-  //   .subscribe((data) => {
-  //     this.services = data['data'];
-  //     this.allServices = this.services
-  //     console.log(this.services)
-  //     this.cdr.detectChanges();
-  //   });
-  // }
-
-  // readAPI(URL: string){
-  //   return this.http.get(URL)
-    
-  // }
 
   loadMoreData() {
     this.index ++;
@@ -150,6 +141,7 @@ export class ProfilPage implements OnInit {
   async afficheServiceCall(service : any) {
     this.serviceService.afficheService(service)
   }
+  
 
   ngOnInit() {
 

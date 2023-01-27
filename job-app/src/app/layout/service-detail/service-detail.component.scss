@@ -28,9 +28,12 @@ ion-searchbar {
     margin-right: -50vw;
     max-width: 100vw;
     width: 100vw;
+    max-height: 80px;
 }
 
-
+// .imgsize{
+//     max-height: 175px !important;
+// }
 
 .arrowIcon{
     position: absolute;
@@ -57,6 +60,8 @@ ion-searchbar {
     border-radius: 5px;
 }
 
+
+
 .serviceTitre{
     font-size: 18px;
     margin-left: 20px;
@@ -75,7 +80,7 @@ ion-searchbar {
 
 
 .void{
-    height: 150px;
+    max-height: 80px;
     background-color: grey;
 }
 
