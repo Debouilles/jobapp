@@ -23,6 +23,7 @@ export class ProfilPage implements OnInit {
 
   allDataLoaded: boolean;
 
+  index: number;
   userID: any;
   userName: any;
   userEmail: any;
@@ -39,8 +40,9 @@ export class ProfilPage implements OnInit {
   }
 
 
-  servicesSub: Service[];
+  // servicesSub: Service[];
   service : any;
+  allServices: any;
 
   private servicesSubscription: Subscription;
 
@@ -63,6 +65,15 @@ export class ProfilPage implements OnInit {
       this.userEmail = data.email;
     });
 
+    this.index = 1;
+    this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
+    .subscribe((data) => {
+      this.services = data['data'];
+      this.allServices = this.services
+      console.log(this.services)
+      this.cdr.detectChanges();
+    });
+
   
   }
 
@@ -72,6 +83,7 @@ export class ProfilPage implements OnInit {
       console.log(`Services loaded`, servicesSub);
       this.services= servicesSub['data']
       // this.cdr.detectChanges();
+      
     });
   }
 
@@ -89,16 +101,49 @@ export class ProfilPage implements OnInit {
     
   // }
 
+  // loadMoreData() {
+  //   this.readAPI('https://jobapp.onrender.com/services')
+  //   .subscribe((data) => {
+  //     this.services.push(...data['data']);
+  //     this.cdr.detectChanges();
+  //     if(this.services.length >= this.services.length){
+  //       this.allDataLoaded = true;
+  //     }
+  //   });
+  // }
+
+
+  
+  // constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef, private serviceService: ServiceService) {
+  //   this.index = 1;
+  //   this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
+  //   .subscribe((data) => {
+  //     this.services = data['data'];
+  //     this.allServices = this.services
+  //     console.log(this.services)
+  //     this.cdr.detectChanges();
+  //   });
+  // }
+
+  // readAPI(URL: string){
+  //   return this.http.get(URL)
+    
+  // }
+
   loadMoreData() {
-    this.readAPI('https://jobapp.onrender.com/services')
+    this.index ++;
+    this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
     .subscribe((data) => {
+      console.log("DATA!!!:"+ data['data'])
       this.services.push(...data['data']);
-      this.cdr.detectChanges();
-      if(this.services.length >= this.services.length){
+      console.log(this.services)
+      // this.cdr.detectChanges();
+      if(this.services.length >= this.allServices.length){
         this.allDataLoaded = true;
       }
     });
   }
+
 
 
 

@@ -66,6 +66,15 @@ export class RDVSPage implements OnInit {
       private serviceService: ServiceService,
       private auth: AuthService,) {
 
+
+  }
+
+  readAPI(URL: string) {
+    return this.http.get(URL)
+
+  }
+
+  ionViewWillEnter(){
     this.readAPI('https://jobapp.onrender.com/rdvs')
       .subscribe((data) => {
         this.rdvs = data;
@@ -81,11 +90,7 @@ export class RDVSPage implements OnInit {
       this.userEmail = data.email;
     });
   }
-
-  readAPI(URL: string) {
-    return this.http.get(URL)
-
-  }
+  
 
   loadMoreData() {
     this.index++;
