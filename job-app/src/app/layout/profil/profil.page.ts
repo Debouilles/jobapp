@@ -93,7 +93,7 @@ export class ProfilPage implements OnInit {
 
   }
 
-  async presentAlert() {
+  async presentAlert(id) {
     const alert = await this.alertController.create({
       header: 'Voulez-vous vraiment supprimer cette annonce ?',
       buttons: [
@@ -108,7 +108,9 @@ export class ProfilPage implements OnInit {
           text: 'Supprimer',
           role: 'confirm',
           handler: () => {
-          this.deleteServ(this.service)
+            //problème ici ! ----------------------------------------------------------------------------------------------- !!!
+          this.deleteServ(id)
+          console.log('hello')
           },
         },
       ],
@@ -158,8 +160,8 @@ export class ProfilPage implements OnInit {
   }
 
 
-  async deleteServ(service: Service) {
-    await this.serviceService.deleteService(service._id)
+  async deleteServ(id) {
+    await this.serviceService.deleteService(id)
 
     await this.deletedMessage()
     this.readAPI('https://jobapp.onrender.com/services')

@@ -15,7 +15,7 @@
 
 <ion-item>
   <ion-label>Image</ion-label>
-  <ion-button (click)="takePicture()"> Take picture 
+  <ion-button (click)="takePicture()"> Prendre une photo
     <ion-icon name="camera-outline"></ion-icon></ion-button>
   <img *ngIf="picture" [src]="picture" />
 </ion-item>
@@ -30,7 +30,7 @@
   </ion-item>
   <ion-item>
     <ion-label>
-      Location <span>*</span>
+      Location <span></span>
     </ion-label>
     <ion-button (click)="getCurrentPosition()">get position</ion-button>
     {{ latitude }}
@@ -41,8 +41,7 @@
     </div>
   </ion-item>
   <ion-item>
-    <!-- Le date se cache derrière le calendrier, à gérer pour la suite en CSS-->
-    <ion-label>Date </ion-label>
+    <ion-label>Date</ion-label>
     <ion-datetime [(ngModel)]="date" name="date"  locale="ch-CH" >
       <!-- <span slot="title">Select a Reservation Date</span>
       <span slot="time-label">Heure</span> -->
