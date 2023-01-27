@@ -23,7 +23,23 @@
   </ion-segment>
 
   <section *ngIf="selectTabs === 'default'">
-    [liste des rdvs à venir]
+    <ion-list>
+      <ion-item class="service" (click)="afficheRdvCall(service)" *ngFor="let service of rdvs; let index">
+        <div class="serviceImage">
+          <img src={{service.picture}} height="100%" width="">
+          <!-- alt="image indisponible" -->
+        </div>
+        <div class="infosService">
+          <div class="servicelien">
+            <h2 class="serviceTitre">{{ service.relatedService.titre }}</h2>
+            <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
+          </div>
+        </div>
+      </ion-item>
+      <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-list>
   </section>
 
   <section *ngIf="selectTabs === 'enAttente'">
