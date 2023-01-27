@@ -80,6 +80,19 @@ router.get("/:id",authenticate, loadRdv, checkRdvOwnerOrReciever, async (req, re
   }
 });
 
+router.get("/service/:id", async (req, res, next) =>{
+  try {
+    const service = await RDV.findOne({}).select({ "relatedService": req.params.id});
+    if (!service.relatedService) {
+      res.status(501).send('not found')
+    } else {
+      res.send(service);
+    }
+  } catch (e) {
+    next(e)
+  }
+})
+
 
 //  POST 
 // /rdvs
