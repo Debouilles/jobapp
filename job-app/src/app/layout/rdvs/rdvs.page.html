@@ -9,7 +9,7 @@
 
 <ion-content>
   <h3>Mes RdVs:</h3>
-
+  <!-- NOTE: marche pas si pas nommé default -->
   <ion-segment [(ngModel)]="selectTabs" color="secondary" value="default">
     <ion-segment-button value="default">
       <ion-label>A venir</ion-label>
@@ -17,13 +17,10 @@
     <ion-segment-button value="enAttente">
       <ion-label>En attente</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="historique">
-      <ion-label>Historique</ion-label>
-    </ion-segment-button>
   </ion-segment>
 
-  <section *ngIf="selectTabs === 'default'">
-    <!-- <ion-list>
+
+  <!-- <ion-list>
       <div class="item" *ngFor="let rdv of rdvs; let index">
         <ion-item class="service" 
           (click)="afficheRdvCall(service)"
@@ -45,7 +42,7 @@
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </ion-list> -->
-  </section>
+
 
   <section *ngIf="selectTabs === 'enAttente'">
     <!-- <ion-list>
@@ -91,25 +88,30 @@
   </ion-list> -->
 
 
-  <section *ngIf="selectTabs === 'enAttente'">
+  <section *ngIf="selectTabs === 'default'">
     <ion-list>
-      <div class="item" *ngFor="let rdv of rdvs; let index"
-      (click)="afficheRdvCall(rdv.relatedService)">
-        <ion-item class="rdv" *ngIf="rdv.reciever._id === userID && rdv.relatedService.date < today && !rdv.isAccepted ">
-   
-            <div class="rdvImage">
-              <img src={{rdv.relatedService.picture}} height="100%" width="">
-            </div>
-            <div class="infosRdv">
-              <div class="servicelien">
-                
-                <h6 class="rdvProvider">rendez vous avec {{ rdv.provider.name }} pour</h6>
-            
-                <!-- <p class="serviceDate">{{ service.relatedService.date | date: "dd MMM yyyy" }}</p> -->
+      <div class="item" *ngFor="let rdv of rdvs; let index" (click)="afficheRdvCall(rdv.relatedService)">
+        <ion-item class="rdv" *ngIf="rdv.reciever._id === userID && rdv.relatedService.date < today ">
+
+          <div class="rdvImage">
+            <img src={{rdv.relatedService.picture}} height="100%" width="">
+          </div>
+          <div class="infosRdv">
+            <div class="rdvContainer">
+              <div class="rdvProvider">rendez vous avec {{ rdv.provider.name }}</div>
+              <div class="alarmIcon">
+                <ion-icon class="alarm" name="alarm"></ion-icon>
+                <span class="alarmMessage">en attente</span>
               </div>
+              <div class="serviceInfo">concernant: {{ rdv.relatedService.titre }}</div>
+              <!-- <p class="serviceDate">{{ service.relatedService.date | date: "dd MMM yyyy" }}</p> -->
             </div>
 
-          
+
+
+          </div>
+
+
         </ion-item>
       </div>
       <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">

@@ -75,6 +75,7 @@ export class RDVSPage implements OnInit {
   }
 
   ionViewWillEnter(){
+    setTimeout(() => this.cdr.markForCheck());
     this.readAPI('https://jobapp.onrender.com/rdvs')
       .subscribe((data) => {
         this.rdvs = data;
@@ -137,7 +138,13 @@ export class RDVSPage implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.today = new Date().toISOString();
+      
     });
+  }
+
+  public ngAfterViewInit(): void {
+    // Bug: https://github.com/ionic-team/ionic/issues/19289
+    setTimeout(() => this.cdr.markForCheck());
   }
 
 }
