@@ -6,6 +6,8 @@ import { User } from "../model/User.js"
 import { idCheckValidity } from "./users.js";
 import { authenticate } from "./login.js";
 import mongoose from "mongoose";
+import { RDV } from "../model/Rdv.js";
+
 
 
 
@@ -168,6 +170,7 @@ router.post("/", authenticate , async (req, res, next) => {
 // /services/:id
 router.delete("/:id", authenticate , loadService, checkServiceOwner, async (req, res) => {
   try {
+    await RDV.deleteMany({relatedService: req.params.id})
     await Service.findByIdAndDelete(req.params.id)
     res.status(200).json({ message: 'Deletion applied with success' });
     
