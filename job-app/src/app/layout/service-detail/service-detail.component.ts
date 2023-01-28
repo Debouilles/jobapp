@@ -7,6 +7,7 @@ import { MiniMapComponent } from '../mini-map/mini-map.component';
 import { RdvService } from '../services/rdv.service';
 import { map } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
+import { ServiceService } from '../services/service.service';
 @Component({
   selector: 'app-service-detail',
   templateUrl: './service-detail.component.html',
@@ -28,7 +29,8 @@ export class ServiceDetailComponent implements OnInit {
     private modalController: ModalController,
     private rdvServ: RdvService,
     public cdr: ChangeDetectorRef,
-    public toast: ToastController) {
+    public toast: ToastController,
+    private serv: ServiceService) {
 
 
     this.loggedUser = localStorage.getItem('user_id')
@@ -36,8 +38,24 @@ export class ServiceDetailComponent implements OnInit {
   }
 
 
+  onSubmit(id){
+    this.serv.deleteService(id).subscribe(
+      (data) => {
+          console.log("success: ", data);
+          this.deletedMessage();
+          this.closeModal();
+          this.cdr.detectChanges();
+          // show a toaster message here
+      },
+      (error) => console.log("error: ", error)
+    );
+  }
+
+
   deleteService(id){
     console.log(id)
+   
+    // this.serv.
   }
 
 
@@ -91,6 +109,20 @@ async waitingMessage() {
 }
 
 
+async deletedMessage() {
+  const toast = await this.toast.create({
+    message: 'Service supprimé !',
+    duration: 2500,
+    position: 'bottom',
+    color: 'danger',
+    cssClass: 'sucess-toaster'
+  });
+
+  await toast.present();
+}
+
+
+
 
   takeRdv(service: any) {
     // console.log(data)
@@ -121,6 +153,7 @@ async waitingMessage() {
 
   closeModal() {
     this.modalController.dismiss();
+    
   }
 
 

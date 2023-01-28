@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ModalController, NavParams } from '@ionic/angular';
 import { CreateServicePage } from '../create-service/create-service.page';
@@ -67,17 +67,12 @@ export class services {
 
 }
   
- 
+//  ngOnChanges(){
+//   this.cdr.detectChanges();
+//  }
 
   constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef, private serviceService: ServiceService) {
-    // this.index = 1;
-    // this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
-    // .subscribe((data) => {
-    //   this.services = data['data'];
-    //   this.allServices = this.services
-    //   console.log(this.services)
-    //   this.cdr.detectChanges();
-    // });
+
   }
 
   readAPI(URL: string){
@@ -87,16 +82,12 @@ export class services {
 
 
   ionViewWillEnter(): void {
-    // this.http.get('https://jobapp.onrender.com/services').subscribe((servicesSub) => {
-    //   console.log(`Services loaded`, servicesSub);
-    //   this.services= servicesSub['data']
-    //   // this.cdr.detectChanges();
-      
-    // });
+
     this.index = 1;
     this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
     .subscribe((data) => {
       this.services = data['data'];
+      
       this.allServices = this.services
       console.log(this.services)
       this.cdr.detectChanges();
@@ -119,33 +110,60 @@ export class services {
   }
 
 
+
+  ///DO HERE THE MODAL SO IT UPDATES -___-
+
+  async afficheService(service : any) {
+    const modal = await this.modalController.create({
+        component: ServiceDetailComponent,
+        componentProps: { 
+          data: service
+          // pass any props that your create service component needs
+        },
+        cssClass: 'ModalPage'
+        
+    });
+    modal.onDidDismiss().then(() => {
+      // refresh the list of services after the modal is closed
+      this.readAPI('https://jobapp.onrender.com/services')
+        .subscribe((data) => {
+          this.services = data['data'];
+        });
+    });
+    
+  
+  
+    return await modal.present();
+  }
+
+
   async afficheServiceCall(service : any) {
     console.log("helloWOrlds")
     this.serviceService.afficheService(service)
+    
    
   }
 
-  // async afficheService(service : any) {
+
+
+  // async openDetailServModal() {
   //   const modal = await this.modalController.create({
-  //       component: ServiceDetailComponent,
-  //       componentProps: { 
-  //         data: service
+  //       component: CreateServicePage,
+  //       componentProps: {
   //         // pass any props that your create service component needs
   //       },
-  //       cssClass: 'ModalPage'
-        
+  //       cssClass: 'createServiceModal'
   //   });
-  
-  
-  //   return await modal.present();
-  // }
-  
 
-  // handleChange(event) {
-  //     console.log(event);
-  //     const query = event.target.value.toLowerCase();
-  //     this.services = this.services.filter(d => d.toLowerCase().indexOf(query) > -1);
-  //   }
+  //   modal.onDidDismiss().then(() => {
+  //     // refresh the list of services after the modal is closed
+  //     this.readAPI('https://jobapp.onrender.com/services')
+  //       .subscribe((data) => {
+  //         this.services = data['data'];
+  //       });
+  //   });
+
+
 
   async openCreateServiceModal() {
     const modal = await this.modalController.create({

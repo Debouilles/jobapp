@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 
 import { HttpClient, HttpHeaders, HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
@@ -21,7 +21,7 @@ export class ServiceService {
   baseUrl = 'https://jobapp.onrender.com/services';
    servicesMain = new Subject<Service[]>();
 
-  constructor(private http: HttpClient, private authService: AuthService, private modalController: ModalController ) {
+  constructor(private http: HttpClient, private authService: AuthService, private modalController: ModalController) {
    
 
    }
@@ -180,6 +180,53 @@ export class ServiceService {
 
 
 
+  // deleteService(id: string) {
+  //   let httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     })
+  //   };
+  //   httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+
+  //   return this.http.delete(`${this.baseUrl}/${id}`, httpOptions)
+  //     .pipe(
+  //       map(response => {
+  //         // convert the response data to an instance of the Service class
+  //         // this.cdr.detectChanges();
+  //         console.log(response)
+  //       }),
+  //       catchError(error => {
+  //         // handle errors here
+  //         return throwError(error);
+  //       })
+  //     )
+  // }
+
+
+
+  deleteService(id: string): Observable<any> {
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+    this.authService.getToken$().subscribe((token) => {
+        httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${token}`);
+    });
+
+    return this.http.delete<Service>(`${this.baseUrl}/${id}`, httpOptions)
+      .pipe(
+        map(response => {
+          console.log(response);
+          return response;
+        }),
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
+
   async afficheService(service : any) {
     const modal = await this.modalController.create({
         component: ServiceDetailComponent,
@@ -190,6 +237,7 @@ export class ServiceService {
         cssClass: 'ModalPage'
         
     });
+    
   
   
     return await modal.present();
@@ -278,14 +326,14 @@ export class ServiceService {
 
   // }
 
-  async deleteService(id: string) {
-    // const httpOptions = await this.getAuth()
-    let httpOptions = await this.getAuth()
-    this.http.delete(`${this.baseUrl}/${id}`, httpOptions).subscribe(async data => {
+  // async deleteService(id: string) {
+  //   // const httpOptions = await this.getAuth()
+  //   let httpOptions = await this.getAuth()
+  //   this.http.delete(`${this.baseUrl}/${id}`, httpOptions).subscribe(async data => {
 
-    });
+  //   });
 
-  }
+  // }
 
   // async deleteService(id: string) {
   //   //MARCHE PAS EN FONCTION :( )

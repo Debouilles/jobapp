@@ -145,7 +145,7 @@ router.delete("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) =>
     if(!req.rdv) return res.status(404).send("No rdv found with this id")
     // res.send(req.rdv);
     await RDV.findByIdAndDelete(req.params.id)
-    res.status(200).send('RDV deleted').json({ message: 'Deletion applied with success' });
+    res.status(200).json({ message: 'Deletion applied with success' });
     
   } catch (e) {
     res.json({ message: 'Error updating RDV', error: e });

@@ -16,20 +16,23 @@
     <div class="heure">{{data.date | date: "HH : mm" }}</div>
   </ion-card-content>
   <!-- <div class="typedescflex"> -->
-    <ion-card-content class="typedesc">
-      <h4 class="typo">Type : {{ data.type }} </h4>
+  <ion-card-content class="typedesc">
+    <h4 class="typo">Type : {{ data.type }} </h4>
     <div class="description">{{ data.description }}</div>
   </ion-card-content>
   <!-- </div> -->
   <!-- <h4 class="description">Description :</h4> -->
-  
+
   <ion-card-content><app-mini-map [coords]="this.data.location"></app-mini-map></ion-card-content>
   <ion-card-content *ngIf="isWaiting && !isOwner">
     <div>Ce rendez-vous est en attente de confirmation par le propriétaire</div>
   </ion-card-content>
   <ion-card-content *ngIf="isOwner">
     <div class="proprioMess">Vous êtes le proprietaire</div>
-    <ion-button (click)="deleteService(data._id)" color="danger">Supprimer</ion-button>
+    <form #form="ngForm">
+      <!-- <ion-button (click)="deleteService(data._id)" color="danger">Supprimer</ion-button> -->
+      <ion-button type="submit" (click)="onSubmit(data._id)" color="danger">Supprimer</ion-button>
+    </form>
   </ion-card-content>
   <ion-card-content *ngIf="!isOwner && !isWaiting">
     <ion-button (click)="takeRdv(data)">Prendre rendez-vous</ion-button>
