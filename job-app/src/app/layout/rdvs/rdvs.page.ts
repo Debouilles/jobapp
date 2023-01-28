@@ -87,12 +87,13 @@ export class RDVSPage implements OnInit {
     //     console.log(this.rdvs)
     //     this.cdr.detectChanges();
     //   });
-    this.RdvService.getRdvs().subscribe(data => {
-      this.rdvs = data;
-      this.allRdvs = this.rdvs;
-      console.log(this.rdvs);
-      this.cdr.detectChanges();
-  });
+  //   this.RdvService.getRdvs().subscribe(data => {
+  //     this.rdvs = data;
+  //     this.allRdvs = this.rdvs;
+  //     console.log(this.rdvs);
+  //     this.cdr.detectChanges();
+  // });
+  this.refreshRdvs
 
     this.userID = this.auth.getUser$();
     this.auth.getUser$().subscribe(data => {

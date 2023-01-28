@@ -116,6 +116,9 @@ export class CreateServicePage implements OnInit {
     if (!formData.description) {
       isFormValid = false;
       formErrors['description'] = 'Veuillez entrer la description du service';
+    }else if (formData.titre.length < 5) {
+      isFormValid = false;
+      formErrors['description'] = 'Le titre doit contenir au moins 5 caractères';
     }
 
 

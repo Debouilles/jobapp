@@ -23,7 +23,7 @@
   <section *ngIf="selectTabs === 'enAttente'">
     <ion-list>
       <div class="item" *ngFor="let rdv of rdvs; let index" (click)="afficheRdvCall(rdv.relatedService)">
-        <ion-item class="rdv" *ngIf="rdv.provider._id === userID && !rdv.isAccepted && rdv.relatedService.date < today ">
+        <ion-item class="rdv" *ngIf="rdv.provider._id === userID && !rdv.isAccepted">
           <div class="rdvImage">
             <img src={{rdv.relatedService.picture}} height="100%" width="">
           </div>
