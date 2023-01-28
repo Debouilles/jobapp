@@ -102,4 +102,31 @@ export class RdvService {
         })
     );
 }
+
+
+updateRdv(rdvId: string, updatedRdv: any): Observable<Rdv> {
+  let httpOptions = {
+      headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+      })
+  };
+  httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+  console.log(localStorage.getItem('access_token'))
+
+  return this.http.put<Rdv>(`${this.baseUrl}/${rdvId}`, updatedRdv, httpOptions)
+      .pipe(
+          map(response => {
+              // map the response to a User object
+              console.log(response)
+              return new Rdv();
+
+          }),
+          catchError(error => {
+              // handle errors here
+              // console.log(error);
+
+              return throwError(error);
+          })
+      );
+}
 }

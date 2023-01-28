@@ -6,6 +6,7 @@ import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-de
 import { ChangeDetectorRef } from '@angular/core';
 import { ServiceService } from '../services/service.service';
 import { AuthService } from "src/app/auth/auth.service";
+import { RdvService } from '../services/rdv.service';
 
 @Component({
   selector: 'app-rdvs',
@@ -64,7 +65,8 @@ export class RDVSPage implements OnInit {
       private modalController: ModalController, 
       private cdr: ChangeDetectorRef, 
       private serviceService: ServiceService,
-      private auth: AuthService,) {
+      private auth: AuthService,
+      private RdvService: RdvService) {
 
 
   }
@@ -113,8 +115,16 @@ export class RDVSPage implements OnInit {
 
   }
 
-  confirmRdv(id){
-    console.log("confirm: "+id)
+  confirmRdv(rdvId: string) {
+    let updatedRdv = {isAccepted: true};
+    this.RdvService.updateRdv(rdvId, updatedRdv).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   refuteRdv(id){
