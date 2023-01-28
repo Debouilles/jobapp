@@ -139,6 +139,27 @@ export class RDVSPage implements OnInit {
 
   }
 
+
+
+  refuteRdv(id){
+    console.log("refute: "+id)
+   
+    this.RdvService.deleteRdv(id).subscribe(
+      data => {
+        console.log(data);
+        this.createdRdv();
+        this.refreshRdvs();
+        this.cdr.detectChanges();
+      },
+      error => {
+        console.log(error);
+        // this.errorMessage();
+      }
+    );
+  }
+
+
+
   
   refreshRdvs() {
     // retrieve updated data from API
@@ -175,10 +196,6 @@ export class RDVSPage implements OnInit {
     await toast.present();
   }
 
-
-  refuteRdv(id){
-    console.log("refute: "+id)
-  }
 
   async openCreateServiceModal() {
     const modal = await this.modalController.create({

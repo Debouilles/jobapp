@@ -66,6 +66,25 @@ export class RdvService {
 }
 
 
+deleteRdv(id: string): Observable<Rdv> {
+  let httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    })
+  };
+  httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+
+  return this.http.delete<any>(`${this.baseUrl}/${id}`, httpOptions)
+    .pipe(
+      catchError(error => {
+        // handle errors here
+        // console.log(error);
+        return throwError(error);
+      })
+    );
+}
+
+
 
   checkIfIsAlive(serviceId){
     //note marche pas si en fonction °\__O__/°
