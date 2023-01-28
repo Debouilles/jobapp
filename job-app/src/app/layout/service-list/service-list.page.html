@@ -26,7 +26,7 @@
   <ion-list>
     <ion-item class="service" (click)="afficheServiceCall(service)" *ngFor="let service of services; let index">
       <div class="serviceImage">
-        <img src={{service.picture}} height="100%" width="">
+        <img class="squareimg" [ngStyle]="{'background-image': 'url(' + service.picture + ')', 'background-size': 'cover'}">
         <!-- alt="image indisponible" -->
       </div>
       <div class="infosService">

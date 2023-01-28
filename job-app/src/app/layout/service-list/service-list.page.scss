@@ -1,6 +1,5 @@
-
-.barreRecherche{
-    display:flex;
+.barreRecherche {
+    display: flex;
     align-items: center;
 }
 
@@ -9,7 +8,7 @@ ion-searchbar {
     margin-right: -10px;
 }
 
-.icon{
+.icon {
     margin: 10px;
     font-size: 25px;
     color: black;
@@ -22,13 +21,21 @@ ion-searchbar {
     border-radius: 5px;
 }
 
-.serviceTitre{
+.serviceTitre {
     font-size: 18px;
     margin-left: 20px;
 }
 
-.serviceDate{
-    color:rgb(142, 142, 142);
+.serviceDate {
+    color: rgb(142, 142, 142);
     font-size: 14px;
     margin-left: 20px;
+}
+
+.squareimg {
+    width: 100%;
+    padding-bottom: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
 }

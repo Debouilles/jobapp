@@ -63,6 +63,7 @@ ion-searchbar {
 .serviceTitre{
     font-size: 18px;
     margin-left: 20px;
+    margin-top: 10px;
 }
 
 .serviceDate{
@@ -84,21 +85,29 @@ ion-searchbar {
 
 
 ion-card-header{
-height: 150px;
+height: 200px;
 }
 
-.description{
-    font-size: 16px;
+.typo{
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .tpyedesc{
-    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 14px;
     margin-top: -10px;
 }
 
-.description.type{
-    display: flex;
-    justify-content: space-between;
+.description{
+    width: 100%;
+    margin-top: 10px;
+    font-size: 15px;
+}
 
-    gap: 10px;
+.titreService{
+margin-left: 15px;
+margin-top: 17px;
 }
