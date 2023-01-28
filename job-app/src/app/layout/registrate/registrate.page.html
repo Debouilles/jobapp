@@ -7,17 +7,25 @@
   <form (ngSubmit)="onSubmit(form)" #form="ngForm">
      <ion-list>
         <ion-item>
-          <ion-label position="floating">Nom</ion-label>
-          <ion-input type="text" name="name" [(ngModel)]="name" pattern="[a-zA-Z ]*" min-length="1" max-length="30"></ion-input>
+          <ion-label position="floating">Name</ion-label>
+          <ion-input type="text" name="name" [(ngModel)]="name" pattern="[a-zA-Z ]*" min-length="3" max-length="30"></ion-input>
+          <div *ngIf="!validation.isFormValid && validation.formErrors['name']" class="error-message">
+            {{validation.formErrors['name']}}
+          </div>
         </ion-item>
         <ion-item>
           <ion-label position="floating">Email</ion-label>
           <ion-input type="email" name="email" [(ngModel)]="email" placeholder="email@domain.com"></ion-input>
         </ion-item>
-
+        <div *ngIf="!validation.isFormValid && validation.formErrors['email']" class="error-message">
+          {{validation.formErrors['email']}}
+        </div>
         <ion-item>
           <ion-label position="floating">Mot de passe</ion-label>
           <ion-input type="password" name="password" [(ngModel)]="password" min-length="6" max-length="150"></ion-input>
+          <div *ngIf="!validation.isFormValid && validation.formErrors['password']" class="error-message">
+            {{validation.formErrors['password']}}
+          </div>
         </ion-item>
        
 </ion-list>

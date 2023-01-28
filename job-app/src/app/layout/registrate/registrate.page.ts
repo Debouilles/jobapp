@@ -15,12 +15,13 @@ export class RegistratePage implements OnInit {
   email: string;
   password: string;
   validation: any;
+
   ngOnInit(): void {
 
   }
 
   constructor(private userService: UserService, public Router: Router, public toast: ToastController) {
-
+    this.validation = { isFormValid: '', formErrors: '' }
   }
 
 
@@ -55,24 +56,32 @@ export class RegistratePage implements OnInit {
 
 
   onSubmit(form: NgForm) {
-    const { name, email, password } = form.value;
+    // const { name, email, password } = form.value;
+    
     this.validation = this.validateForm(form.value)
-    this.userService.createUser(name, email, password).subscribe((response) => {
-      console.log(response);
-      this.createdUserMessage();
-      this.Router.navigate(['/login']);
+    console.log(this.validation)
+    console.log(this.validation.formErrors['name'])
+    console.log(this.validation.formErrors['password'])
+    if (this.validation.isFormValid) {
+      const { name, email, password } = form.value;
+      this.userService.createUser(name, email, password).subscribe((response) => {
+        console.log(response);
+        this.createdUserMessage();
+        this.Router.navigate(['/login']);
 
-    },
-      (error) => {
-        console.error(error);
-        this.errorMessage();
-      }
+      },
+        (error) => {
+          console.error(error);
+          this.errorMessage();
+        }
 
-    );
+      );
+    }
+
   }
 
 
-  
+
   validateForm(formData: any) {
     let isFormValid = true;
     const formErrors = {};
@@ -80,7 +89,17 @@ export class RegistratePage implements OnInit {
     if (!formData.name) {
       isFormValid = false;
       formErrors['name'] = 'Veuillez entrer un nom';
-    } else if (formData.password < 3) {
+      console.log(formErrors['name'])
+    } 
+    else if (formData.name.length < 5 ) {
+      isFormValid = false;
+      formErrors['name'] = 'Le nom doit contenir 5 lettres';
+    }
+    if(!formData.password){
+      isFormValid = false;
+      formErrors['password'] = 'Veuillez entrer un mot de passe';
+    }
+   else if (formData.password.length < 3) {
       isFormValid = false;
       formErrors['password'] = 'Le mot de passe doit contenir au moins 3 caractères';
     }
@@ -90,7 +109,7 @@ export class RegistratePage implements OnInit {
     } else if (!this.validateEmail(formData.email)) {
       isFormValid = false;
       formErrors['email'] = 'L\'email est d\'un format incorrect';
-  }
+    }
 
 
 
@@ -101,10 +120,10 @@ export class RegistratePage implements OnInit {
   validateEmail(email: string) {
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (emailRegex.test(email)) {
-        return true;
+      return true;
     }
     return false;
-}
+  }
 
 
 }
