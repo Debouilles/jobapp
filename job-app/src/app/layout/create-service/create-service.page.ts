@@ -6,7 +6,7 @@ import { NgForm } from '@angular/forms';
 import { Service } from 'src/app/models/service';
 import { ServiceService } from 'src/app/layout/services/service.service';
 import { Geolocation } from '@capacitor/geolocation';
-import { NativeGeocoder } from '@capgo/nativegeocoder';
+// import { NativeGeocoder } from '@capgo/nativegeocoder';
 // import { NativeGeocoderPlugin } from '@capgo/nativegeocoder/dist/esm/definitions';
 
 
@@ -206,7 +206,7 @@ export class CreateServicePage implements OnInit {
       this.validation = this.validateUpdateForm(form.value)
       if (this.validation.isFormValid) {
         this.ServiceService.updateService(this.serviceToUpdate, picture, oneLocation, titre, date, type, description)
-        console.log("areYouHere")
+
         this.closeModal();
         this.updateMessage()
       }
@@ -216,16 +216,7 @@ export class CreateServicePage implements OnInit {
 
 
   ngOnInit() {
-    // this.requestPermissions();
-    // console.log(this.serviceToUpdate)
-    // if(this.serviceToUpdate !== undefined){
-    //   this.picture = this.serviceToUpdate.picture
-    //   this.location = this.serviceToUpdate.location
-    //   this.titre = this.serviceToUpdate.titre
-    //   this.date = this.serviceToUpdate.date
-    //   this.type = this.serviceToUpdate.type
-    //   this.description = this.serviceToUpdate.description
-    // }
+
   }
 
 
@@ -250,13 +241,18 @@ export class CreateServicePage implements OnInit {
     }
   }
 
+
+  //NOTE: Aucune reverseGeoloc gratuite sans api key, on aurait fait sinon
+  //:(
+
   async getCurrentPosition() {
     try {
       const coordinates = await Geolocation.getCurrentPosition();
       this.location = coordinates;
       this.latitude = coordinates.coords.latitude
       this.longitude = coordinates.coords.longitude
-      // this.theTextAdress = NativeGeocoder.reverseGeocode( {latitude: this.latitude, longitude: this.longitude})
+//reverseGeocode
+//supprimé
 
       console.log(this.location)
     } catch (err) {
