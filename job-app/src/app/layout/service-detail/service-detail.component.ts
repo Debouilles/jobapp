@@ -35,6 +35,12 @@ export class ServiceDetailComponent implements OnInit {
 
   }
 
+
+  deleteService(id){
+    console.log(id)
+  }
+
+
   //A FAIRE !! take id from localstorage, send request with body to rdvs avec les 2 userid et leserviceid
   //aussi faire si service provider = id en localstorage 
   //si rdv existe pour le service, ne plus l'afficher ? ou si isAccepted?

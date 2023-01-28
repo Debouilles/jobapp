@@ -169,11 +169,10 @@ router.post("/", authenticate , async (req, res, next) => {
 router.delete("/:id", authenticate , loadService, checkServiceOwner, async (req, res) => {
   try {
     await Service.findByIdAndDelete(req.params.id)
-    res.status(200).send("service deleted")
-    // res.send(service);
+    res.status(200).json({ message: 'Deletion applied with success' });
+    
   } catch (e) {
-    res.send(e)
-    next(e)
+    res.json({ message: 'Error updating RDV', error: e });
   }
 });
 

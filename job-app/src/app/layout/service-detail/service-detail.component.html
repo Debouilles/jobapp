@@ -28,7 +28,8 @@
     <div>Ce rendez-vous est en attente de confirmation par le propriétaire</div>
   </ion-card-content>
   <ion-card-content *ngIf="isOwner">
-    <div>Vous êtes le proprietaire</div>
+    <div class="proprioMess">Vous êtes le proprietaire</div>
+    <ion-button (click)="deleteService(data._id)" color="danger">Supprimer</ion-button>
   </ion-card-content>
   <ion-card-content *ngIf="!isOwner && !isWaiting">
     <ion-button (click)="takeRdv(data)">Prendre rendez-vous</ion-button>
