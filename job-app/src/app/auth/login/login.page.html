@@ -35,8 +35,10 @@
 
     <div class="ion-padding">
       <!-- Submit button -->
-      <ion-button type="submit" expand="block" [disabled]="loginForm.invalid">Log in</ion-button>
+      <ion-button class="logBut" type="submit" expand="block" [disabled]="loginForm.invalid">Log in</ion-button>
       <!-- <ion-button (click)="registratePage">Inscription</ion-button> -->
+      <!-- <div class="spacing" height="100px"></div> -->
+      <!-- ... -->
       <ion-button routerLink="/registrate">S'inscrire</ion-button>
            <!-- Error message displayed if the login failed -->
       <ion-text color="danger" *ngIf="loginError">Email or password is invalid.</ion-text>

@@ -65,9 +65,12 @@ export class ProfilPage implements OnInit {
   ) {
     this.userID = this.auth.getUser$();
     this.auth.getUser$().subscribe(data => {
-      this.userID = data._id;
-      this.userName = data.name;
-      this.userEmail = data.email;
+      if(data){
+        this.userID = data._id;
+        this.userName = data.name;
+        this.userEmail = data.email;
+      }
+
     });
 
     // this.index = 1;
@@ -163,8 +166,9 @@ export class ProfilPage implements OnInit {
   logOut() {
     console.log("logging out...");
     this.auth.logOut();
-    location.reload();
-    this.router.navigateByUrl("/login");
+    // location.reload();
+    // this.router.navigateByUrl("/login");
+    this.router.navigate(['/login'], {replaceUrl: true});
   }
 
   readAPI(URL: string) {
