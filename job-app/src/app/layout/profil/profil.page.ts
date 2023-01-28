@@ -73,27 +73,13 @@ export class ProfilPage implements OnInit {
 
     });
 
-    // this.index = 1;
-    // this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
-    // .subscribe((data) => {
-    //   this.services = data['data'];
-    //   this.allServices = this.services
-    //   console.log(this.services)
-    //   this.cdr.detectChanges();
-    // });
 
   
   }
 
 
   ionViewWillEnter(): void {
-    // this.http.get('https://jobapp.onrender.com/services').subscribe((servicesSub) => {
-    //   console.log(`Services loaded`, servicesSub);
-    //   this.services= servicesSub['data']
-    //   this.allServices = this.services
-    //   this.cdr.detectChanges();
-      
-    // });
+
 
     this.index = 1;
     this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
@@ -101,7 +87,7 @@ export class ProfilPage implements OnInit {
       this.services = data['data'];
       this.allServices = this.services
       console.log(this.services)
-      // this.cdr.detectChanges();
+   
     });
 
 
@@ -122,9 +108,9 @@ export class ProfilPage implements OnInit {
           text: 'Supprimer',
           role: 'confirm',
           handler: () => {
-            //problème ici ! ----------------------------------------------------------------------------------------------- !!!
+  
           this.deleteServ(id)
-          console.log('hello')
+
           },
         },
       ],
@@ -191,11 +177,7 @@ export class ProfilPage implements OnInit {
     console.log("deleted")
   }
 
-  // deleteCompte() {
-  //   console.log('compte supprimé.');
-  //   this.auth.deleteService(user._id);
-  //   this.router.navigateByUrl("/registrate");
-  // }
+
 
 
   async deletedMessage() {

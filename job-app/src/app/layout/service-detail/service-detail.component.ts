@@ -83,11 +83,7 @@ checkAvailability(){
     } else {
         this.isWaiting = false;
     }
-      // if (response[0].relatedService === this.data._id) {
-      //   this.isWaiting = true;
-      // } else if (response[0].relatedService === undefined) {
-      //   this.isWaiting = false;
-      // }
+
     }, error => {
       console.error(error);
       this.isWaiting = false;
@@ -134,9 +130,6 @@ async deletedMessage() {
     }
     // console.log(contract)
     this.rdvServ.createRdv(contract).subscribe((response) => {
-      // console.log(response);
-      // this.checkAvailability;
-      // this.cdr.detectChanges
 
     },
       (error) => {
@@ -178,11 +171,7 @@ ionViewWillEnter(){
     } else {
         this.isWaiting = false;
     }
-      // if (response[0].relatedService === this.data._id) {
-      //   this.isWaiting = true;
-      // } else if (response[0].relatedService === undefined) {
-      //   this.isWaiting = false;
-      // }
+
     }, error => {
       console.error(error);
       this.isWaiting = false;
@@ -198,13 +187,5 @@ ionViewWillEnter(){
   }
 
 
-
-  // async function presentAlert() {
-  //   const alert = await this.alertController.create({
-  //     header: 'Rendez-vous déjà pris',
-  //   });
-
-  //   await alert.present();
-  // }
 
 }

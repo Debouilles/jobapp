@@ -6,6 +6,8 @@ import { NgForm } from '@angular/forms';
 import { Service } from 'src/app/models/service';
 import { ServiceService } from 'src/app/layout/services/service.service';
 import { Geolocation } from '@capacitor/geolocation';
+import { NativeGeocoder } from '@capgo/nativegeocoder';
+// import { NativeGeocoderPlugin } from '@capgo/nativegeocoder/dist/esm/definitions';
 
 
 
@@ -42,12 +44,17 @@ export class CreateServicePage implements OnInit {
 
   validation: any;
 
+  //
+  theTextAdress: any;
+
   pictureString = "";
   constructor(
     public modalController: ModalController,
     private pictureService: PictureService,
     private ServiceService: ServiceService,
     private toast: ToastController,
+
+
     // private formV: FormValidationService
   ) {
     this.validation = { isFormValid: '', formErrors: '' }
@@ -249,6 +256,8 @@ export class CreateServicePage implements OnInit {
       this.location = coordinates;
       this.latitude = coordinates.coords.latitude
       this.longitude = coordinates.coords.longitude
+      // this.theTextAdress = NativeGeocoder.reverseGeocode( {latitude: this.latitude, longitude: this.longitude})
+
       console.log(this.location)
     } catch (err) {
       console.log('Error getting location', err);

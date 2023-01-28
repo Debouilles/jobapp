@@ -29,22 +29,15 @@
       </ion-button>
     </div>
     <div class="linksProfile">
-      <!-- <ion-button class="buttonLinks" color="secondary" fill="clear">
-        <ion-icon name="pencil"></ion-icon>
-        <p> Modifier le mot de passe</p>
-      </ion-button> -->
       <ion-button class="buttonLinks" color="danger" fill="clear" (click)="logOut()">
         <ion-icon name="power"></ion-icon>
         <p color="danger"> Se déconnecter</p>
       </ion-button>
-      <!-- <ion-button class="buttonLinks" color="danger" fill="clear" (click)="deleteCompte()"> -->
-      <!-- <ion-icon name="close"></ion-icon>
-      <p> Supprimer le compte</p>
-      <!-- </ion-button> -->
     </div> 
   </section>
 
-
+<!-- NOTE: on aurait pu faire une route service/user/:id et fetch de la au lieu de récupérer tout et afficher avec ngIf
+mais pas assez de temps à dispo -->
   <section *ngIf="selectTabs === 'mesAnnonces'">
     <h3 class="enteteSection">Mes annonces</h3>
 
