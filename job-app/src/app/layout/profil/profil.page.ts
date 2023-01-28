@@ -70,26 +70,37 @@ export class ProfilPage implements OnInit {
       this.userEmail = data.email;
     });
 
-    this.index = 1;
-    this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
-    .subscribe((data) => {
-      this.services = data['data'];
-      this.allServices = this.services
-      console.log(this.services)
-      this.cdr.detectChanges();
-    });
+    // this.index = 1;
+    // this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
+    // .subscribe((data) => {
+    //   this.services = data['data'];
+    //   this.allServices = this.services
+    //   console.log(this.services)
+    //   this.cdr.detectChanges();
+    // });
 
   
   }
 
 
   ionViewWillEnter(): void {
-    this.http.get('https://jobapp.onrender.com/services').subscribe((servicesSub) => {
-      console.log(`Services loaded`, servicesSub);
-      this.services= servicesSub['data']
-      // this.cdr.detectChanges();
+    // this.http.get('https://jobapp.onrender.com/services').subscribe((servicesSub) => {
+    //   console.log(`Services loaded`, servicesSub);
+    //   this.services= servicesSub['data']
+    //   this.allServices = this.services
+    //   this.cdr.detectChanges();
       
+    // });
+
+    this.index = 1;
+    this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
+    .subscribe((data) => {
+      this.services = data['data'];
+      this.allServices = this.services
+      console.log(this.services)
+      // this.cdr.detectChanges();
     });
+
 
   }
 
@@ -206,8 +217,20 @@ export class ProfilPage implements OnInit {
       },
       cssClass: 'createServiceModal'
     });
+
+    modal.onDidDismiss().then(() => {
+      // refresh the list of services after the modal is closed
+      this.readAPI('https://jobapp.onrender.com/services')
+        .subscribe((data) => {
+          this.services = data['data'];
+        });
+    });
+    
+    
     return await modal.present();
   }
+
+
 
 
 }

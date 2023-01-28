@@ -94,6 +94,33 @@ export class CreateServicePage implements OnInit {
 
 
 
+  validateUpdateForm(formData: any) {
+    let isFormValid = true;
+    const formErrors = {};
+
+    if (!formData.titre) {
+
+    } else if (formData.titre.length < 3) {
+      isFormValid = false;
+      formErrors['titre'] = 'Le titre doit contenir au moins 3 caractères';
+    }
+    if (!formData.location) {
+
+    }
+    if (!formData.type) {
+
+    }
+    if (!formData.description) {
+
+    } else if (formData.description.length < 5 || formData.description.length > 30) {
+      isFormValid = false;
+      formErrors['description'] = 'La description doit contenir entre 5 et 30 caractères';
+    }
+
+
+    return { isFormValid: isFormValid, formErrors: formErrors };
+  }
+
   validateForm(formData: any) {
     let isFormValid = true;
     const formErrors = {};
@@ -125,6 +152,11 @@ export class CreateServicePage implements OnInit {
     return { isFormValid: isFormValid, formErrors: formErrors };
   }
 
+
+
+  // onViewInit(){
+
+  // }
 
   // ngModelChange(form: NgForm){
   //  this.validation = this.validateForm(form.value)
@@ -166,13 +198,16 @@ export class CreateServicePage implements OnInit {
         console.log("hello")
       }
 
-    } else {
+    } else if(this.serviceToUpdate){
       //UPDATE-------------------------------------------------
       console.log("Updating an existing service");
-      this.ServiceService.updateService(this.serviceToUpdate, picture, oneLocation, titre, date, type, description)
-      console.log("areYouHere")
-      this.closeModal();
-      this.updateMessage()
+      this.validation = this.validateUpdateForm(form.value)
+      if (this.validation.isFormValid) {
+        this.ServiceService.updateService(this.serviceToUpdate, picture, oneLocation, titre, date, type, description)
+        console.log("areYouHere")
+        this.closeModal();
+        this.updateMessage()
+      }
 
     }
   }
@@ -181,7 +216,28 @@ export class CreateServicePage implements OnInit {
   ngOnInit() {
     // this.requestPermissions();
     // console.log(this.serviceToUpdate)
+    // if(this.serviceToUpdate !== undefined){
+    //   this.picture = this.serviceToUpdate.picture
+    //   this.location = this.serviceToUpdate.location
+    //   this.titre = this.serviceToUpdate.titre
+    //   this.date = this.serviceToUpdate.date
+    //   this.type = this.serviceToUpdate.type
+    //   this.description = this.serviceToUpdate.description
+    // }
   }
+
+
+  ionViewWillEnter() {
+    if (this.serviceToUpdate !== undefined) {
+      this.picture = this.serviceToUpdate.picture
+      this.location = this.serviceToUpdate.location
+      this.titre = this.serviceToUpdate.titre
+      this.date = this.serviceToUpdate.date
+      this.type = this.serviceToUpdate.type
+      this.description = this.serviceToUpdate.description
+    }
+  }
+
 
   async requestPermissions() {
     try {

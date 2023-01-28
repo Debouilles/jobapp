@@ -12,7 +12,9 @@
 <ion-content>
 
 <!-- <h1>Création d'une annonce</h1> -->
-
+<ion-item *ngIf="serviceToUpdate" color="warning">
+Laisser vide pour ne pas changer
+</ion-item>
 <ion-item>
   <ion-label>Image</ion-label>
   <ion-button (click)="takePicture()"> Prendre une photo
