@@ -20,11 +20,12 @@
   <img *ngIf="picture" [src]="picture" />
 </ion-item>
 <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
   <ion-item>
     <ion-label position="floating">Title</ion-label>
-    <ion-input [(ngModel)]="titre" name="titre" inputmode="text" placeholder="Titre du service" minlength="3" maxlength="64">
+    <ion-input [(ngModel)]="titre" name="titre" inputmode="text" placeholder="Titre du service" minlength="3" maxlength="30">
     </ion-input>
-    <div *ngIf="!validation.isFormValid && validation.formErrors['titre']" class="error-message">
+    <div *ngIf="!validation.isFormValid && validation.formErrors['titre']" class="error-message-bottom">
       {{validation.formErrors['titre']}}
     </div>
   </ion-item>
@@ -36,7 +37,7 @@
     {{ latitude }}
     {{ longitude }}
     <input type="hidden" [(ngModel)]="location" name="location">
-    <div *ngIf="!validation.isFormValid && validation.formErrors['location']" class="error-message">
+    <div *ngIf="!validation.isFormValid && validation.formErrors['location']" class="error-message-bottom">
       {{validation.formErrors['location']}}
     </div>
   </ion-item>
@@ -57,14 +58,14 @@
       <ion-select-option value="Prêt">Prêt</ion-select-option>
       <ion-select-option value="Autres">Autres</ion-select-option>
     </ion-select>
-    <div *ngIf="!validation.isFormValid && validation.formErrors['type']" class="error-message">
+    <div *ngIf="!validation.isFormValid && validation.formErrors['type']" class="error-message-bottom">
       {{validation.formErrors['type']}}
     </div>
   </ion-item>
   <ion-item>
     <ion-label>Description</ion-label>
-    <ion-input [(ngModel)]="description" name="description" placeholder="Entrez du texte"></ion-input>
-    <div *ngIf="!validation.isFormValid && validation.formErrors['description']" class="error-message">
+    <ion-input [(ngModel)]="description" name="description" minlength="3" maxlength="30" placeholder="Entrez du texte"></ion-input>
+    <div *ngIf="!validation.isFormValid && validation.formErrors['description']" class="error-message-bottom">
       {{validation.formErrors['description']}}
     </div>
   </ion-item>

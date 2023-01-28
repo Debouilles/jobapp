@@ -50,6 +50,14 @@ ion-toolbar ion-title {
 
 }
 
+
+  .error-message-bottom{
+   position: absolute;
+   bottom: 0;
+   font-size: 10px;
+   color: red;
+  }
+
 .ion-input.ng-invalid {
     border-bottom: 1px solid red;
 }
