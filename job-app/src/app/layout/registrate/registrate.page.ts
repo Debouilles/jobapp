@@ -14,6 +14,7 @@ export class RegistratePage implements OnInit {
   name: string;
   email: string;
   password: string;
+  validation: any;
   ngOnInit(): void {
 
   }
@@ -55,6 +56,7 @@ export class RegistratePage implements OnInit {
 
   onSubmit(form: NgForm) {
     const { name, email, password } = form.value;
+    this.validation = this.validateForm(form.value)
     this.userService.createUser(name, email, password).subscribe((response) => {
       console.log(response);
       this.createdUserMessage();
@@ -68,6 +70,41 @@ export class RegistratePage implements OnInit {
 
     );
   }
+
+
+  
+  validateForm(formData: any) {
+    let isFormValid = true;
+    const formErrors = {};
+
+    if (!formData.name) {
+      isFormValid = false;
+      formErrors['name'] = 'Veuillez entrer un nom';
+    } else if (formData.password < 3) {
+      isFormValid = false;
+      formErrors['password'] = 'Le mot de passe doit contenir au moins 3 caractères';
+    }
+    if (!formData.email) {
+      isFormValid = false;
+      formErrors['email'] = 'Veuillez entrer votre email';
+    } else if (!this.validateEmail(formData.email)) {
+      isFormValid = false;
+      formErrors['email'] = 'L\'email est d\'un format incorrect';
+  }
+
+
+
+    return { isFormValid: isFormValid, formErrors: formErrors };
+  }
+
+
+  validateEmail(email: string) {
+    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (emailRegex.test(email)) {
+        return true;
+    }
+    return false;
+}
 
 
 }
