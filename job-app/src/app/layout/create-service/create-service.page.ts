@@ -116,7 +116,7 @@ export class CreateServicePage implements OnInit {
     if (!formData.description) {
       isFormValid = false;
       formErrors['description'] = 'Veuillez entrer la description du service';
-    }else if (formData.description.length < 5 || formData.description.length > 30) {
+    } else if (formData.description.length < 5 || formData.description.length > 30) {
       isFormValid = false;
       formErrors['description'] = 'La description doit contenir entre 5 et 30 caractères';
     }
@@ -150,19 +150,22 @@ export class CreateServicePage implements OnInit {
       if (date === undefined) {
         date = Date.now();
       }
-      //CREATION-------------------------------------------------
-      console.log("Creating a new service");
-      // picture: string, location: object, titre: string, date: Date, type: string, description: string
-      this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
-        console.log(response);
-        this.closeModal();
-        this.createdMessage()
-      },
-        (error) => {
-          console.error(error);
-        }
-      );
-      console.log("hello")
+      if (this.validation.isFormValid) {
+        //CREATION-------------------------------------------------
+        // console.log("Creating a new service");
+        // picture: string, location: object, titre: string, date: Date, type: string, description: string
+        this.ServiceService.createService(picture, oneLocation, titre, date, type, description).subscribe((response) => {
+          console.log(response);
+          this.closeModal();
+          this.createdMessage()
+        },
+          (error) => {
+            console.error(error);
+          }
+        );
+        console.log("hello")
+      }
+
     } else {
       //UPDATE-------------------------------------------------
       console.log("Updating an existing service");
@@ -177,7 +180,7 @@ export class CreateServicePage implements OnInit {
 
   ngOnInit() {
     // this.requestPermissions();
-    console.log(this.serviceToUpdate)
+    // console.log(this.serviceToUpdate)
   }
 
   async requestPermissions() {

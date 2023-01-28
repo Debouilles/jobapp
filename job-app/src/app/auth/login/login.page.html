@@ -11,13 +11,13 @@
       <!-- Username input -->
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input inputmode="text" #email="ngModel" required="true" name="username"
+        <ion-input inputmode="text" #email="ngModel" required="true" name="Email"
           [(ngModel)]="authRequest.email"></ion-input>
       </ion-item>
 
       <!-- Error message displayed if the username is invalid -->
       <ion-item lines="none" *ngIf="email.invalid && email.touched">
-        <ion-text color="danger">Username is required.</ion-text>
+        <ion-text color="danger">Email is required.</ion-text>
       </ion-item>
 
       <!-- Password input -->
