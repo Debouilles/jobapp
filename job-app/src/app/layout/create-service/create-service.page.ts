@@ -57,7 +57,7 @@ export class CreateServicePage implements OnInit {
     const toast = await this.toast.create({
       message: 'Service mis-à-jour !',
       duration: 1500,
-      position: 'middle',
+      position: 'bottom',
       color: 'success',
       cssClass: 'sucess-toaster'
     });
@@ -99,17 +99,12 @@ export class CreateServicePage implements OnInit {
     const formErrors = {};
 
     if (!formData.titre) {
-
+      //do nothing..
     } else if (formData.titre.length < 3) {
       isFormValid = false;
       formErrors['titre'] = 'Le titre doit contenir au moins 3 caractères';
     }
-    if (!formData.location) {
 
-    }
-    if (!formData.type) {
-
-    }
     if (!formData.description) {
 
     } else if (formData.description.length < 5 || formData.description.length > 30) {
