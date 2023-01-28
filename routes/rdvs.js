@@ -142,12 +142,13 @@ router.post("/", authenticate ,async (req, res, next) => {
 
 router.delete("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) => {
   try {
-    res.send(req.rdv);
-    const rdv = await RDV.findByIdAndDelete(req.params.id)
-    res.status(200).send('RDV deleted')
+    if(!req.rdv) return res.status(404).send("No rdv found with this id")
+    // res.send(req.rdv);
+    await RDV.findByIdAndDelete(req.params.id)
+    res.status(200).send('RDV deleted').json({ message: 'Deletion applied with success' });
     
   } catch (e) {
-    res.send(e)
+    res.json({ message: 'Error updating RDV', error: e });
   }
 });
 
@@ -155,6 +156,7 @@ router.delete("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) =>
 
 router.put("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) => {
   try {
+    
     let modif = req.body
     await RDV.findByIdAndUpdate(req.params.id, modif)
     res.status(200).json({ message: 'Modification applied with success' });
