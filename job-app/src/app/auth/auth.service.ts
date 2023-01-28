@@ -62,6 +62,7 @@ export class AuthService {
     localStorage.removeItem('user_id');
     this.storage.remove('auth');
     console.log('User logged out');
+    
   }
 
   private saveAuth$(auth: AuthResponse): Observable<void> {

@@ -152,6 +152,7 @@ export class ProfilPage implements OnInit {
   logOut() {
     console.log("logging out...");
     this.auth.logOut();
+    location.reload();
     this.router.navigateByUrl("/login");
   }
 

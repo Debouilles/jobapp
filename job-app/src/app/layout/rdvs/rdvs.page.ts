@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, ToastButton, ToastController } from '@ionic/angular';
 import { CreateServicePage } from '../create-service/create-service.page';
 import { ServiceDetailComponent } from 'src/app/layout/service-detail/service-detail.component';
 import { ChangeDetectorRef } from '@angular/core';
@@ -66,9 +66,11 @@ export class RDVSPage implements OnInit {
       private cdr: ChangeDetectorRef, 
       private serviceService: ServiceService,
       private auth: AuthService,
-      private RdvService: RdvService) {
+      private RdvService: RdvService,
+      public toast: ToastController) {
 
-
+        this.userID = localStorage.getItem('user_id')
+        this.refreshRdvs();
   }
 
   readAPI(URL: string) {
@@ -93,14 +95,9 @@ export class RDVSPage implements OnInit {
   //     console.log(this.rdvs);
   //     this.cdr.detectChanges();
   // });
-  this.refreshRdvs
+  this.refreshRdvs();
 
-    this.userID = this.auth.getUser$();
-    this.auth.getUser$().subscribe(data => {
-      this.userID = data._id;
-      this.userName = data.name;
-      this.userEmail = data.email;
-    });
+
   }
   
 
@@ -118,15 +115,6 @@ export class RDVSPage implements OnInit {
       });
   }
 
-  refreshRdvs() {
-    // retrieve updated data from API
-    this.RdvService.getRdvs().subscribe(data => {
-      this.rdvs = data;
-      this.allRdvs = this.rdvs;
-      console.log(this.rdvs);
-      this.cdr.detectChanges();
-  });
-  }
 
   async afficheRdvCall(rdv: any) {
     // console.log("helloWOrlds")
@@ -139,13 +127,54 @@ export class RDVSPage implements OnInit {
     this.RdvService.updateRdv(rdvId, updatedRdv).subscribe(
       data => {
         console.log(data);
-        this.refreshRdvs
+        this.createdRdv();
+        this.refreshRdvs();
+        this.cdr.detectChanges();
       },
       error => {
         console.log(error);
+        // this.errorMessage();
       }
     );
+
   }
+
+  
+  refreshRdvs() {
+    // retrieve updated data from API
+    this.RdvService.getRdvs().subscribe(data => {
+      this.rdvs = data;
+      this.allRdvs = this.rdvs;
+      console.log(this.rdvs);
+      this.cdr.detectChanges();
+      // this.cdr.detectChanges();
+  });
+  }
+
+
+  async createdRdv() {
+    const toast = await this.toast.create({
+      message: 'Le RDV est pris !',
+      duration: 1500,
+      position: 'bottom',
+      color: 'success',
+      cssClass: 'sucess-toaster'
+    });
+
+    await toast.present();
+  }
+  async errorMessage() {
+    const toast = await this.toast.create({
+      message: 'une Erreur est survenue',
+      duration: 1500,
+      position: 'middle',
+      color: 'danger',
+      cssClass: 'sucess-toaster'
+    });
+
+    await toast.present();
+  }
+
 
   refuteRdv(id){
     console.log("refute: "+id)
@@ -174,6 +203,7 @@ export class RDVSPage implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshRdvs();
     setTimeout(() => {
       this.today = new Date().toISOString();
       
