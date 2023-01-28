@@ -94,8 +94,8 @@ export class RDVSPage implements OnInit {
   
 
   loadMoreData() {
-    this.index++;
-    this.readAPI('https://jobapp.onrender.com/rdvs?page=' + this.index)
+    // this.index++;
+    this.readAPI('https://jobapp.onrender.com/rdvs')
       .subscribe((data) => {
         // console.log("DATA!!!:" + data['data'])
         this.rdvs.push(...data['data']);
