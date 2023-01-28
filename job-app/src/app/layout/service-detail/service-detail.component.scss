@@ -86,3 +86,19 @@ ion-searchbar {
 ion-card-header{
 height: 150px;
 }
+
+.description{
+    font-size: 16px;
+}
+
+.tpyedesc{
+    font-size: 16px;
+    margin-top: -10px;
+}
+
+.description.type{
+    display: flex;
+    justify-content: space-between;
+
+    gap: 10px;
+}

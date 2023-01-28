@@ -15,10 +15,13 @@
     <div class="date">{{ data.date | date: "dd MMM yyyy" }}</div>
     <div class="heure">{{data.date | date: "HH : mm" }}</div>
   </ion-card-content>
-  <h4 class="description">Type :</h4>
-  <ion-card-content>{{ data.type }}</ion-card-content>
-  <h4 class="description">Description :</h4>
-  <ion-card-content>{{ data.description }}</ion-card-content>
+  <div class="description type">
+    <ion-card-content class="typedesc">
+      <h4 class="description">Type :</h4> {{ data.type }}
+    </ion-card-content>
+  </div>
+  <!-- <h4 class="description">Description :</h4> -->
+  <ion-card-content class="typedesc">{{ data.description }}</ion-card-content>
   <ion-card-content><app-mini-map [coords]="this.data.location"></app-mini-map></ion-card-content>
   <ion-card-content *ngIf="isWaiting && !isOwner">
     <div>Ce rendez-vous est en attente de confirmation par le propriétaire</div>
