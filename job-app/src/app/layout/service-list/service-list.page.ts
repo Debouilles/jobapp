@@ -70,6 +70,29 @@ export class services {
  
 
   constructor(public http: HttpClient, private modalController: ModalController, private cdr: ChangeDetectorRef, private serviceService: ServiceService) {
+    // this.index = 1;
+    // this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
+    // .subscribe((data) => {
+    //   this.services = data['data'];
+    //   this.allServices = this.services
+    //   console.log(this.services)
+    //   this.cdr.detectChanges();
+    // });
+  }
+
+  readAPI(URL: string){
+    return this.http.get(URL)
+    
+  }
+
+
+  ionViewWillEnter(): void {
+    // this.http.get('https://jobapp.onrender.com/services').subscribe((servicesSub) => {
+    //   console.log(`Services loaded`, servicesSub);
+    //   this.services= servicesSub['data']
+    //   // this.cdr.detectChanges();
+      
+    // });
     this.index = 1;
     this.readAPI('https://jobapp.onrender.com/services?page='+this.index)
     .subscribe((data) => {
@@ -78,11 +101,7 @@ export class services {
       console.log(this.services)
       this.cdr.detectChanges();
     });
-  }
 
-  readAPI(URL: string){
-    return this.http.get(URL)
-    
   }
 
   loadMoreData() {

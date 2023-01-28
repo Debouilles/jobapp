@@ -41,7 +41,7 @@ export class CreateServicePage implements OnInit {
 
 
   validation: any;
-  
+
   pictureString = "";
   constructor(
     public modalController: ModalController,
@@ -49,9 +49,9 @@ export class CreateServicePage implements OnInit {
     private ServiceService: ServiceService,
     private toast: ToastController,
     // private formV: FormValidationService
-    ) { 
-      this.validation= { isFormValid: '' , formErrors: '' }
-    }
+  ) {
+    this.validation = { isFormValid: '', formErrors: '' }
+  }
 
   async updateMessage() {
     const toast = await this.toast.create({
@@ -93,36 +93,45 @@ export class CreateServicePage implements OnInit {
   }
 
 
-    
+
   validateForm(formData: any) {
     let isFormValid = true;
     const formErrors = {};
 
     if (!formData.titre) {
-        isFormValid = false;
-        formErrors['titre'] = 'Veuillez entrer un titre';
+      isFormValid = false;
+      formErrors['titre'] = 'Veuillez entrer un titre';
     } else if (formData.titre.length < 3) {
-        isFormValid = false;
-        formErrors['titre'] = 'Le titre doit contenir au moins 3 caractères';
+      isFormValid = false;
+      formErrors['titre'] = 'Le titre doit contenir au moins 3 caractères';
     }
     if (!formData.location) {
       isFormValid = false;
       formErrors['location'] = 'Veuillez entrer votre localisation';
-  } 
+    }
+    if (!formData.type) {
+      isFormValid = false;
+      formErrors['type'] = 'Veuillez entrer le type du service';
+    }
+    if (!formData.description) {
+      isFormValid = false;
+      formErrors['description'] = 'Veuillez entrer la description du service';
+    }
+
 
     return { isFormValid: isFormValid, formErrors: formErrors };
   }
-  
 
-// ngModelChange(form: NgForm){
-//  this.validation = this.validateForm(form.value)
-// }
+
+  // ngModelChange(form: NgForm){
+  //  this.validation = this.validateForm(form.value)
+  // }
 
   onSubmit(form: NgForm) {
     console.log(form.value)
 
     this.validation = this.validateForm(form.value)
-    if(!this.validation.isFormValid){
+    if (!this.validation.isFormValid) {
       console.log("INVALID")
     }
     console.log(this.validation.formErrors['titre'])

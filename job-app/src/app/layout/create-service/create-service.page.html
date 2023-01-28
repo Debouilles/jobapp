@@ -57,10 +57,16 @@
       <ion-select-option value="Prêt">Prêt</ion-select-option>
       <ion-select-option value="Autres">Autres</ion-select-option>
     </ion-select>
+    <div *ngIf="!validation.isFormValid && validation.formErrors['type']" class="error-message">
+      {{validation.formErrors['type']}}
+    </div>
   </ion-item>
   <ion-item>
     <ion-label>Description</ion-label>
     <ion-input [(ngModel)]="description" name="description" placeholder="Entrez du texte"></ion-input>
+    <div *ngIf="!validation.isFormValid && validation.formErrors['description']" class="error-message">
+      {{validation.formErrors['description']}}
+    </div>
   </ion-item>
   <div class="modal--button">
     <ion-button type="submit">Submit</ion-button>
