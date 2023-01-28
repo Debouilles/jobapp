@@ -46,6 +46,26 @@ export class RdvService {
   //     );
   // }
 
+  getRdvs(): Observable<Rdv[]> {
+    let httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json',
+        })
+    };
+    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+
+    return this.http.get<Rdv[]>(this.baseUrl, httpOptions)
+        .pipe(
+            map(response => {
+                return response;
+            }),
+            catchError(error => {
+                return throwError(error);
+            })
+        );
+}
+
+
 
   checkIfIsAlive(serviceId){
     //note marche pas si en fonction °\__O__/°

@@ -76,15 +76,23 @@ export class RDVSPage implements OnInit {
 
   }
 
+
+
   ionViewWillEnter(){
 
-    this.readAPI('https://jobapp.onrender.com/rdvs')
-      .subscribe((data) => {
-        this.rdvs = data;
-        this.allRdvs = this.rdvs
-        console.log(this.rdvs)
-        this.cdr.detectChanges();
-      });
+    // this.readAPI('https://jobapp.onrender.com/rdvs')
+    //   .subscribe((data) => {
+    //     this.rdvs = data;
+    //     this.allRdvs = this.rdvs
+    //     console.log(this.rdvs)
+    //     this.cdr.detectChanges();
+    //   });
+    this.RdvService.getRdvs().subscribe(data => {
+      this.rdvs = data;
+      this.allRdvs = this.rdvs;
+      console.log(this.rdvs);
+      this.cdr.detectChanges();
+  });
 
     this.userID = this.auth.getUser$();
     this.auth.getUser$().subscribe(data => {
@@ -109,6 +117,16 @@ export class RDVSPage implements OnInit {
       });
   }
 
+  refreshRdvs() {
+    // retrieve updated data from API
+    this.RdvService.getRdvs().subscribe(data => {
+      this.rdvs = data;
+      this.allRdvs = this.rdvs;
+      console.log(this.rdvs);
+      this.cdr.detectChanges();
+  });
+  }
+
   async afficheRdvCall(rdv: any) {
     // console.log("helloWOrlds")
     this.serviceService.afficheService(rdv)
@@ -120,6 +138,7 @@ export class RDVSPage implements OnInit {
     this.RdvService.updateRdv(rdvId, updatedRdv).subscribe(
       data => {
         console.log(data);
+        this.refreshRdvs
       },
       error => {
         console.log(error);

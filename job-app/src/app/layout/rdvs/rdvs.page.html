@@ -10,7 +10,7 @@
 <ion-content>
   <h3>Mes RdVs:</h3>
   <!-- NOTE: marche pas si pas nommé default -->
-  <ion-segment [(ngModel)]="selectTabs" color="secondary" value="default">
+  <ion-segment [(ngModel)]="selectTabs" color="secondary" value="default"  (ionSelect)="refreshRdvs()">
     <ion-segment-button value="default">
       <ion-label>A venir</ion-label>
     </ion-segment-button>
@@ -18,30 +18,6 @@
       <ion-label>En attente</ion-label>
     </ion-segment-button>
   </ion-segment>
-
-
-  <!-- <ion-list>
-      <div class="item" *ngFor="let rdv of rdvs; let index">
-        <ion-item class="service" 
-          (click)="afficheRdvCall(service)"
-          *ngIf="rdv.reciever._id === userID && rdv.relatedService.date >= today ">
-
-          <div class="serviceImage">
-            <img src={{rdv.relatedService.picture}} height="100%" width="">
-
-          </div>
-          <div class="infosService">
-            <div class="servicelien">
-              <h2 class="serviceTitre">{{ rdv.relatedService.titre }}</h2>
-              <p class="serviceDate">{{ rdv.relatedService.date | date: "dd MMM yyyy" }}</p>
-            </div>
-          </div>
-        </ion-item>
-      </div>
-      <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll>
-    </ion-list> -->
 
 
   <section *ngIf="selectTabs === 'enAttente'">
@@ -53,7 +29,7 @@
           </div>
           <div class="infosRdv">
             <div class="rdvContainer">
-              <div *ngIf="" class="rdvProvider">rendez vous avec {{ rdv.reciever.name }}</div>
+              <div  class="rdvProvider">rendez vous avec {{ rdv.reciever.name }}</div>
               <div class="selectButton">
                 <ion-button color="success" (click)="confirmRdv(rdv._id); $event.stopPropagation()">confirmer</ion-button>
                 <ion-button color="danger" (click)="refuteRdv(rdv._id); $event.stopPropagation()">refuser</ion-button>
@@ -64,29 +40,11 @@
           </div>
         </ion-item>
       </div>
-      <!-- <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll> -->
+
     </ion-list>
   </section>
 
 
-  <!-- <ion-list>
-    <ion-item class="service" (click)="afficheServiceCall(service)" *ngFor="let service of services; let index">
-      <div class="serviceImage">
-        <img class="squareimg" [ngStyle]="{'background-image': 'url(' + service.picture + ')', 'background-size': 'cover'}">
-      </div>
-      <div class="infosService">
-        <div class="servicelien">
-          <h2 class="serviceTitre">{{ service.titre }}</h2>
-          <p class="serviceDate">{{ service.date | date: "dd MMM yyyy" }}</p>
-        </div>
-      </div>
-    </ion-item>
-    <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
-      <ion-infinite-scroll-content></ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-  </ion-list> -->
 
 
   <section *ngIf="selectTabs === 'default'">
@@ -114,9 +72,7 @@
           </div>
         </ion-item>
       </div>
-      <!-- <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
-        <ion-infinite-scroll-content></ion-infinite-scroll-content>
-      </ion-infinite-scroll> -->
+
     </ion-list>
   </section>
 
