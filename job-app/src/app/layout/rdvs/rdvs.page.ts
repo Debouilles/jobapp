@@ -96,7 +96,7 @@ export class RDVSPage implements OnInit {
     this.index++;
     this.readAPI('https://jobapp.onrender.com/rdvs?page=' + this.index)
       .subscribe((data) => {
-        console.log("DATA!!!:" + data['data'])
+        // console.log("DATA!!!:" + data['data'])
         this.rdvs.push(...data['data']);
         console.log(this.rdvs)
         // this.cdr.detectChanges();
@@ -107,7 +107,7 @@ export class RDVSPage implements OnInit {
   }
 
   async afficheRdvCall(rdv: any) {
-    console.log("helloWOrlds")
+    // console.log("helloWOrlds")
     this.serviceService.afficheService(rdv)
 
   }

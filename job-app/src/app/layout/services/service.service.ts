@@ -26,11 +26,11 @@ export class ServiceService {
 
    }
 
-   //Observables
-   getAnimals$(): Observable<Service[]> {
-    // const servicesUrl = `${environment.apiUrl}services`;
-    return this.http.get<ServiceResponse[]>(this.baseUrl);
-  }
+  //  //Observables
+  //  getAnimals$(): Observable<Service[]> {
+  //   // const servicesUrl = `${environment.apiUrl}services`;
+  //   return this.http.get<ServiceResponse[]>(this.baseUrl);
+  // }
 
   //AUTH
   // setAuthorizationHeader(token: string): any {

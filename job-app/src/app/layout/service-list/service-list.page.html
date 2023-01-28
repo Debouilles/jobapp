@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>JobApp</ion-title>
-    <ion-button routerLink="/service-list" id="notifButton" slot="end" color="primary">
+    <ion-button routerLink="/service-list" id="notifButton" slot="end">
       <ion-icon name="notifications-circle-outline"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -9,13 +9,13 @@
 
 <ion-content>
   <ion-fab z-index="30002" slot="fixed" horizontal="end" vertical="bottom">
-    <ion-fab-button class="addButton" (click)="openCreateServiceModal()" color="primary">
+    <ion-fab-button class="addButton" (click)="openCreateServiceModal()" color="secondary">
       <ion-icon id="btnadd" name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
   <div class="barreRecherche">
     <a routerLink="/service-map">
-      <ion-icon id="icon1" class="icon" name="map-sharp" color='#36ABE0'></ion-icon>
+      <ion-icon id="icon1" class="icon" name="map-sharp" color='secondary'></ion-icon>
     </a>
     <ion-searchbar animated="true" placeholder="Rechercher un service" [debounce]="1000"
       (ionChange)="handleChange($event)"></ion-searchbar> 
