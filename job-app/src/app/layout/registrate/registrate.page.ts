@@ -59,9 +59,9 @@ export class RegistratePage implements OnInit {
     // const { name, email, password } = form.value;
     
     this.validation = this.validateForm(form.value)
-    console.log(this.validation)
-    console.log(this.validation.formErrors['name'])
-    console.log(this.validation.formErrors['password'])
+    // console.log(this.validation)
+    // console.log(this.validation.formErrors['name'])
+    // console.log(this.validation.formErrors['password'])
     if (this.validation.isFormValid) {
       const { name, email, password } = form.value;
       this.userService.createUser(name, email, password).subscribe((response) => {
