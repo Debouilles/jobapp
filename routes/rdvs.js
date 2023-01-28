@@ -157,9 +157,11 @@ router.put("/:id", authenticate , loadRdv, checkRdvOwner, async (req, res) => {
   try {
     let modif = req.body
     await RDV.findByIdAndUpdate(req.params.id, modif)
-    res.status(200).send('Modification applied with success')
+    res.status(200).json({ message: 'Modification applied with success' });
   } catch (e) {
-    res.send(e)
+    res.json({ message: 'Error updating RDV', error: e });
   }
 });
+
+
 export default router;
