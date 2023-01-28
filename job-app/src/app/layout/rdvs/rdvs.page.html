@@ -45,20 +45,21 @@
 
 
   <section *ngIf="selectTabs === 'enAttente'">
-    <!-- <ion-list>
-      <div class="item" *ngFor="let service of rdvs; let index">
-        <ion-item class="service" 
-          (click)="afficheRdvCall(service)"
-          *ngIf="service.reciever._id === userID && service.relatedService.date == today ">
-
-          <div class="serviceImage">
-            <img src={{service.relatedService.picture}} height="100%" width="">
-         
+    <ion-list>
+      <div class="item" *ngFor="let rdv of rdvs; let index" (click)="afficheRdvCall(rdv.relatedService)">
+        <ion-item class="rdv" *ngIf="rdv.provider._id === userID && rdv.relatedService.date < today ">
+          <div class="rdvImage">
+            <img src={{rdv.relatedService.picture}} height="100%" width="">
           </div>
-          <div class="infosService">
-            <div class="servicelien">
-              <h2 class="serviceTitre">{{ service.relatedService.titre }}</h2>
-              <p class="serviceDate">{{ service.relatedService.date | date: "dd MMM yyyy" }}</p>
+          <div class="infosRdv">
+            <div class="rdvContainer">
+              <div class="rdvProvider">rendez vous avec {{ rdv.reciever.name }}</div>
+              <div class="selectButton">
+                <ion-button color="success" (click)="confirmRdv(rdv._id); $event.stopPropagation()">confirmer</ion-button>
+                <ion-button color="danger" (click)="refuteRdv(rdv._id); $event.stopPropagation()">refuser</ion-button>
+              </div>
+              <div class="serviceInfo">concernant: {{ rdv.relatedService.titre }}</div>
+              <!-- <p class="serviceDate">{{ service.relatedService.date | date: "dd MMM yyyy" }}</p> -->
             </div>
           </div>
         </ion-item>
@@ -66,7 +67,7 @@
       <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">
         <ion-infinite-scroll-content></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-    </ion-list> -->
+    </ion-list>
   </section>
 
 
@@ -92,26 +93,20 @@
     <ion-list>
       <div class="item" *ngFor="let rdv of rdvs; let index" (click)="afficheRdvCall(rdv.relatedService)">
         <ion-item class="rdv" *ngIf="rdv.reciever._id === userID && rdv.relatedService.date < today ">
-
           <div class="rdvImage">
             <img src={{rdv.relatedService.picture}} height="100%" width="">
           </div>
           <div class="infosRdv">
             <div class="rdvContainer">
               <div class="rdvProvider">rendez vous avec {{ rdv.provider.name }}</div>
-              <div class="alarmIcon">
+              <div class="alarmIcon" *ngIf="!rdv.relatedService.isAccepted">
                 <ion-icon class="alarm" name="alarm"></ion-icon>
                 <span class="alarmMessage">en attente</span>
               </div>
               <div class="serviceInfo">concernant: {{ rdv.relatedService.titre }}</div>
               <!-- <p class="serviceDate">{{ service.relatedService.date | date: "dd MMM yyyy" }}</p> -->
             </div>
-
-
-
           </div>
-
-
         </ion-item>
       </div>
       <ion-infinite-scroll (ionInfinite)="loadMoreData()" *ngIf="!allDataLoaded">

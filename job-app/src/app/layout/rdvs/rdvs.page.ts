@@ -75,7 +75,7 @@ export class RDVSPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    setTimeout(() => this.cdr.markForCheck());
+
     this.readAPI('https://jobapp.onrender.com/rdvs')
       .subscribe((data) => {
         this.rdvs = data;
@@ -111,6 +111,14 @@ export class RDVSPage implements OnInit {
     // console.log("helloWOrlds")
     this.serviceService.afficheService(rdv)
 
+  }
+
+  confirmRdv(id){
+    console.log("confirm: "+id)
+  }
+
+  refuteRdv(id){
+    console.log("refute: "+id)
   }
 
   async openCreateServiceModal() {

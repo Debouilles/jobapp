@@ -53,6 +53,10 @@ ion-searchbar {
 }
 
 
+.choiceButtons{
+// width: 40%;
+}
+
 .alarmIcon{
     // display: flex; /* centers the child elements horizontally and vertically */
     // align-items: center; /* centers the child elements vertically */
@@ -91,3 +95,7 @@ ion-icon.alarm {
 //     display: flex;
 //     flex-direction: row;
 // }
+
+.selectButton{
+    margin-top: 20px;
+}
