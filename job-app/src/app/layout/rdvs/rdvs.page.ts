@@ -147,7 +147,7 @@ export class RDVSPage implements OnInit {
     this.RdvService.deleteRdv(id).subscribe(
       data => {
         console.log(data);
-        this.createdRdv();
+        this.deletedRdv();
         this.refreshRdvs();
         this.cdr.detectChanges();
       },
@@ -179,6 +179,18 @@ export class RDVSPage implements OnInit {
       duration: 1500,
       position: 'bottom',
       color: 'success',
+      cssClass: 'sucess-toaster'
+    });
+
+    await toast.present();
+  }
+
+  async deletedRdv() {
+    const toast = await this.toast.create({
+      message: 'Le RDV est annulé !',
+      duration: 1500,
+      position: 'bottom',
+      color: 'warning',
       cssClass: 'sucess-toaster'
     });
 
