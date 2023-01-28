@@ -47,13 +47,13 @@
   <section *ngIf="selectTabs === 'enAttente'">
     <ion-list>
       <div class="item" *ngFor="let rdv of rdvs; let index" (click)="afficheRdvCall(rdv.relatedService)">
-        <ion-item class="rdv" *ngIf="rdv.provider._id === userID && rdv.relatedService.date < today ">
+        <ion-item class="rdv" *ngIf="rdv.provider._id === userID && !rdv.isAccepted && rdv.relatedService.date < today ">
           <div class="rdvImage">
             <img src={{rdv.relatedService.picture}} height="100%" width="">
           </div>
           <div class="infosRdv">
             <div class="rdvContainer">
-              <div class="rdvProvider">rendez vous avec {{ rdv.reciever.name }}</div>
+              <div *ngIf="" class="rdvProvider">rendez vous avec {{ rdv.reciever.name }}</div>
               <div class="selectButton">
                 <ion-button color="success" (click)="confirmRdv(rdv._id); $event.stopPropagation()">confirmer</ion-button>
                 <ion-button color="danger" (click)="refuteRdv(rdv._id); $event.stopPropagation()">refuser</ion-button>
@@ -92,16 +92,21 @@
   <section *ngIf="selectTabs === 'default'">
     <ion-list>
       <div class="item" *ngFor="let rdv of rdvs; let index" (click)="afficheRdvCall(rdv.relatedService)">
-        <ion-item class="rdv" *ngIf="rdv.reciever._id === userID && rdv.relatedService.date < today ">
+        <ion-item class="rdv" *ngIf="(rdv.reciever._id === userID && rdv.relatedService.date < today ) || (rdv.provider._id === userID && rdv.isAccepted) ">
           <div class="rdvImage">
             <img src={{rdv.relatedService.picture}} height="100%" width="">
           </div>
           <div class="infosRdv">
             <div class="rdvContainer">
-              <div class="rdvProvider">rendez vous avec {{ rdv.provider.name }}</div>
-              <div class="alarmIcon" *ngIf="!rdv.relatedService.isAccepted">
+              <div *ngIf="rdv.provider._id === userID" class="rdvProvider">rendez vous avec {{ rdv.reciever.name }}</div>
+              <div *ngIf="rdv.reciever._id === userID" class="rdvProvider">rendez vous avec {{ rdv.provider.name }}</div>
+              <div class="alarmIcon" *ngIf="!rdv.isAccepted">
                 <ion-icon class="alarm" name="alarm"></ion-icon>
                 <span class="alarmMessage">en attente</span>
+              </div>
+              <div class="successIcon" *ngIf="rdv.isAccepted">
+                <ion-icon class="checkmark" name="checkmark"></ion-icon>
+                <span class="successMessage">accepté</span>
               </div>
               <div class="serviceInfo">concernant: {{ rdv.relatedService.titre }}</div>
               <!-- <p class="serviceDate">{{ service.relatedService.date | date: "dd MMM yyyy" }}</p> -->

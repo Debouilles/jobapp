@@ -57,7 +57,7 @@ ion-searchbar {
 // width: 40%;
 }
 
-.alarmIcon{
+.alarmIcon, .successIcon{
     // display: flex; /* centers the child elements horizontally and vertically */
     // align-items: center; /* centers the child elements vertically */
     // padding: 10px; /* adds padding around the icon */
@@ -65,11 +65,22 @@ ion-searchbar {
     align-items: center;
 }
 
-ion-icon.alarm {
+ion-icon.alarm, ion-icon.success {
     justify-content: center; /* centers the child elements horizontally and vertically */
     padding: 8px; /* adds padding around the icon */
     color: orange; /* changes the color of the icon to orange */
 }
+
+ion-icon.alarm{
+
+    color: orange; /* changes the color of the icon to orange */
+}
+
+
+ion-icon.checkmark{
+    color: green;
+}
+
 
 .rdvProvider{
     width: 70%;
@@ -79,6 +90,12 @@ ion-icon.alarm {
 
 .alarmMessage{
     color: orange;
+    font-size: 10px;
+
+}
+
+.successMessage{
+    color: green;
     font-size: 10px;
 
 }
