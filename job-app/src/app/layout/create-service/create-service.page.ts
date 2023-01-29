@@ -36,6 +36,7 @@ export class CreateServicePage implements OnInit {
   date: Date;
   type: string;
   description: string;
+  todaysDate: any;
 
   //pour test
   latitude: number;
@@ -57,7 +58,9 @@ export class CreateServicePage implements OnInit {
 
     // private formV: FormValidationService
   ) {
-    this.validation = { isFormValid: '', formErrors: '' }
+    this.validation = { isFormValid: '', formErrors: '' };
+    this.todaysDate = new Date().toISOString();
+    console.log(this.todaysDate)
   }
 
   async updateMessage() {

@@ -45,7 +45,7 @@ Laisser vide pour ne pas changer
   </ion-item>
   <ion-item>
     <ion-label>Date</ion-label>
-    <ion-datetime [(ngModel)]="date" name="date"  locale="ch-CH" >
+    <ion-datetime [(ngModel)]="date" name="date"  locale="ch-CH" max="2025" [min]="todaysDate" >
       <!-- <span slot="title">Select a Reservation Date</span>
       <span slot="time-label">Heure</span> -->
     </ion-datetime>
