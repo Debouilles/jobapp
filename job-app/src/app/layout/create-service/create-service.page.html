@@ -1,6 +1,7 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title routerLink="/service-list">JobApp</ion-title>
+        <ion-title *ngIf="!serviceToUpdate" routerLink="/service-list">Ajout service</ion-title>
+        <ion-title *ngIf="serviceToUpdate" routerLink="/service-list">Modification service</ion-title>
         <ion-buttons slot="end">
             <ion-button width="80px" class="closeButton" (click)="closeModal()">
               CLOSE
